@@ -251,17 +251,17 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .contact-sec{margin-bottom:24px}
 .contact-sec-title{font-size:13px;font-weight:700;border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:4px;margin-bottom:14px}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px}
-.ccard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:box-shadow .13s}
+.ccard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:box-shadow .13s;display:flex;flex-direction:column;min-height:178px}
 .ccard:hover{box-shadow:0 2px 12px rgba(0,0,0,.07)}
-.ccard-hdr{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.ccard-hdr{display:grid;grid-template-columns:42px 1fr;align-items:center;gap:10px;margin-bottom:10px;min-height:48px}
 .cav{width:42px;height:42px;border-radius:50%;object-fit:cover;flex-shrink:0;border:2px solid var(--border)}
 .cav-placeholder{width:42px;height:42px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;flex-shrink:0}
 .cav-placeholder.senior{background:#fff3cd;color:#856404}
 .cname{font-size:14px;font-weight:700}.crank{font-size:11px;color:var(--text-muted)}
 .corg{font-size:10px;color:var(--text-muted)}
-.croles{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:9px}
+.croles{display:flex;flex-wrap:wrap;align-content:flex-start;gap:4px;margin-bottom:9px;min-height:24px}
 .crole{background:var(--accent-light);color:var(--accent);border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600}
-.cinfo{display:flex;flex-direction:column;gap:4px}
+.cinfo{display:flex;flex-direction:column;gap:4px;margin-top:auto}
 .cinfo-row{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-dim)}
 .cinfo-row .ck{color:var(--text-muted);min-width:38px;flex-shrink:0}
 .cinfo-row a{color:var(--accent);text-decoration:none}
@@ -293,7 +293,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .act-btn.del:hover{border-color:var(--red);color:var(--red)}
 
 /* ─── CONTROL ─── */
-.ctrl-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:9px}
+.ctrl-grid{display:flex;flex-direction:column;gap:14px}
+.ctrl-group{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 14px}
+.ctrl-group-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.ctrl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:9px}
 .ctrl-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px 10px;cursor:pointer;text-align:center;transition:all .13s;font-family:var(--sans)}
 .ctrl-btn:hover{border-color:var(--accent);background:var(--accent-light)}
 .ctrl-btn.c-offline{opacity:.5;cursor:not-allowed}
@@ -323,6 +326,23 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .ai-inp-row input:focus{border-color:var(--accent)}
 .ai-inp-row button{background:var(--accent);border:none;border-radius:7px;padding:6px 11px;color:#fff;cursor:pointer;font-size:12px}
 
+
+/* ─── QA / CONTROL PATCH ─── */
+.qa-toolbar-top{justify-content:space-between;align-items:center}
+.qa-page-size{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-muted);font-weight:600;white-space:nowrap}
+.qa-filter-panel{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.qa-filter-line{display:grid;grid-template-columns:78px 1fr;gap:10px;align-items:start}
+.qa-filter-line .filter-label{padding-top:6px;color:var(--text-dim)}
+.ctrl-filterbar{display:flex;gap:8px;align-items:center;margin-bottom:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px}
+.ctrl-filterbar .qa-search{max-width:360px;flex:1}
+.ctrl-empty{padding:24px;text-align:center;color:var(--text-muted);background:var(--surface);border:1px solid var(--border);border-radius:10px}
+.ccard{min-height:178px;display:flex;flex-direction:column;justify-content:space-between}
+.ccard-hdr{min-height:48px;align-items:center}
+.cinfo{display:grid;grid-template-rows:repeat(3,20px);gap:4px;margin-top:auto}
+.cinfo-row{min-height:20px;align-items:center;white-space:nowrap;overflow:hidden}
+.cinfo-row .cval{overflow:hidden;text-overflow:ellipsis;min-width:0}
+.cinfo-row.empty .cval{visibility:hidden}
+
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
 </style>
 </head>
@@ -332,8 +352,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 <div id="login-overlay">
   <div class="login-box">
     <div class="login-logo"><img id="login-logo" src="../src/assets/images/logos/로고_KETI.jpg" alt="KETI" onerror="this.style.display='none';this.parentElement.innerHTML='<div style=\'font-size:22px;font-weight:800;color:#1a5fac;letter-spacing:.02em\'>KETI</div>'"></div>
-    <div class="login-title">STAR TEAM 운영 매뉴얼</div>
-    <div class="login-sub">지능로보틱스연구센터 · Incheon Techno-park</div>
+    <div class="login-title">TOM AND GERRI 원격 관제 시스템</div>
+    <div class="login-sub">KETI AX운영본부 지능로보틱스연구센터 STAR TEAM</div>
     <hr class="ld">
     <div class="lf"><label>아이디</label><input type="text" id="lid" placeholder="예: itp_user" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="lf"><label>비밀번호</label><input type="password" id="lpw" placeholder="비밀번호" onkeydown="if(event.key==='Enter')doLogin()"></div>
@@ -365,7 +385,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
   <div class="tb-right">
     <div class="status-chip"><div class="led green pulse"></div><span style="font-size:10px;color:var(--text-muted)">Rubberneck</span><span style="font-weight:600">연결됨</span></div>
     <div class="status-chip"><div class="led yellow pulse"></div><span style="font-size:10px;color:var(--text-muted)">SOLAR</span><span style="font-weight:600">점검 중</span></div>
-    <div class="status-chip" id="gps-chip" style="cursor:pointer" onclick="requestGps()" title="클릭하여 위치 정보 허용">
+    <div class="status-chip" id="gps-chip" style="cursor:pointer" onclick="requestGps(true)" title="클릭하여 위치 정보 갱신">
       <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
       <span id="loc-t" style="font-weight:500;font-size:11px">위치 허용</span>
     </div>
@@ -508,6 +528,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
     <!-- CONTROL -->
     <div class="tab-panel" id="tab-control">
       <div class="ph"><h1>수동 제어</h1><p>온라인 로봇만 활성화됩니다</p></div>
+      <div class="ctrl-filterbar">
+        <input class="qa-search" id="ctrl-q" type="text" placeholder="제조사 또는 로봇 검색…" oninput="buildCtrl()">
+        <select class="qa-filter" id="ctrl-maker" onchange="buildCtrl()"><option value="all">전체 제조사</option></select>
+      </div>
       <div class="sec-title" style="margin-bottom:12px">제어 대상 선택</div>
       <div class="ctrl-grid" id="ctrl-grid"></div>
     </div>
@@ -527,24 +551,29 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
     <div class="tab-panel" id="tab-qa">
       <div id="qa-list-view">
         <div class="ph"><h1>문의 / 지원</h1><p>운영 관련 질문, 장애 신고, 기술 지원 요청</p></div>
-        <div class="qa-toolbar">
-          <input class="qa-search" id="qa-q" type="text" placeholder="제목 또는 작성자 검색…" oninput="renderQa()">
-          <select class="qa-filter" id="qa-sort" onchange="renderQa()" style="font-size:11px">
+        <div class="qa-toolbar qa-toolbar-top">
+          <input class="qa-search" id="qa-q" type="text" placeholder="제목 또는 작성자 검색…" oninput="qaPage=1;renderQa()">
+          <select class="qa-filter" id="qa-sort" onchange="qaPage=1;renderQa()" style="font-size:11px">
             <option value="newest">최신순</option><option value="oldest">오래된 순</option><option value="views">조회수</option>
           </select>
+          <label class="qa-page-size">표시
+            <select class="qa-filter" id="qa-page-size" onchange="setQaPageSize(this.value)">
+              <option value="10" selected>10개</option><option value="20">20개</option><option value="50">50개</option>
+            </select>
+          </label>
           <button class="btn-primary" onclick="showQaForm()">+ 신규 문의</button>
         </div>
-        <div style="display:flex;gap:12px;margin-bottom:12px;flex-wrap:wrap">
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <span class="filter-label">로봇</span>
+        <div class="qa-filter-panel">
+          <div class="qa-filter-line">
+            <span class="filter-label">로봇 기종</span>
             <div id="flt-robot" class="filter-group"></div>
           </div>
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+          <div class="qa-filter-line">
             <span class="filter-label">사이트</span>
             <div id="flt-site" class="filter-group"></div>
           </div>
-          <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-            <span class="filter-label">유형</span>
+          <div class="qa-filter-line">
+            <span class="filter-label">문의 유형</span>
             <div id="flt-type" class="filter-group"></div>
           </div>
         </div>
@@ -702,6 +731,8 @@ const ACCESS_LOGS = [
   {time:'2025-05-02 11:00',user:'star_sw',  name:'STAR팀 SW', action:'로그인',   ip:'192.168.1.10'},
 ];
 let me = null;
+const AUTH_KEY='star_team_auth_user_id';
+const GPS_KEY='star_team_cached_location';
 
 function doLogin(){
   const id=document.getElementById('lid').value.trim();
@@ -709,6 +740,7 @@ function doLogin(){
   const u=USERS_DB.find(x=>x.id===id&&x.pw===pw&&x.status==='active');
   if(u){
     me=u;
+    localStorage.setItem(AUTH_KEY,u.id);
     document.getElementById('login-overlay').style.display='none';
     document.getElementById('topbar').style.display='flex';
     document.getElementById('layout').classList.add('visible');
@@ -731,7 +763,8 @@ function doLogin(){
 
 function doLogout(){
   if(!confirm('로그아웃 하시겠습니까?')) return;
-  ACCESS_LOGS.unshift({time:new Date().toLocaleString('ko-KR').replace(',',''),user:me.id,name:me.name,action:'로그아웃',ip:'127.0.0.1'});
+  if(me) ACCESS_LOGS.unshift({time:new Date().toLocaleString('ko-KR').replace(',',''),user:me.id,name:me.name,action:'로그아웃',ip:'127.0.0.1'});
+  localStorage.removeItem(AUTH_KEY);
   me=null;
   document.getElementById('login-overlay').style.display='flex';
   document.getElementById('topbar').style.display='none';
@@ -770,18 +803,20 @@ const ALL_ROBOTS = {
     {id:'ilg1',bld:'robotower',name:'일개미 #1',cat:'amr',icon:'🐜',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.41','RN ID':'ilgaemi-01','OS':'Ubuntu 20.04','SDK':'ROS2'},startup:['충전 분리','TOM ON','전원 ON','ilgaemi_robot.py'],checklist:['배터리 80%','경로 장애물','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck 수동 전환','조이스틱','긴급 정지'],mdFile:'robots/ilgaemi.md'},
     {id:'ilg2',bld:'robotower',name:'일개미 #2',cat:'amr',icon:'🐜',type:'AMR',floor:'22F',power:'offline',mp:'offline',rn:'offline',solar:'offline',upd:'3시간 전',specs:{'IP':'192.168.1.42','RN ID':'ilgaemi-02','OS':'Ubuntu 20.04','SDK':'ROS2'},startup:['충전 확인','TOM ON','전원 ON'],checklist:['배터리','TOM','Rubberneck'],ctrl:['Rubberneck','조이스틱','긴급 정지'],mdFile:'robots/ilgaemi.md'},
     {id:'jipg1',bld:'robotower',name:'집개미 #1',cat:'amr',icon:'🐜',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'2분 전',specs:{'IP':'192.168.1.43','RN ID':'jipgaemi-01','OS':'Ubuntu 20.04','SDK':'ROS2'},startup:['충전 확인','TOM ON','전원 ON','jipgaemi_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','키보드','긴급 정지'],mdFile:'robots/jipgaemi.md'},
-    {id:'rby1',bld:'robotower',name:'RB-Y1',cat:'manipulator',icon:'🦾',type:'매니퓰레이터',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.61','RN ID':'rby1-01','OS':'Ubuntu 22.04','SDK':'RB SDK'},startup:['E-Stop 해제','TOM ON','RB-Y1 전원 → 초기화 60초','rby1_robot.py'],checklist:['E-Stop 해제','관절 초기화','TOM','Rubberneck','작업 반경 장애물','그리퍼'],ctrl:['Rubberneck → RB-Y1','양팔 개별 제어','속도 50% 이하','Space 긴급 정지'],mdFile:'robots/rby1.md'},
+    {id:'rby1',bld:'robotower',name:'RB-Y1',cat:'manipulator',icon:'🦾',type:'모바일 매니퓰레이터',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.61','RN ID':'rby1-01','OS':'Ubuntu 22.04','SDK':'RB SDK'},startup:['E-Stop 해제','TOM ON','RB-Y1 전원 → 초기화 60초','rby1_robot.py'],checklist:['E-Stop 해제','관절 초기화','TOM','Rubberneck','작업 반경 장애물','그리퍼'],ctrl:['Rubberneck → RB-Y1','양팔 개별 제어','속도 50% 이하','Space 긴급 정지'],mdFile:'robots/rby1.md'},
     // R&D Center
     {id:'gc_sd1',bld:'rnd',name:'GoCart SD #1',cat:'amr',icon:'🛒',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.31','RN ID':'gocart-sd-01','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리','TOM ON','gocart_robot.py','Rubberneck'],checklist:['배터리','TOM','Rubberneck','SOLAR','LiDAR'],ctrl:['Rubberneck','WASD','Space'],mdFile:'robots/gocart.md'},
     {id:'gc_sd2',bld:'rnd',name:'GoCart SD #2',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.2.32','RN ID':'gocart-sd-02','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리','TOM ON','gocart_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','WASD','Space'],mdFile:'robots/gocart.md'},
-    {id:'nova1',bld:'rnd',name:'KT 노바텍 #1',cat:'service',icon:'📦',type:'서비스 로봇',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.51','RN ID':'novatek-01','OS':'Ubuntu 22.04','SDK':'KT Novatek SDK'},startup:['TOM ON','novatek_robot.py','Rubberneck'],checklist:['배터리','TOM','Rubberneck','SOLAR','서비스 모듈'],ctrl:['Rubberneck → Novatek #1','서비스 제어','긴급 정지'],mdFile:'robots/novatek.md'},
-    {id:'nova2',bld:'rnd',name:'KT 노바텍 #2',cat:'service',icon:'📦',type:'서비스 로봇',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'3분 전',specs:{'IP':'192.168.2.52','RN ID':'novatek-02','OS':'Ubuntu 22.04','SDK':'KT Novatek SDK'},startup:['TOM ON','novatek_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','서비스 제어','긴급 정지'],mdFile:'robots/novatek.md'},
+    {id:'nova1',bld:'rnd',name:'Novatek #1',cat:'amr',icon:'📦',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.51','RN ID':'novatek-01','OS':'Ubuntu 22.04','SDK':'KT Novatek SDK'},startup:['TOM ON','novatek_robot.py','Rubberneck'],checklist:['배터리','TOM','Rubberneck','SOLAR','서비스 모듈'],ctrl:['Rubberneck → Novatek #1','서비스 제어','긴급 정지'],mdFile:'robots/novatek.md'},
+    {id:'nova2',bld:'rnd',name:'Novatek #2',cat:'amr',icon:'📦',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'3분 전',specs:{'IP':'192.168.2.52','RN ID':'novatek-02','OS':'Ubuntu 22.04','SDK':'KT Novatek SDK'},startup:['TOM ON','novatek_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','서비스 제어','긴급 정지'],mdFile:'robots/novatek.md'},
     {id:'pick1',bld:'rnd',name:'오더피킹',cat:'manipulator',icon:'📋',type:'피킹 로봇',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'7분 전',specs:{'IP':'192.168.2.62','RN ID':'picking-01','OS':'Ubuntu 20.04','SDK':'ROS2+MoveIt'},startup:['E-Stop 해제','TOM ON','orderpicking_robot.py'],checklist:['E-Stop','암 초기화','TOM','Rubberneck'],ctrl:['Rubberneck → 오더피킹','피킹 경로 지정','긴급 정지'],mdFile:'robots/orderpicking.md'},
+    {id:'door_icn',bld:'rnd',name:'자동문',cat:'iot',icon:'🚪',type:'IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.71','RN ID':'door-icn-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
+    {id:'elev_icn',bld:'rnd',name:'엘리베이터',cat:'iot',icon:'🛗',type:'IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.72','RN ID':'elev-icn-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
   ],
   suwon:[
     {id:'zayd1',bld:'',name:'자이드모바일',cat:'amr',icon:'🛺',type:'AMR',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.3.31','RN ID':'zayd-01','OS':'Ubuntu 22.04','SDK':'ROS2'},startup:['충전 분리','TOM ON','전원 ON','zayd_robot.py'],checklist:['배터리','TOM','Rubberneck','지도 로딩'],ctrl:['Rubberneck 수동 모드','방향키 이동','AUTO 재개'],mdFile:'robots/zayd.md'},
     {id:'cobot1',bld:'',name:'COBOT (건설로봇)',cat:'manipulator',icon:'🏗',type:'건설 로봇',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'10분 전',specs:{'IP':'192.168.3.62','RN ID':'cobot-01','OS':'Ubuntu 20.04','SDK':'COBOT SDK'},startup:['안전 구역 확인','TOM ON','COBOT ON','cobot_robot.py'],checklist:['안전 구역','E-Stop 해제','TOM','Rubberneck'],ctrl:['Rubberneck → COBOT','건설 작업 제어','E-Stop'],mdFile:'robots/cobot.md'},
-    {id:'piper1',bld:'',name:'Piper',cat:'manipulator',icon:'🦾',type:'매니퓰레이터',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.3.63','RN ID':'piper-01','OS':'Ubuntu 22.04','SDK':'Piper SDK'},startup:['TOM ON','piper_robot.py','Rubberneck'],checklist:['E-Stop','TOM','Rubberneck','작업 범위'],ctrl:['Rubberneck','암 제어','긴급 정지'],mdFile:'robots/piper.md'},
+    {id:'piper1',bld:'',name:'Piper',cat:'manipulator',icon:'🦾',type:'모바일 매니퓰레이터',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.3.63','RN ID':'piper-01','OS':'Ubuntu 22.04','SDK':'Piper SDK'},startup:['TOM ON','piper_robot.py','Rubberneck'],checklist:['E-Stop','TOM','Rubberneck','작업 범위'],ctrl:['Rubberneck','암 제어','긴급 정지'],mdFile:'robots/piper.md'},
   ],
   yeongwol:[
     {id:'spot_yw',bld:'',name:'SPOT (영월)',cat:'quadruped',icon:'🐕',type:'4족 보행',floor:'발전소',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.21','RN ID':'spot-yw-01','OS':'Ubuntu 20.04','SDK':'Spot SDK 4.x'},startup:['배터리 확인','TOM ON','SPOT ON','spot_robot.py'],checklist:['배터리 50%','E-Stop 해제','TOM','Rubberneck','순찰 경로'],ctrl:['Rubberneck 원격 제어','순찰 모드 또는 수동','Space 정지'],mdFile:'robots/spot.md'},
@@ -791,14 +826,14 @@ const ALL_ROBOTS = {
   ],
 };
 
-const CATS={quadruped:{l:'4족 보행 로봇'},amr:{l:'AMR (자율이동로봇)'},manipulator:{l:'매니퓰레이터'},service:{l:'서비스 로봇'},iot:{l:'IoT 연동'}};
+const CATS={quadruped:{l:'4족 보행 로봇'},amr:{l:'AMR (자율이동로봇)'},manipulator:{l:'모바일 매니퓰레이터'},service:{l:'서비스 로봇'},iot:{l:'IoT 연동'}};
 
 /* ═══════════════════════════════════
    STATE
 ═══════════════════════════════════ */
 let activeSite='incheon', activeBld='all', activeFloor='all', activeManualId=null;
 let qaFltRobot='all', qaFltSite='all', qaFltType='all', qaPage=1;
-const QA_PP=8;
+let QA_PP=10;
 let editingQaId=null, adminTabActive='accounts';
 
 /* ═══════════════════════════════════
@@ -812,7 +847,14 @@ function filteredRobots(){
   let r=robots();
   if(activeSite==='incheon'){
     if(activeBld!=='all') r=r.filter(x=>x.bld===activeBld);
-    if(activeFloor!=='all') r=r.filter(x=>x.floor===activeFloor);
+    if(activeFloor!=='all'){
+      if(activeFloor.includes('|')){
+        const [b,f]=activeFloor.split('|');
+        r=r.filter(x=>x.bld===b&&x.floor===f);
+      } else {
+        r=r.filter(x=>x.floor===activeFloor);
+      }
+    }
   }
   return r;
 }
@@ -866,19 +908,23 @@ function setBld(bld){
 
 function buildFloorTabs(){
   const fw=document.getElementById('floor-wrap-outer');
-  let floors=['all'];
+  let tabs=[{key:'all',label:'전체'}];
   if(activeSite==='incheon'){
-    if(activeBld==='all') floors=[...new Set(robots().map(r=>r.floor))];
-    else if(SITE_CONF.incheon.buildings[activeBld]) floors=['all',...SITE_CONF.incheon.buildings[activeBld].floors];
+    if(activeBld==='all'){
+      fw.innerHTML=`<div class="floor-wrap"><div class="floor-tab active">전체</div><span style="font-size:11px;color:var(--text-muted);padding:5px 0">층 필터는 먼저 빌딩을 선택하면 1F·5F·20F·22F 버튼을 재사용해서 표시합니다.</span></div>`;
+      return;
+    } else if(SITE_CONF.incheon.buildings[activeBld]){
+      tabs=tabs.concat(SITE_CONF.incheon.buildings[activeBld].floors.map(f=>({key:f,label:f})));
+    }
   } else {
-    floors=['all',...(SITE_CONF[activeSite].floors||[])];
+    tabs=tabs.concat((SITE_CONF[activeSite].floors||[]).map(f=>({key:f,label:f})));
   }
-  fw.innerHTML=`<div class="floor-wrap">${floors.map(f=>`<div class="floor-tab ${f===activeFloor?'active':''}" onclick="setFloor('${f}')">${f==='all'?'전체':f}</div>`).join('')}</div>`;
+  fw.innerHTML=`<div class="floor-wrap">${tabs.map(t=>`<div class="floor-tab ${t.key===activeFloor?'active':''}" onclick="setFloor('${t.key}')">${t.label}</div>`).join('')}</div>`;
 }
-
 function setFloor(f){
   activeFloor=f;
-  document.querySelectorAll('.floor-tab').forEach(t=>t.classList.toggle('active',t.textContent===(f==='all'?'전체':f)));
+  document.querySelectorAll('.floor-tab').forEach(t=>t.classList.remove('active'));
+  buildFloorTabs();
   buildRobotGroups(document.getElementById('robot-groups'),filteredRobots());
 }
 
@@ -952,15 +998,43 @@ function openManual(id){sw('manual',document.querySelectorAll('.nav-item')[2]);a
 /* ═══════════════════════════════════
    CONTROL
 ═══════════════════════════════════ */
-function buildCtrl(){
-  document.getElementById('ctrl-grid').innerHTML=robots().map(r=>{
-    const s=cState(r);
-    return `<div class="ctrl-btn c-${s}" onclick="${s!=='offline'?`alert('${r.name} 수동 제어 인터페이스 — 구현 예정')`:"alert('오프라인 상태입니다')"}">
-      <div class="cbi">${r.icon}</div><div class="cbn">${r.name}</div>
-      <div class="cbs">${s==='online'?'● 온라인':s==='warning'?'◐ 점검 중':'○ 오프라인'}</div></div>`;
-  }).join('');
+const CTRL_GROUPS=[
+  {m:'로보티즈 (Robotis)', items:[['🐜','일개미'],['🐜','집개미']]},
+  {m:'보스턴 다이나믹스 (Boston Dynamics)', items:[['🐕','SPOT']]},
+  {m:'유진로봇 (Yujin Robot)', items:[['🛒','GoCart180']]},
+  {m:'레인보우로보틱스 (Rainbow Robotics)', items:[['🦾','RB-Y1'],['📋','RB-오더피킹']]},
+  {m:'KT', items:[['📦','Novatek']]},
+  {m:'고스트로보틱스 (Ghost Robotics)', items:[['🦿','Vision60']]},
+  {m:'자이드테크 (Gydtech)', items:[['🛺','자이드모바일']]},
+  {m:'KETI', items:[['🏗','COBOT'],['📋','오더피킹']]},
+  {m:'로아스 (ROAS)', items:[['🦾','PiPER']]},
+];
+function syncCtrlMakerOptions(){
+  const sel=document.getElementById('ctrl-maker'); if(!sel || sel.dataset.ready) return;
+  sel.innerHTML='<option value="all">전체 제조사</option>'+CTRL_GROUPS.map(g=>`<option value="${g.m}">${g.m}</option>`).join('');
+  sel.dataset.ready='1';
 }
-
+function buildCtrl(){
+  syncCtrlMakerOptions();
+  const q=(document.getElementById('ctrl-q')?.value||'').trim().toLowerCase();
+  const maker=document.getElementById('ctrl-maker')?.value||'all';
+  let groups=CTRL_GROUPS.map(g=>({m:g.m,items:[...g.items]}));
+  if(maker!=='all') groups=groups.filter(g=>g.m===maker);
+  if(q){
+    groups=groups.map(g=>({m:g.m,items:g.items.filter(([icon,name])=>g.m.toLowerCase().includes(q)||name.toLowerCase().includes(q))})).filter(g=>g.items.length);
+  }
+  const el=document.getElementById('ctrl-grid');
+  if(!groups.length){el.innerHTML='<div class="ctrl-empty">검색 조건에 맞는 제어 대상이 없습니다.</div>';return;}
+  el.innerHTML=groups.map(g=>`
+    <div class="ctrl-group">
+      <div class="ctrl-group-title">${g.m}</div>
+      <div class="ctrl-list">${g.items.map(([icon,name])=>`
+        <div class="ctrl-btn c-online" onclick="alert('${name} 로컬 수동 제어 인터페이스 — 구현 예정')">
+          <div class="cbi">${icon}</div><div class="cbn">${name}</div>
+          <div class="cbs">로컬 제어</div>
+        </div>`).join('')}</div>
+    </div>`).join('');
+}
 /* ═══════════════════════════════════
    Q&A
 ═══════════════════════════════════ */
@@ -1010,6 +1084,12 @@ function getFilteredQa(){
   return d;
 }
 
+function setQaPageSize(v){
+  QA_PP=parseInt(v,10)||10;
+  qaPage=1;
+  renderQa();
+}
+
 function renderQa(){
   const all=getFilteredQa();
   const pages=Math.ceil(all.length/QA_PP)||1;
@@ -1032,7 +1112,7 @@ function renderQa(){
       </div>`;
     }).join('');
   }
-  const pg=document.getElementById('qa-pages'); pg.innerHTML='';
+  const pg=document.getElementById('qa-pages'); pg.innerHTML=`<span style="font-size:11px;color:var(--text-muted);margin-right:8px">${all.length}개 중 ${slice.length?((qaPage-1)*QA_PP+1):0}-${Math.min(qaPage*QA_PP,all.length)} 표시</span>`;
   for(let i=1;i<=pages;i++){const b=document.createElement('div');b.className='qa-pg'+(i===qaPage?' active':'');b.textContent=i;b.onclick=()=>{qaPage=i;renderQa();};pg.appendChild(b);}
 }
 
@@ -1110,16 +1190,18 @@ const CP_ICON=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" strok
 
 function buildContacts(){
   function card(c,isItp){
-    const av=c.photo?`<img class="cav" src="${c.photo}" alt="${c.name}" onerror="this.outerHTML='<div class=\\'cav-placeholder ${c.senior?\\'senior\\':\\'\\'}\\'>${c.name[0]}</div>'">`:`<div class="cav-placeholder ${c.senior?'senior':''}">${c.name[0]}</div>`;
+    const ph=`<div class="cav-placeholder ${c.senior?'senior':''}">${c.name[0]}</div>`;
+    const av=c.photo?`<img class="cav" src="${c.photo}" alt="${c.name}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'cav-placeholder ${c.senior?'senior':''}',textContent:'${c.name[0]}' }))">`:ph;
     const roleColor=isItp?'background:#e8f5e9;color:#2e7d32':'';
     const roles=c.roles.map(r=>`<span class="crole" style="${roleColor}">${r}</span>`).join('');
-    const extRow=c.ext&&c.ext!=='—'?`<div class="cinfo-row"><span class="ck">내선</span>${c.ext}<button class="copy-btn" onclick="copyText('${c.ext}')">${CP_ICON}</button></div>`:'';
+    const hasExt=c.ext&&c.ext!=='—';
+    const extRow=hasExt?`<div class="cinfo-row"><span class="ck">내선</span><span class="cval">${c.ext}</span><button class="copy-btn" onclick="copyText('${c.ext}')">${CP_ICON}</button></div>`:`<div class="cinfo-row empty"><span class="ck">내선</span><span class="cval">&nbsp;</span><button class="copy-btn" style="visibility:hidden">${CP_ICON}</button></div>`;
     return `<div class="ccard">
       <div class="ccard-hdr">${av}<div><div class="cname">${c.name}</div><div class="crank">${c.rank}</div><div class="corg">지능로보틱스연구센터</div></div></div>
       <div class="croles">${roles}</div>
       <div class="cinfo">
-        <div class="cinfo-row"><span class="ck">이메일</span><a href="mailto:${c.email}">${c.email}</a><button class="copy-btn" onclick="copyText('${c.email}')">${CP_ICON}</button></div>
-        <div class="cinfo-row"><span class="ck">휴대폰</span>${c.phone}<button class="copy-btn" onclick="copyText('${c.phone}')">${CP_ICON}</button></div>
+        <div class="cinfo-row"><span class="ck">이메일</span><a class="cval" href="mailto:${c.email}">${c.email}</a><button class="copy-btn" onclick="copyText('${c.email}')">${CP_ICON}</button></div>
+        <div class="cinfo-row"><span class="ck">휴대폰</span><span class="cval">${c.phone}</span><button class="copy-btn" onclick="copyText('${c.phone}')">${CP_ICON}</button></div>
         ${extRow}
       </div>
     </div>`;
@@ -1236,28 +1318,47 @@ function sw(name,el){
 function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});}
 
 let gpsWatcher=null;
-function requestGps(){
+function mockReverseGeocode(lat,lon){
+  const sites=[
+    {name:'인천광역시 서구 로봇랜드로',lat:37.52,lon:126.62},
+    {name:'서울특별시 강남구 수서동 로봇플러스 테스트필드',lat:37.48,lon:127.10},
+    {name:'강원특별자치도 영월군 남부발전소',lat:37.18,lon:128.46},
+  ];
+  let best=sites[0], bestD=Infinity;
+  sites.forEach(s=>{const d=Math.hypot(lat-s.lat,lon-s.lon); if(d<bestD){bestD=d; best=s;}});
+  return bestD<0.35 ? best.name : SITE_CONF[activeSite].label;
+}
+function applyGpsText(addr, title){
+  const loc=document.getElementById('loc-t'); if(loc) loc.textContent=addr;
+  const chip=document.getElementById('gps-chip'); if(chip) chip.title=title||addr;
+  const gpsSvg=document.querySelector('#gps-chip svg');
+  if(gpsSvg) gpsSvg.setAttribute('stroke','var(--green)');
+}
+function requestGps(force=false){
+  const cached=localStorage.getItem(GPS_KEY);
+  if(cached && !force){
+    try{const c=JSON.parse(cached); applyGpsText(c.addr,c.title); return;}catch(e){}
+  }
   if(!navigator.geolocation){document.getElementById('loc-t').textContent='미지원';return;}
   document.getElementById('loc-t').textContent='위치 조회 중…';
   if(gpsWatcher) navigator.geolocation.clearWatch(gpsWatcher);
   gpsWatcher=navigator.geolocation.watchPosition(
     pos=>{
-      const lat=pos.coords.latitude.toFixed(5), lon=pos.coords.longitude.toFixed(5);
+      const lat=pos.coords.latitude, lon=pos.coords.longitude;
       const acc=Math.round(pos.coords.accuracy);
-      document.getElementById('loc-t').textContent=`${lat}, ${lon}`;
-      document.getElementById('gps-chip').title=`정확도: ±${acc}m`;
-      // Update GPS LED green
-      const gpsSvg=document.querySelector('#gps-chip svg');
-      if(gpsSvg) gpsSvg.setAttribute('stroke','var(--green)');
+      const addr=mockReverseGeocode(lat,lon);
+      const title=`${addr} · 정확도: ±${acc}m · ${lat.toFixed(5)}, ${lon.toFixed(5)}`;
+      localStorage.setItem(GPS_KEY,JSON.stringify({addr,title,lat,lon,acc,ts:Date.now()}));
+      applyGpsText(addr,title);
+      navigator.geolocation.clearWatch(gpsWatcher); gpsWatcher=null;
     },
     err=>{
       const msgs={1:'위치 허용 필요',2:'위치 불가',3:'시간 초과'};
       document.getElementById('loc-t').textContent=msgs[err.code]||'오류';
     },
-    {enableHighAccuracy:true,maximumAge:10000,timeout:15000}
+    {enableHighAccuracy:true,maximumAge:600000,timeout:15000}
   );
 }
-
 /* ═══════════════════════════════════
    TOAST / AI
 ═══════════════════════════════════ */
@@ -1285,12 +1386,32 @@ function sendAI(){
 ═══════════════════════════════════ */
 function initApp(){
   updateClock();setInterval(updateClock,1000);
-  // Auto-request GPS on login
-  if(navigator.geolocation) requestGps();
+  // GPS는 캐시 우선 사용. 캐시가 없을 때만 1회 권한 요청.
+  requestGps(false);
   initQaFilters(); renderQa();
   buildContacts();
   onSiteChange();
 }
+function restoreSession(){
+  const uid=localStorage.getItem(AUTH_KEY);
+  if(!uid) return;
+  const u=USERS_DB.find(x=>x.id===uid&&x.status==='active');
+  if(!u){localStorage.removeItem(AUTH_KEY);return;}
+  me=u;
+  document.getElementById('login-overlay').style.display='none';
+  document.getElementById('topbar').style.display='flex';
+  document.getElementById('layout').classList.add('visible');
+  document.getElementById('uname').textContent=u.name;
+  document.getElementById('urole').textContent=u.role==='admin'?'관리자':u.role==='staff'?'직원':'일반';
+  const av=document.getElementById('uav'); av.textContent=u.name[0]; av.classList.toggle('admin-av',u.role==='admin');
+  const sel=document.getElementById('site-sel');
+  Array.from(sel.options).forEach(o=>{ o.disabled=!u.sites.includes(o.value); if(!u.sites.includes(o.value)) o.style.display='none'; else o.style.display=''; });
+  sel.value=u.sites.includes(activeSite)?activeSite:u.sites[0];
+  onSiteChange();
+  initApp();
+}
+restoreSession();
+
 </script>
 </body>
 </html>
