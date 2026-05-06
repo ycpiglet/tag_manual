@@ -114,6 +114,29 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .info-card.accent-card{border-color:var(--accent);border-top:3px solid var(--accent)}
 .info-card.full-width{grid-column:1/-1}
 
+.home-ops-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin:0 0 18px}
+.home-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px 18px}
+.home-panel-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:7px}
+.home-panel-sub{font-size:11px;color:var(--text-muted);margin-bottom:12px}
+.deploy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.deploy-card{border:1px solid var(--border);border-radius:10px;background:var(--surface2);padding:12px;min-height:132px}
+.deploy-card b{display:block;font-size:12px;color:var(--text);margin-bottom:3px}
+.deploy-card .addr{font-size:10px;color:var(--text-muted);margin-bottom:9px;line-height:1.45}
+.deploy-card .robot-line{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;color:var(--text-dim);padding:5px 0;border-top:1px solid var(--border)}
+.deploy-card .robot-line:first-of-type{border-top:none}
+.deploy-card .robot-count{font-family:var(--mono);font-size:10px;font-weight:700;color:var(--accent);background:var(--accent-light);border-radius:999px;padding:1px 7px;white-space:nowrap}
+.owner-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.owner-row{background:var(--surface2);border:1px solid var(--border);border-radius:9px;padding:9px 10px;position:relative}
+.owner-topic{font-size:11px;font-weight:800;color:var(--text);margin-bottom:6px}
+.owner-chips{display:flex;flex-wrap:wrap;gap:5px}
+.owner-chip{border:none;background:var(--accent-light);color:var(--accent);font-family:var(--sans);font-size:11px;font-weight:700;border-radius:999px;padding:4px 8px;cursor:pointer;position:relative}
+.owner-chip:hover{background:var(--accent);color:#fff}
+.owner-chip .owner-tip{display:none;position:absolute;left:0;top:calc(100% + 7px);width:230px;background:#fff;color:var(--text-dim);border:1px solid var(--border);box-shadow:0 8px 24px rgba(0,0,0,.14);border-radius:10px;padding:10px;z-index:20;text-align:left;line-height:1.55;font-weight:500}
+.owner-chip:hover .owner-tip,.owner-chip:focus .owner-tip{display:block}
+.owner-tip strong{display:block;color:var(--text);font-size:12px;margin-bottom:3px}
+.owner-tip span{display:block;font-size:11px}
+@media(max-width:1100px){.home-ops-grid{grid-template-columns:1fr}.deploy-grid{grid-template-columns:1fr}.owner-grid{grid-template-columns:1fr}}
+
 /* ─── STATUS SUMMARY ─── */
 .sum-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px}
 .sum-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:13px 15px}
@@ -141,6 +164,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .rgroup{margin-bottom:22px}
 .rgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:9px}
 .rcard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .13s;position:relative;overflow:hidden}
+.rcard-img{width:100%;height:118px;border-radius:8px;background:var(--surface2);border:1px solid var(--border);object-fit:contain;margin-bottom:10px;padding:6px}
+.rcard-img.fallback{display:none}
+.rcard-imgbox{width:100%;height:118px;border-radius:8px;background:var(--surface2);border:1px dashed var(--border2);margin-bottom:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);font-size:11px;gap:4px}
+.rcard-imgbox .ri{font-size:24px;line-height:1}
+.rcard-imgbox .rt{font-weight:600}
 .rcard::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .rcard.s-online::before{background:var(--green)}.rcard.s-warning::before{background:var(--yellow)}.rcard.s-offline::before{background:var(--gray)}.rcard.s-error::before{background:var(--red)}
 .rcard:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(26,95,172,.1);transform:translateY(-1px)}
@@ -164,7 +192,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .mdot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
 .mbody{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 28px}
 .m-rh{display:flex;align-items:center;gap:14px;margin-bottom:20px;padding-bottom:14px;border-bottom:1px solid var(--border)}
-.m-rico{width:48px;height:48px;background:var(--accent-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+.m-rico{width:64px;height:64px;background:var(--accent-light);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;overflow:hidden;border:1px solid var(--border)}
+.m-rico img{width:100%;height:100%;object-fit:contain;padding:5px}
+.m-rico.placeholder{flex-direction:column;color:var(--text-muted);font-size:10px;gap:2px}.m-rico.placeholder .mi{font-size:20px;line-height:1}.m-rico.placeholder .mt{font-weight:600}
 .m-rtitle{font-size:19px;font-weight:700}.m-rmeta{font-size:12px;color:var(--text-muted);margin-top:2px}
 .mtag{display:inline-block;background:var(--surface2);border:1px solid var(--border);border-radius:4px;padding:2px 7px;font-size:10px;font-family:var(--mono);margin-right:4px;margin-top:5px}
 .mtag.tg{background:var(--green-bg);color:var(--green);border-color:rgba(24,163,90,.2)}
@@ -249,7 +279,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 
 /* ─── CONTACT ─── */
 .contact-sec{margin-bottom:24px}
-.contact-sec-title{font-size:13px;font-weight:700;border-bottom:2px solid var(--accent);display:inline-block;padding-bottom:4px;margin-bottom:14px}
+.contact-sec-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;border-bottom:2px solid var(--accent);padding-bottom:4px;width:max-content;max-width:100%}
+.contact-sec-title{font-size:13px;font-weight:700;display:inline-block}
+.contact-sec-sub{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--text-muted);font-weight:500}
 .cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:11px}
 .ccard{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px 16px;transition:box-shadow .13s;display:flex;flex-direction:column;min-height:178px}
 .ccard:hover{box-shadow:0 2px 12px rgba(0,0,0,.07)}
@@ -298,6 +330,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .ctrl-group-title{font-size:12px;font-weight:700;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:6px}
 .ctrl-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:9px}
 .ctrl-btn{background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:13px 10px;cursor:pointer;text-align:center;transition:all .13s;font-family:var(--sans)}
+.ctrl-img{width:100%;height:82px;object-fit:contain;background:var(--surface2);border:1px solid var(--border);border-radius:8px;margin-bottom:8px;padding:5px}
+.ctrl-imgbox{width:100%;height:82px;background:var(--surface2);border:1px dashed var(--border2);border-radius:8px;margin-bottom:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--text-muted);font-size:10px;gap:2px}
 .ctrl-btn:hover{border-color:var(--accent);background:var(--accent-light)}
 .ctrl-btn.c-offline{opacity:.5;cursor:not-allowed}
 .cbi{font-size:23px;margin-bottom:6px}.cbn{font-size:12px;font-weight:700;color:var(--text)}
@@ -339,11 +373,60 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .ccard{min-height:178px;display:flex;flex-direction:column;justify-content:space-between}
 .ccard-hdr{min-height:48px;align-items:center}
 .cinfo{display:grid;grid-template-rows:repeat(3,20px);gap:4px;margin-top:auto}
-.cinfo-row{min-height:20px;align-items:center;white-space:nowrap;overflow:hidden}
+.cinfo-row{min-height:20px;display:grid;grid-template-columns:38px minmax(0,1fr) 18px;align-items:center;gap:6px;white-space:nowrap;overflow:hidden}
 .cinfo-row .cval{overflow:hidden;text-overflow:ellipsis;min-width:0}
 .cinfo-row.empty .cval{visibility:hidden}
 
+
+.contact-filterbar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:14px;display:grid;grid-template-columns:1fr 170px 190px;gap:8px;align-items:center}
+.contact-filterbar .qa-search{min-width:180px}
+.manual-toolbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;flex-wrap:wrap}
+.manual-mode{display:flex;gap:6px;align-items:center}.manual-mode .qa-filter.on{background:var(--accent);border-color:var(--accent);color:#fff;font-weight:700}
+.manual-actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.mnav-cat{font-size:9px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);padding:9px 12px 4px;border-top:1px solid var(--border);margin-top:4px}.mnav-cat:first-child{border-top:none;margin-top:0}
+.mnav-item .mnav-sub{margin-left:auto;font-size:9px;color:var(--text-muted);font-family:var(--mono)}
+.secret-unlock{margin-top:16px;display:flex;gap:8px;justify-content:center;align-items:center}.secret-unlock input{padding:8px 10px;border:1.5px solid var(--border);border-radius:7px;font-family:var(--sans)}
+.answer-box{margin-top:12px}.answer-box textarea{width:100%;min-height:90px;border:1.5px solid var(--border);border-radius:8px;padding:10px;font-family:var(--sans);font-size:13px;line-height:1.6;resize:vertical}
+@media(max-width:900px){.contact-filterbar{grid-template-columns:1fr}.manual-toolbar{align-items:stretch}.manual-actions{justify-content:flex-start}}
+
 ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ─── RESPONSIVE / EXPORT PATCH ─── */
+body{min-width:1040px}
+#topbar{overflow-x:auto;overflow-y:hidden}
+.tb-left,.tb-right{flex-shrink:0;min-width:0}
+.site-sel{min-width:210px;white-space:nowrap}
+.status-chip,.user-chip,.logout-btn{flex-shrink:0;white-space:nowrap}
+#main{min-width:0}
+.export-menu{position:relative;display:inline-flex}
+.export-options{display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:900;background:var(--surface);border:1px solid var(--border);border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.12);min-width:170px;padding:6px}
+.export-options.open{display:flex;flex-direction:column}
+.export-options button{background:none;border:none;text-align:left;padding:8px 10px;border-radius:7px;font-size:12px;color:var(--text-dim);cursor:pointer;font-family:var(--sans);white-space:nowrap}
+.export-options button:hover{background:var(--surface2);color:var(--accent)}
+.site-address-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:8px;margin-bottom:14px}
+.site-address-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px;font-size:11px;color:var(--text-dim);line-height:1.5;cursor:pointer;transition:all .12s;position:relative}
+.site-address-card:hover{border-color:var(--accent);box-shadow:0 2px 10px rgba(26,95,172,.08)}
+.site-address-card.active{border-color:var(--accent);background:var(--accent-light)}
+.site-address-card b{display:block;color:var(--text);font-size:12px;margin-bottom:2px}
+.addr-line{display:flex;align-items:center;gap:6px;justify-content:space-between}
+.addr-copy{border:none;background:transparent;color:var(--text-muted);cursor:pointer;padding:2px;border-radius:4px;flex-shrink:0}
+.addr-copy:hover{background:var(--surface2);color:var(--accent)}
+@media(max-width:1100px){
+  body{min-width:1040px}
+  .tb-brand-sub{display:none}
+  #topbar{padding:0 12px}
+}
+@media print{
+  #login-overlay,#topbar,#sidebar,#ai-fab,#ai-panel,.manual-toolbar,.mnav,.nav-item,.sb-bottom{display:none!important}
+  body{min-width:0;background:#fff;overflow:visible}
+  #layout,#layout.visible{display:block;height:auto}
+  #main{padding:0;overflow:visible}
+  .tab-panel{display:none!important}
+  #tab-manual{display:block!important}
+  .manual-layout{display:block;min-height:0}
+  .mbody{border:none;padding:0}
+}
+
 </style>
 </head>
 <body>
@@ -377,7 +460,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
       <span class="site-lbl">사이트</span>
       <select class="site-sel" id="site-sel" onchange="onSiteChange()">
         <option value="incheon">인천 청라 로봇랜드</option>
-        <option value="suwon">서울 강남 수서 로봇플러스</option>
+        <option value="suwon">서울 강남 로봇플러스 테스트필드</option>
         <option value="yeongwol">강원 영월 남부발전소</option>
       </select>
     </div>
@@ -448,7 +531,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
       <div class="sb-row"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><a href="mailto:star_support@keti.re.kr">star_support@keti.re.kr</a></div>
       <div class="sb-row"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.61 3.41 2 2 0 0 1 3.6 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 8.55a16 16 0 0 0 7.55 7.55l.91-.91a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 17z"/></svg><span>T. 031-789-7126</span></div>
       <hr class="sb-divider">
-      <div class="sb-row"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span style="font-size:10px;color:var(--text-muted)">평일 09:00 – 18:00</span></div>
+      <div class="sb-row"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span style="font-size:10px;color:var(--text-muted)">평일 10:00 – 18:00</span></div>
     </div>
   </nav>
 
@@ -460,43 +543,94 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
       <div class="home-hero">
         <h2>🤖 STAR TEAM 이기종 로봇 운영 매뉴얼</h2>
         <div class="org-full">한국전자기술연구원 (KETI) AX연구본부 지능로보틱스연구센터</div>
-        <p>TOM(Tele-Operation Module) 아키텍처 기반의 이기종 로봇 원격 관제 시스템입니다. Rubberneck 및 SOLAR 플랫폼과 연동하여 인천 테크노파크(ITP) 시설 내 다양한 로봇을 통합 관리합니다.</p>
+        <p>TOM(Tele-Operation Module) 아키텍처 기반의 이기종 로봇 원격 관제 시스템입니다. Rubberneck 및 SOLAR 플랫폼과 연동하여 인천 청라 로봇랜드 등 운영 사이트의 다양한 로봇을 통합 관리합니다.</p>
+      </div>
+
+      <div class="home-ops-grid">
+        <div class="home-panel">
+          <div class="home-panel-title">🗺️ 로봇 배치 현황</div>
+          <div class="home-panel-sub">사이트별 주요 로봇과 IoT 연동 장치를 한눈에 확인합니다.</div>
+          <div class="deploy-grid">
+            <div class="deploy-card">
+              <b>인천 청라 로봇랜드</b>
+              <div class="addr">로보타워 · R&D센터 / 인천 서구 로봇랜드로 155-11</div>
+              <div class="robot-line"><span>AMR</span><span class="robot-count">GoCart180 · 일개미 · 집개미 · Novatek</span></div>
+              <div class="robot-line"><span>보행/매니퓰레이터</span><span class="robot-count">SPOT · RB-Y1 · 오더피킹</span></div>
+              <div class="robot-line"><span>MtoM IoT</span><span class="robot-count">자동문 · 엘리베이터</span></div>
+            </div>
+            <div class="deploy-card">
+              <b>서울 강남 로봇플러스 테스트필드</b>
+              <div class="addr">서울 강남구 수서동 730</div>
+              <div class="robot-line"><span>AMR</span><span class="robot-count">자이드모바일</span></div>
+              <div class="robot-line"><span>매니퓰레이터</span><span class="robot-count">COBOT · PiPER</span></div>
+              <div class="robot-line"><span>MtoM IoT</span><span class="robot-count">자동문 · 엘리베이터</span></div>
+            </div>
+            <div class="deploy-card">
+              <b>강원 영월 남부발전소</b>
+              <div class="addr">한국남부발전 영월빛드림본부 / 강원도 영월군 영월읍 중앙로 411</div>
+              <div class="robot-line"><span>4족 보행</span><span class="robot-count">SPOT · Vision60</span></div>
+              <div class="robot-line"><span>MtoM IoT</span><span class="robot-count">자동문 · 엘리베이터</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="home-panel">
+          <div class="home-panel-title">👥 핵심 담당자</div>
+          <div class="home-panel-sub">담당자 이름에 마우스를 올리면 연락처를 확인할 수 있습니다.</div>
+          <div class="owner-grid">
+            <div class="owner-row"><div class="owner-topic">STAR TEAM</div><div class="owner-chips">
+              <button class="owner-chip">전세웅<span class="owner-tip"><strong>전세웅</strong><span>수석 연구원 / 총괄</span><span>daniel@keti.re.kr</span><span>010-9767-3102</span></span></button>
+              <button class="owner-chip">신장범<span class="owner-tip"><strong>신장범</strong><span>연구원(행정)</span><span>roy_shin@keti.re.kr</span><span>010-9424-4958</span></span></button>
+              <button class="owner-chip">김윤재<span class="owner-tip"><strong>김윤재</strong><span>연구원(행정)</span><span>yunj95@keti.re.kr</span><span>010-9013-7559</span></span></button>
+            </div></div>
+            <div class="owner-row"><div class="owner-topic">Rubberneck · AND · GERRI</div><div class="owner-chips">
+              <button class="owner-chip">Dr. Phung<span class="owner-tip"><strong>Dr. Phung</strong><span>연구원(시니어)</span><span>ngocpq@keti.re.kr</span><span>010-9215-2401</span></span></button>
+            </div></div>
+            <div class="owner-row"><div class="owner-topic">TOM</div><div class="owner-chips">
+              <button class="owner-chip">김강현<span class="owner-tip"><strong>김강현</strong><span>연구원(팀장)</span><span>khkim1207@keti.re.kr</span><span>010-7712-0094</span></span></button>
+            </div></div>
+            <div class="owner-row"><div class="owner-topic">SOLAR · UI · IoT</div><div class="owner-chips">
+              <button class="owner-chip">김형겸<span class="owner-tip"><strong>김형겸</strong><span>연구원(백엔드)</span><span>pkqwaszx@keti.re.kr</span><span>010-2235-3634</span></span></button>
+              <button class="owner-chip">홍석희<span class="owner-tip"><strong>홍석희</strong><span>연구원(UI/UX)</span><span>hsh2001234@keti.re.kr</span><span>010-9925-9619</span></span></button>
+              <button class="owner-chip">천지영<span class="owner-tip"><strong>천지영</strong><span>연구원(IoT)</span><span>c8599@keti.re.kr</span><span>010-2535-2709</span></span></button>
+            </div></div>
+          </div>
+        </div>
       </div>
       <div class="info-cards-grid">
         <div class="info-card accent-card">
           <div class="info-card-hdr"><span class="info-card-icon">🏛</span><div><div class="info-card-title">KETI · STAR TEAM</div><div class="info-card-sub">한국전자기술연구원 지능로보틱스연구센터</div></div></div>
-          <div class="info-card-body"><b>KETI(한국전자기술연구원)</b>는 국내 전자·IT 분야 대표 정부출연연구기관입니다. <b>AX연구본부 지능로보틱스연구센터</b> 소속 <b>STAR TEAM</b>은 이기종 로봇에 TOM 모듈을 부착하여 단일 플랫폼에서 원격 관제·제어하는 아키텍처를 연구·개발합니다. 현재 인천 테크노파크(ITP) 내 로봇랜드를 비롯한 여러 사이트에서 다양한 로봇 기종을 운영 중입니다.</div>
+          <div class="info-card-body"><b>KETI(한국전자기술연구원)</b>는 국내 전자·IT 분야 대표 정부출연연구기관입니다. <b>AX연구본부 지능로보틱스연구센터</b> 소속 <b>STAR TEAM</b>은 이기종 로봇에 TOM 모듈을 부착하여 단일 플랫폼에서 원격 관제·제어하는 아키텍처를 연구·개발합니다. 현재 인천 청라 로봇랜드를 비롯한 여러 사이트에서 다양한 로봇 기종을 운영 중입니다.<br>담당: <b>전세웅</b> · <b>신장범</b> · <b>김윤재</b></div>
         </div>
         <div class="info-card">
           <div class="info-card-hdr"><span class="info-card-icon">📡</span><div><div class="info-card-title">TOM (Tele-Operation Module)</div><div class="info-card-sub">이기종 로봇 범용 원격제어 모듈</div></div></div>
-          <div class="info-card-body"><b>TOM</b>은 어떤 로봇에도 부착 가능한 범용 원격제어 모듈입니다. 5G/LTE 모뎀 내장으로 로봇 전원 ON 즉시 <b>AND-GERRI 프레임워크</b>가 자동 실행되어 Rubberneck 서버와 SOLAR 플랫폼에 연동됩니다. TOM 부착만으로 기존 로봇을 원격 관제 체계에 즉시 편입할 수 있어 확장성이 뛰어납니다.</div>
+          <div class="info-card-body"><b>TOM</b>은 어떤 로봇에도 부착 가능한 범용 원격제어 모듈입니다. 5G/LTE 모뎀 내장으로 로봇 전원 ON 즉시 <b>AND-GERRI 프레임워크</b>가 자동 실행되어 Rubberneck 서버와 SOLAR 플랫폼에 연동됩니다. TOM 부착만으로 기존 로봇을 원격 관제 체계에 즉시 편입할 수 있어 확장성이 뛰어납니다.<br>담당: <b>김강현</b></div>
         </div>
         <div class="info-card">
           <div class="info-card-hdr"><span class="info-card-icon">⚙️</span><div><div class="info-card-title">AND (Adaptive Network Daemon)</div><div class="info-card-sub">네트워크 통신 데몬</div></div></div>
-          <div class="info-card-body"><b>AND</b>는 Rubberneck 서버와의 WebSocket 통신을 전담하는 네트워크 데몬입니다. PubSub 구조로 명령과 상태 데이터를 구독·발행하여 낮은 지연으로 로봇을 실시간 제어합니다. TOM 부팅 시 자동 실행되어 네트워크 상태를 지속적으로 모니터링하고 재연결을 처리합니다.</div>
+          <div class="info-card-body"><b>AND</b>는 Rubberneck 서버와의 WebSocket 통신을 전담하는 네트워크 데몬입니다. PubSub 구조로 명령과 상태 데이터를 구독·발행하여 낮은 지연으로 로봇을 실시간 제어합니다. TOM 부팅 시 자동 실행되어 네트워크 상태를 지속적으로 모니터링하고 재연결을 처리합니다.<br>담당: <b>Dr. Phung</b></div>
         </div>
         <div class="info-card">
           <div class="info-card-hdr"><span class="info-card-icon">🦾</span><div><div class="info-card-title">GERRI (Robot Control Framework)</div><div class="info-card-sub">로봇 제어 아키텍처 프레임워크</div></div></div>
-          <div class="info-card-body"><b>GERRI</b>는 로봇 제어 로직을 구조화하는 프레임워크입니다. <b>GERRI Operator</b>(BaseCommander/SubCommander)가 원격 조작자 측 명령을 생성하고, <b>GERRI Robot</b>(BaseController/SubController)가 로봇 측에서 수신·실행합니다. 로봇 기종에 상관없이 일관된 인터페이스를 제공합니다.</div>
+          <div class="info-card-body"><b>GERRI</b>는 로봇 제어 로직을 구조화하는 프레임워크입니다. <b>GERRI Operator</b>(BaseCommander/SubCommander)가 원격 조작자 측 명령을 생성하고, <b>GERRI Robot</b>(BaseController/SubController)가 로봇 측에서 수신·실행합니다. 로봇 기종에 상관없이 일관된 인터페이스를 제공합니다.<br>담당: <b>Dr. Phung</b></div>
         </div>
         <div class="info-card">
           <div class="info-card-hdr"><span class="info-card-icon">🌐</span><div><div class="info-card-title">Rubberneck</div><div class="info-card-sub">원격 관제 플랫폼 · <a href="https://www.rubberneck.kr" target="_blank">www.rubberneck.kr</a></div></div></div>
-          <div class="info-card-body"><b>Rubberneck</b>은 웹 기반 실시간 원격 관제 플랫폼입니다. TOM이 부착된 모든 로봇의 카메라 영상과 상태 정보를 실시간으로 수신하고, 조작자가 브라우저에서 직접 수동 제어 명령을 전송할 수 있습니다. 계정 권한에 따라 접근 가능한 로봇이 구분됩니다. 담당: <b>Dr. Phung</b></div>
+          <div class="info-card-body"><b>Rubberneck</b>은 웹 기반 실시간 원격 관제 플랫폼입니다. TOM이 부착된 모든 로봇의 카메라 영상과 상태 정보를 실시간으로 수신하고, 조작자가 브라우저에서 직접 수동 제어 명령을 전송할 수 있습니다. 계정 권한에 따라 접근 가능한 로봇이 구분됩니다. 담당:<br><b>Dr. Phung</b> (Rubberneck · AND · GERRI)</div>
         </div>
         <div class="info-card">
-          <div class="info-card-hdr"><span class="info-card-icon">⭐</span><div><div class="info-card-title">SOLAR</div><div class="info-card-sub">Smart Operation &amp; Logistics Automation Robot-platform</div></div></div>
-          <div class="info-card-body"><b>SOLAR</b>는 스마트 물류·자율화 로봇 통합 플랫폼입니다. 다수 로봇의 임무 스케줄링, 경로 계획, 상태 모니터링을 통합 관리합니다. Rubberneck이 실시간 원격 제어에 특화되었다면, SOLAR는 자율 임무 운영 및 Fleet 관리에 초점을 맞춥니다. 담당: <b>김형겸</b>(SOLAR), <b>홍석희</b>(UI)</div>
+          <div class="info-card-hdr"><span class="info-card-icon">☀️</span><div><div class="info-card-title">SOLAR</div><div class="info-card-sub">Smart Operation &amp; Logistics Automation Robot-platform</div></div></div>
+          <div class="info-card-body"><b>SOLAR</b>는 스마트 물류·자율화 로봇 통합 플랫폼입니다. 다수 로봇의 임무 스케줄링, 경로 계획, 상태 모니터링을 통합 관리합니다. Rubberneck이 실시간 원격 제어에 특화되었다면, SOLAR는 자율 임무 운영 및 Fleet 관리에 초점을 맞춥니다. 담당:<br><b>김형겸</b> (백엔드) · <b>홍석희</b> (UI/UX)</div>
         </div>
         <div class="info-card full-width">
-          <div class="info-card-hdr"><span class="info-card-icon">🗺</span><div><div class="info-card-title">사이트 현황</div><div class="info-card-sub">인천 청라 로봇랜드 · 강남 수서 로봇플러스 · 강원 영월 남부발전소</div></div></div>
+          <div class="info-card-hdr"><span class="info-card-icon">🗺</span><div><div class="info-card-title">사이트 현황</div><div class="info-card-sub">인천 청라 로봇랜드 · 강남 로봇플러스 테스트필드 · 강원 영월 남부발전소</div></div></div>
           <div class="info-card-body" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
             <div><b>🏢 인천 청라 로봇랜드</b><br>
-              <u>로보타워</u>: 1F·20F·22F 맵핑<br>GoCart×2, SPOT×2, 일개미×2, 집개미×1, RB-Y1×1<br><br>
-              <u>로봇R&D센터</u>: 1F·5F 맵핑<br>GoCart×2, Novatek×2, 오더피킹×1</div>
-            <div><b>🏙 서울 강남 수서</b><br>
-              로봇플러스 테스트필드<br>자이드모바일, COBOT, Piper 등<br><br>개발·테스트 목적 운영</div>
+              <u>로보타워</u>: 1F·20F·22F 맵핑<br>GoCart180×2, SPOT×2, 일개미×2, 집개미×1, RB-Y1×1<br><br>
+              <u>로봇R&D센터</u>: 1F·5F 맵핑<br>GoCart180×2, Novatek×2, 오더피킹×1</div>
+            <div><b>🏙 서울 강남 로봇플러스 테스트필드</b><br>
+              로봇플러스 테스트필드<br>자이드모바일, COBOT, PiPER 등<br><br>개발·테스트 목적 운영</div>
             <div><b>🏭 강원 영월</b><br>
-              남부발전소<br>SPOT, Vision60, 자동문, 엘리베이터<br><br>산업현장 자율 순찰 운영</div>
+              한국남부발전 영월빛드림본부<br>SPOT, Vision60, 자동문, 엘리베이터<br><br>산업현장 자율 순찰 운영</div>
           </div>
         </div>
       </div>
@@ -518,7 +652,27 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 
     <!-- MANUAL -->
     <div class="tab-panel" id="tab-manual">
-      <div class="ph"><h1>운영 매뉴얼</h1><p>GitHub .md 파일 수정 시 자동 반영</p></div>
+      <div class="ph"><h1>운영 매뉴얼</h1><p>로봇 기종별 사용자/개발자 매뉴얼 — GitHub .md 파일 수정 시 자동 반영</p></div>
+      <div class="manual-toolbar">
+        <div class="manual-mode">
+          <span class="filter-label">모드</span>
+          <button class="qa-filter on" id="manual-mode-user" onclick="setManualMode('user')">사용자 매뉴얼</button>
+          <button class="qa-filter" id="manual-mode-dev" onclick="setManualMode('dev')">개발자 매뉴얼</button>
+        </div>
+        <div class="manual-actions">
+          <button class="btn-ghost" onclick="printManual()">🖨️ 인쇄</button>
+          <div class="export-menu">
+            <button class="btn-ghost" onclick="toggleExportMenu(event)">📤 내보내기 ▾</button>
+            <div class="export-options" id="export-options">
+              <button onclick="exportManual('pdf')">📄 PDF 문서(.pdf)</button>
+              <button onclick="exportManual('docx')">📝 Word 문서(.docx)</button>
+              <button onclick="exportManual('txt')">📃 텍스트 파일(.txt)</button>
+              <button onclick="exportManual('md')">#️⃣ 마크다운 문서(.md)</button>
+              <button onclick="exportManual('hwpx')">🇰🇷 HWPX 변환 안내</button>
+            </div>
+          </div>
+        </div>
+      </div>
       <div class="manual-layout">
         <div class="mnav" id="mnav"></div>
         <div class="mbody" id="mbody"><div style="color:var(--text-muted);padding:20px">왼쪽에서 로봇을 선택하세요.</div></div>
@@ -565,7 +719,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
         </div>
         <div class="qa-filter-panel">
           <div class="qa-filter-line">
-            <span class="filter-label">로봇 기종</span>
+            <span class="filter-label">시스템/기기 유형</span>
             <div id="flt-robot" class="filter-group"></div>
           </div>
           <div class="qa-filter-line">
@@ -587,11 +741,11 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
         <div class="ph"><h1 id="qft">신규 문의 작성</h1></div>
         <div class="qa-form-wrap">
           <div class="form-row">
-            <div class="form-field"><label>로봇 기종</label>
-              <select id="qf-robot"><option>전체</option><option>SPOT</option><option>Vision60</option><option>GoCart180</option><option>RB-Y1</option><option>Novatek</option><option>자이드모바일</option><option>일개미/집개미</option><option>COBOT</option><option>Piper</option><option>Rubberneck</option><option>SOLAR</option><option>TOM/하드웨어</option><option>기타</option></select>
+            <div class="form-field"><label>시스템/기기 유형</label>
+              <select id="qf-robot"></select>
             </div>
             <div class="form-field"><label>사이트</label>
-              <select id="qf-site"><option>인천 청라 로봇랜드</option><option>서울 강남 수서</option><option>강원 영월</option><option>전체</option></select>
+              <select id="qf-site"></select>
             </div>
           </div>
           <div class="form-row">
@@ -617,15 +771,18 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 
     <!-- CONTACT -->
     <div class="tab-panel" id="tab-contact">
-      <div class="ph"><h1>담당자 연락망</h1><p>STAR TEAM 기술 지원 및 인천 테크노파크 내부 관리망</p></div>
-      <div class="contact-sec">
+      <div class="ph"><h1>담당자 연락망</h1><p>STAR TEAM 기술 지원 및 사이트별 운영 연락망</p></div>
+      <div class="site-address-grid" id="site-address-grid"></div>
+      <div class="contact-filterbar">
+        <input class="qa-search" id="contact-q" type="text" placeholder="이름, 역할, 이메일, 로봇 검색…" oninput="buildContacts()">
+        <select class="qa-filter" id="contact-site" onchange="buildContacts()"><option value="all">전체 사이트</option></select>
+        <select class="qa-filter" id="contact-role" onchange="buildContacts()"><option value="all">전체 시스템/로봇</option></select>
+      </div>
+      <div class="contact-sec" id="star-contact-sec">
         <div class="contact-sec-title">STAR TEAM — 지능로보틱스연구센터</div>
         <div class="cgrid" id="star-grid"></div>
       </div>
-      <div class="contact-sec" style="margin-top:24px">
-        <div class="contact-sec-title">인천 테크노파크 (ITP)</div>
-        <div class="cgrid" id="itp-grid"></div>
-      </div>
+      <div id="contact-site-sections"></div>
     </div>
 
     <!-- ADMIN -->
@@ -679,8 +836,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
               <div class="form-field"><label>허용 사이트</label>
                 <select id="new-sites" multiple style="min-height:80px">
                   <option value="incheon" selected>인천 청라 로봇랜드</option>
-                  <option value="suwon">서울 강남 수서</option>
-                  <option value="yeongwol">강원 영월</option>
+                  <option value="suwon">서울 강남 로봇플러스 테스트필드</option>
+                  <option value="yeongwol">강원 영월 남부발전소</option>
                 </select>
               </div>
             </div>
@@ -722,6 +879,8 @@ let USERS_DB = [
   {id:'itp_user',name:'ITP 사용자',  pw:'1234',     email:'itp@itp.or.kr',       role:'user',   sites:['incheon'],                   status:'active',  lastLogin:'2025-05-03 14:30'},
   {id:'star_sw', name:'STAR팀 SW',   pw:'star1234', email:'star@keti.re.kr',     role:'staff',  sites:['incheon','suwon','yeongwol'], status:'active',  lastLogin:'2025-05-04 10:45'},
   {id:'viewer',  name:'뷰어 계정',    pw:'view',     email:'viewer@keti.re.kr',   role:'user',   sites:['incheon'],                   status:'active',  lastLogin:'2025-04-30 16:20'},
+  {id:'gangnam', name:'강남 계정',    pw:'1234',     email:'gangnam@keti.re.kr',  role:'user',   sites:['suwon'],                     status:'active',  lastLogin:'—'},
+  {id:'yeongwol',name:'영월 계정',    pw:'1234',     email:'yeongwol@keti.re.kr', role:'user',   sites:['yeongwol'],                  status:'active',  lastLogin:'—'},
 ];
 const ACCESS_LOGS = [
   {time:'2025-05-04 10:45',user:'star_sw',  name:'STAR팀 SW', action:'로그인',   ip:'192.168.1.10'},
@@ -750,8 +909,8 @@ function doLogin(){
     if(u.role==='admin') av.classList.add('admin-av');
     // filter site sel
     const sel=document.getElementById('site-sel');
-    Array.from(sel.options).forEach(o=>{ o.disabled=!u.sites.includes(o.value); if(!u.sites.includes(o.value)) o.style.display='none'; });
-    sel.value=u.sites[0];
+    Array.from(sel.options).forEach(o=>{ const ok=u.role==='admin'||u.sites.includes(o.value); o.disabled=!ok; o.style.display=ok?'':'none'; });
+    sel.value=(u.role==='admin'?'incheon':u.sites[0]);
     // log
     ACCESS_LOGS.unshift({time:new Date().toLocaleString('ko-KR').replace(',',''),user:u.id,name:u.name,action:'로그인',ip:'127.0.0.1'});
     onSiteChange();
@@ -782,51 +941,133 @@ function doLogout(){
    SITE & ROBOT DATA
 ═══════════════════════════════════ */
 const SITE_CONF = {
-  incheon:{label:'인천 청라 로봇랜드',hasBuildings:true,
+  incheon:{label:'인천 청라 로봇랜드',address:'인천 서구 로봇랜드로 155-11',hasBuildings:true,
     buildings:{
       all:{label:'전체'},
       robotower:{label:'로보타워',floors:['1F','20F','22F']},
       rnd:{label:'로봇R&D센터',floors:['1F','5F']}
     }
   },
-  suwon:{label:'서울 강남 수서 로봇플러스',hasBuildings:false,floors:['테스트필드']},
-  yeongwol:{label:'강원 영월 남부발전소',hasBuildings:false,floors:['발전소']},
+  suwon:{label:'서울 강남 로봇플러스 테스트필드',address:'서울 강남구 수서동 730',hasBuildings:false,floors:['1F']},
+  yeongwol:{label:'강원 영월 남부발전소',buildingName:'한국남부발전 영월빛드림본부',address:'강원도 영월군 영월읍 중앙로 411',hasBuildings:false,floors:['1F','2F','3F']},
 };
+
+
+const SITE_OPTIONS=[
+  {key:'all',label:'전체'},
+  {key:'incheon',label:SITE_CONF.incheon.label},
+  {key:'suwon',label:SITE_CONF.suwon.label},
+  {key:'yeongwol',label:SITE_CONF.yeongwol.label},
+];
+const SYSTEM_DEVICE_TYPES=['TOM','하드웨어','Rubberneck','SOLAR','관제 시스템(매뉴얼)','AMR','모바일 매니퓰레이터','휴머노이드','매니퓰레이터','기타'];
+function siteLabelByKey(key){return SITE_CONF[key]?.label || key;}
+function shortSiteLabel(label){return label.replace('인천 청라 로봇랜드','인천 청라 로봇랜드').replace('서울 강남 로봇플러스 테스트필드','서울 강남 로봇플러스 테스트필드').replace('강원 영월 남부발전소','강원 영월 남부발전소');}
+function canonicalSiteLabel(v){
+  if(!v||v==='전체'||v==='all') return '전체';
+  const map={'인천':'인천 청라 로봇랜드','인천 청라':'인천 청라 로봇랜드','강남':'서울 강남 로봇플러스 테스트필드','강남 테스트필드':'서울 강남 로봇플러스 테스트필드','서울 강남':'서울 강남 로봇플러스 테스트필드','영월':'강원 영월 남부발전소','강원 영월':'강원 영월 남부발전소'};
+  return map[v]||v;
+}
+
+const ROBOT_IMAGES={
+  '일개미':'../src/assets/images/robots/gaemi/로봇_일개미.png',
+  '집개미':'../src/assets/images/robots/gaemi/로봇_집개미.png',
+  'GoCart':'../src/assets/images/robots/gocart180/로봇_GoCart180.png',
+  'GoCart180':'../src/assets/images/robots/gocart180/로봇_GoCart180.png',
+  'SPOT':'../src/assets/images/robots/spot/로봇_SPOT.jpg',
+  'RB-Y1':'../src/assets/images/robots/rb_y1/로봇_RB-Y1.png',
+  'PiPER':'../src/assets/images/robots/piper/로봇_PiPER.png',
+  'Vision60':'../src/assets/images/robots/vision60/로봇_Vision60.jpg'
+};
+function robotImageFor(name){
+  const n=String(name||'');
+  if(n.includes('일개미')) return ROBOT_IMAGES['일개미'];
+  if(n.includes('집개미')) return ROBOT_IMAGES['집개미'];
+  if(n.includes('GoCart')) return ROBOT_IMAGES['GoCart'];
+  if(n.includes('SPOT')) return ROBOT_IMAGES['SPOT'];
+  if(n.includes('RB-Y1')) return ROBOT_IMAGES['RB-Y1'];
+  if(n.includes('PiPER')) return ROBOT_IMAGES['PiPER'];
+  if(n.includes('Vision60')) return ROBOT_IMAGES['Vision60'];
+  return '';
+}
+function robotImageTag(name,cls='rcard-img'){
+  const src=robotImageFor(name);
+  return src?`<img class="${cls}" src="${src}" alt="${name}" onerror="this.replaceWith(robotImagePlaceholder('${String(name).replace(/'/g,"\\'")}', '${cls==='rcard-img'?'rcard-imgbox':'ctrl-imgbox'}'))">`:'';
+}
+function robotImagePlaceholder(name,cls='rcard-imgbox',icon='🖼️'){
+  const isIot=String(name||'').includes('자동문')||String(name||'').includes('엘리베이터');
+  const label=isIot?'이미지 없음':'이미지 준비중';
+  const el=document.createElement('div');
+  el.className=cls;
+  el.innerHTML=`<div class="ri">${isIot?(String(name).includes('엘리베이터')?'🛗':'🚪'):icon}</div><div class="rt">${label}</div>`;
+  return el;
+}
+function robotVisualHtml(r){
+  const img=robotImageTag(r.name);
+  if(img) return img;
+  const isIot=r.cat==='m2m'||r.cat==='iot'||String(r.name).includes('자동문')||String(r.name).includes('엘리베이터');
+  return `<div class="rcard-imgbox"><div class="ri">${isIot?(String(r.name).includes('엘리베이터')?'🛗':'🚪'):'🖼️'}</div><div class="rt">${isIot?'이미지 없음':'이미지 준비중'}</div></div>`;
+}
+function manualImageHtml(r){
+  const src=robotImageFor(r.displayName||r.name);
+  if(src) return `<div class="m-rico"><img src="${src}" alt="${r.displayName||r.name}" onerror="this.parentElement.className='m-rico placeholder';this.parentElement.innerHTML='<div class=\'mi\'>🖼️</div><div class=\'mt\'>이미지 준비중</div>'"></div>`;
+  const isIot=r.cat==='m2m'||r.cat==='iot'||String(r.name).includes('자동문')||String(r.name).includes('엘리베이터');
+  return `<div class="m-rico placeholder"><div class="mi">${isIot?(String(r.name).includes('엘리베이터')?'🛗':'🚪'):(r.icon||'🖼️')}</div><div class="mt">${isIot?'이미지 없음':'이미지 준비중'}</div></div>`;
+}
+const RANK_ORDER=['수석 연구원 (총괄)','연구원 (팀장)','센터장','선임','대리','연구원 (시니어)','연구원 (HW)','연구원 (백엔드)','연구원 (로봇)','연구원 (IoT)','연구원 (UI/UX)','연구원 (행정)','연구원','한국남부발전 영월빛드림본부'];
+function rankPriority(rank){
+  const r=String(rank||'');
+  const idx=RANK_ORDER.findIndex(x=>r.includes(x)||x.includes(r));
+  return idx<0?99:idx;
+}
+function contactSort(a,b){
+  const ra=rankPriority(a.rank), rb=rankPriority(b.rank);
+  if(ra!==rb) return ra-rb;
+  return a.name.localeCompare(b.name,'ko');
+}
+function allowedSiteOptions(){
+  const opts=SITE_OPTIONS.filter(o=>o.key!=='all');
+  if(!me||me.role==='admin') return opts;
+  return opts.filter(o=>me.sites.includes(o.key));
+}
 
 const ALL_ROBOTS = {
   incheon:[
     // Robotower
-    {id:'gc_lt1',bld:'robotower',name:'GoCart LT #1',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'1분 전',specs:{'IP':'192.168.1.31','RN ID':'gocart-lt-01','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리 40% 이상 확인','TOM 전원 ON','gocart_robot.py 자동 실행 확인','Rubberneck LED 녹색 확인'],checklist:['배터리 40%','TOM LED','Rubberneck','SOLAR','LiDAR 장애물 없음'],ctrl:['Rubberneck → GoCart LT #1','W/S 전진/후진 A/D 좌/우','Space 정지'],mdFile:'robots/gocart.md'},
-    {id:'gc_lt2',bld:'robotower',name:'GoCart LT #2',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'warning',solar:'online',upd:'9분 전',specs:{'IP':'192.168.1.32','RN ID':'gocart-lt-02','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리 확인','TOM ON','gocart_robot.py 실행'],checklist:['배터리','TOM','Rubberneck 재시도','SOLAR'],ctrl:['Rubberneck → GoCart LT #2','WASD','Space'],mdFile:'robots/gocart.md'},
+    {id:'gc_lt1',bld:'robotower',name:'GoCart180 LT #1',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'1분 전',specs:{'IP':'192.168.1.31','RN ID':'gocart-lt-01','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리 40% 이상 확인','TOM 전원 ON','gocart_robot.py 자동 실행 확인','Rubberneck LED 녹색 확인'],checklist:['배터리 40%','TOM LED','Rubberneck','SOLAR','LiDAR 장애물 없음'],ctrl:['Rubberneck → GoCart180 LT #1','W/S 전진/후진 A/D 좌/우','Space 정지'],mdFile:'robots/gocart.md'},
+    {id:'gc_lt2',bld:'robotower',name:'GoCart180 LT #2',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'warning',solar:'online',upd:'9분 전',specs:{'IP':'192.168.1.32','RN ID':'gocart-lt-02','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리 확인','TOM ON','gocart_robot.py 실행'],checklist:['배터리','TOM','Rubberneck 재시도','SOLAR'],ctrl:['Rubberneck → GoCart180 LT #2','WASD','Space'],mdFile:'robots/gocart.md'},
     {id:'spot1',bld:'robotower',name:'SPOT #1',cat:'quadruped',icon:'🐕',type:'4족 보행',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.21','RN ID':'spot-01','OS':'Ubuntu 20.04','SDK':'Spot SDK 4.x'},startup:['배터리 30% 이상','TOM ON','SPOT 전원 → 기립 대기 30초','spot_robot.py 자동 실행'],checklist:['배터리 30%','TOM','E-Stop 해제','Rubberneck','카메라'],ctrl:['Rubberneck → SPOT #1','WASD 또는 조이스틱','Space 긴급 정지','임무 후 앉기 → 전원 차단'],mdFile:'robots/spot.md'},
     {id:'spot2',bld:'robotower',name:'SPOT #2',cat:'quadruped',icon:'🐕',type:'4족 보행',floor:'20F',power:'online',mp:'online',rn:'online',solar:'warning',upd:'4분 전',specs:{'IP':'192.168.1.22','RN ID':'spot-02','OS':'Ubuntu 20.04','SDK':'Spot SDK 4.x'},startup:['배터리 확인','TOM ON','SPOT ON','spot_robot.py'],checklist:['배터리','E-Stop','TOM','Rubberneck','SOLAR 점검'],ctrl:['Rubberneck → SPOT #2','WASD','Space 정지'],mdFile:'robots/spot.md'},
     {id:'ilg1',bld:'robotower',name:'일개미 #1',cat:'amr',icon:'🐜',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.41','RN ID':'ilgaemi-01','OS':'Ubuntu 20.04','SDK':'ROS2'},startup:['충전 분리','TOM ON','전원 ON','ilgaemi_robot.py'],checklist:['배터리 80%','경로 장애물','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck 수동 전환','조이스틱','긴급 정지'],mdFile:'robots/ilgaemi.md'},
     {id:'ilg2',bld:'robotower',name:'일개미 #2',cat:'amr',icon:'🐜',type:'AMR',floor:'22F',power:'offline',mp:'offline',rn:'offline',solar:'offline',upd:'3시간 전',specs:{'IP':'192.168.1.42','RN ID':'ilgaemi-02','OS':'Ubuntu 20.04','SDK':'ROS2'},startup:['충전 확인','TOM ON','전원 ON'],checklist:['배터리','TOM','Rubberneck'],ctrl:['Rubberneck','조이스틱','긴급 정지'],mdFile:'robots/ilgaemi.md'},
     {id:'jipg1',bld:'robotower',name:'집개미 #1',cat:'amr',icon:'🐜',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'2분 전',specs:{'IP':'192.168.1.43','RN ID':'jipgaemi-01','OS':'Ubuntu 20.04','SDK':'ROS2'},startup:['충전 확인','TOM ON','전원 ON','jipgaemi_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','키보드','긴급 정지'],mdFile:'robots/jipgaemi.md'},
     {id:'rby1',bld:'robotower',name:'RB-Y1',cat:'manipulator',icon:'🦾',type:'모바일 매니퓰레이터',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.61','RN ID':'rby1-01','OS':'Ubuntu 22.04','SDK':'RB SDK'},startup:['E-Stop 해제','TOM ON','RB-Y1 전원 → 초기화 60초','rby1_robot.py'],checklist:['E-Stop 해제','관절 초기화','TOM','Rubberneck','작업 반경 장애물','그리퍼'],ctrl:['Rubberneck → RB-Y1','양팔 개별 제어','속도 50% 이하','Space 긴급 정지'],mdFile:'robots/rby1.md'},
+    {id:'elev_rt',bld:'robotower',name:'엘리베이터',cat:'m2m',icon:'🛗',type:'MtoM IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.71','RN ID':'elev-rt-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
+    {id:'door_rt',bld:'robotower',name:'자동문',cat:'m2m',icon:'🚪',type:'MtoM IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.1.72','RN ID':'door-rt-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
     // R&D Center
-    {id:'gc_sd1',bld:'rnd',name:'GoCart SD #1',cat:'amr',icon:'🛒',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.31','RN ID':'gocart-sd-01','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리','TOM ON','gocart_robot.py','Rubberneck'],checklist:['배터리','TOM','Rubberneck','SOLAR','LiDAR'],ctrl:['Rubberneck','WASD','Space'],mdFile:'robots/gocart.md'},
-    {id:'gc_sd2',bld:'rnd',name:'GoCart SD #2',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.2.32','RN ID':'gocart-sd-02','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리','TOM ON','gocart_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','WASD','Space'],mdFile:'robots/gocart.md'},
+    {id:'gc_sd1',bld:'rnd',name:'GoCart180 SD #1',cat:'amr',icon:'🛒',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.31','RN ID':'gocart-sd-01','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리','TOM ON','gocart_robot.py','Rubberneck'],checklist:['배터리','TOM','Rubberneck','SOLAR','LiDAR'],ctrl:['Rubberneck','WASD','Space'],mdFile:'robots/gocart.md'},
+    {id:'gc_sd2',bld:'rnd',name:'GoCart180 SD #2',cat:'amr',icon:'🛒',type:'AMR',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.2.32','RN ID':'gocart-sd-02','OS':'Ubuntu 20.04','SDK':'ketirtc'},startup:['배터리','TOM ON','gocart_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','WASD','Space'],mdFile:'robots/gocart.md'},
     {id:'nova1',bld:'rnd',name:'Novatek #1',cat:'amr',icon:'📦',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.51','RN ID':'novatek-01','OS':'Ubuntu 22.04','SDK':'KT Novatek SDK'},startup:['TOM ON','novatek_robot.py','Rubberneck'],checklist:['배터리','TOM','Rubberneck','SOLAR','서비스 모듈'],ctrl:['Rubberneck → Novatek #1','서비스 제어','긴급 정지'],mdFile:'robots/novatek.md'},
     {id:'nova2',bld:'rnd',name:'Novatek #2',cat:'amr',icon:'📦',type:'AMR',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'3분 전',specs:{'IP':'192.168.2.52','RN ID':'novatek-02','OS':'Ubuntu 22.04','SDK':'KT Novatek SDK'},startup:['TOM ON','novatek_robot.py'],checklist:['배터리','TOM','Rubberneck','SOLAR'],ctrl:['Rubberneck','서비스 제어','긴급 정지'],mdFile:'robots/novatek.md'},
     {id:'pick1',bld:'rnd',name:'오더피킹',cat:'manipulator',icon:'📋',type:'피킹 로봇',floor:'5F',power:'online',mp:'online',rn:'online',solar:'online',upd:'7분 전',specs:{'IP':'192.168.2.62','RN ID':'picking-01','OS':'Ubuntu 20.04','SDK':'ROS2+MoveIt'},startup:['E-Stop 해제','TOM ON','orderpicking_robot.py'],checklist:['E-Stop','암 초기화','TOM','Rubberneck'],ctrl:['Rubberneck → 오더피킹','피킹 경로 지정','긴급 정지'],mdFile:'robots/orderpicking.md'},
-    {id:'door_icn',bld:'rnd',name:'자동문',cat:'iot',icon:'🚪',type:'IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.71','RN ID':'door-icn-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
-    {id:'elev_icn',bld:'rnd',name:'엘리베이터',cat:'iot',icon:'🛗',type:'IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.72','RN ID':'elev-icn-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
+    {id:'door_icn',bld:'rnd',name:'자동문',cat:'m2m',icon:'🚪',type:'MtoM IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.71','RN ID':'door-icn-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
+    {id:'elev_icn',bld:'rnd',name:'엘리베이터',cat:'m2m',icon:'🛗',type:'MtoM IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.2.72','RN ID':'elev-icn-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
   ],
   suwon:[
     {id:'zayd1',bld:'',name:'자이드모바일',cat:'amr',icon:'🛺',type:'AMR',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.3.31','RN ID':'zayd-01','OS':'Ubuntu 22.04','SDK':'ROS2'},startup:['충전 분리','TOM ON','전원 ON','zayd_robot.py'],checklist:['배터리','TOM','Rubberneck','지도 로딩'],ctrl:['Rubberneck 수동 모드','방향키 이동','AUTO 재개'],mdFile:'robots/zayd.md'},
     {id:'cobot1',bld:'',name:'COBOT (건설로봇)',cat:'manipulator',icon:'🏗',type:'건설 로봇',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'10분 전',specs:{'IP':'192.168.3.62','RN ID':'cobot-01','OS':'Ubuntu 20.04','SDK':'COBOT SDK'},startup:['안전 구역 확인','TOM ON','COBOT ON','cobot_robot.py'],checklist:['안전 구역','E-Stop 해제','TOM','Rubberneck'],ctrl:['Rubberneck → COBOT','건설 작업 제어','E-Stop'],mdFile:'robots/cobot.md'},
-    {id:'piper1',bld:'',name:'Piper',cat:'manipulator',icon:'🦾',type:'모바일 매니퓰레이터',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.3.63','RN ID':'piper-01','OS':'Ubuntu 22.04','SDK':'Piper SDK'},startup:['TOM ON','piper_robot.py','Rubberneck'],checklist:['E-Stop','TOM','Rubberneck','작업 범위'],ctrl:['Rubberneck','암 제어','긴급 정지'],mdFile:'robots/piper.md'},
+    {id:'piper1',bld:'',name:'PiPER',cat:'arm',icon:'🦾',type:'매니퓰레이터',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'5분 전',specs:{'IP':'192.168.3.63','RN ID':'piper-01','OS':'Ubuntu 22.04','SDK':'Piper SDK'},startup:['TOM ON','piper_robot.py','Rubberneck'],checklist:['E-Stop','TOM','Rubberneck','작업 범위'],ctrl:['Rubberneck','암 제어','긴급 정지'],mdFile:'robots/piper.md'},
+    {id:'door_suwon',bld:'',name:'자동문',cat:'m2m',icon:'🚪',type:'MtoM IoT',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.3.71','RN ID':'door-suwon-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
+    {id:'elev_suwon',bld:'',name:'엘리베이터',cat:'m2m',icon:'🛗',type:'MtoM IoT',floor:'테스트필드',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.3.72','RN ID':'elev-suwon-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
   ],
   yeongwol:[
-    {id:'spot_yw',bld:'',name:'SPOT (영월)',cat:'quadruped',icon:'🐕',type:'4족 보행',floor:'발전소',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.21','RN ID':'spot-yw-01','OS':'Ubuntu 20.04','SDK':'Spot SDK 4.x'},startup:['배터리 확인','TOM ON','SPOT ON','spot_robot.py'],checklist:['배터리 50%','E-Stop 해제','TOM','Rubberneck','순찰 경로'],ctrl:['Rubberneck 원격 제어','순찰 모드 또는 수동','Space 정지'],mdFile:'robots/spot.md'},
-    {id:'v60_yw',bld:'',name:'Vision60',cat:'quadruped',icon:'🦿',type:'4족 보행',floor:'발전소',power:'online',mp:'online',rn:'warning',solar:'offline',upd:'15분 전',specs:{'IP':'192.168.100.22','RN ID':'v60-yw-01','OS':'Ubuntu 20.04','SDK':'Ghost SDK'},startup:['배터리','TOM ON','Vision60 ON','vision60_robot.py'],checklist:['배터리','TOM','Rubberneck','카메라'],ctrl:['Rubberneck 원격 제어','수동 이동','E-Stop'],mdFile:'robots/vision60.md'},
-    {id:'door_yw',bld:'',name:'자동문',cat:'iot',icon:'🚪',type:'IoT',floor:'발전소',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.51','RN ID':'door-yw-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
-    {id:'elev_yw',bld:'',name:'엘리베이터',cat:'iot',icon:'🛗',type:'IoT',floor:'발전소',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.52','RN ID':'elev-yw-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
+    {id:'spot_yw',bld:'',name:'SPOT (영월)',cat:'quadruped',icon:'🐕',type:'4족 보행',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.21','RN ID':'spot-yw-01','OS':'Ubuntu 20.04','SDK':'Spot SDK 4.x'},startup:['배터리 확인','TOM ON','SPOT ON','spot_robot.py'],checklist:['배터리 50%','E-Stop 해제','TOM','Rubberneck','순찰 경로'],ctrl:['Rubberneck 원격 제어','순찰 모드 또는 수동','Space 정지'],mdFile:'robots/spot.md'},
+    {id:'v60_yw',bld:'',name:'Vision60',cat:'quadruped',icon:'🦿',type:'4족 보행',floor:'1F',power:'online',mp:'online',rn:'warning',solar:'offline',upd:'15분 전',specs:{'IP':'192.168.100.22','RN ID':'v60-yw-01','OS':'Ubuntu 20.04','SDK':'Ghost SDK'},startup:['배터리','TOM ON','Vision60 ON','vision60_robot.py'],checklist:['배터리','TOM','Rubberneck','카메라'],ctrl:['Rubberneck 원격 제어','수동 이동','E-Stop'],mdFile:'robots/vision60.md'},
+    {id:'door_yw',bld:'',name:'자동문',cat:'m2m',icon:'🚪',type:'MtoM IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.51','RN ID':'door-yw-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','door_robot.py','Rubberneck'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['Rubberneck → 자동문','개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
+    {id:'elev_yw',bld:'',name:'엘리베이터',cat:'m2m',icon:'🛗',type:'MtoM IoT',floor:'1F',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'IP':'192.168.100.52','RN ID':'elev-yw-01','OS':'Raspberry Pi OS','SDK':'ketirtc'},startup:['TOM ON','elevator_robot.py','층 제어 확인'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['Rubberneck → 엘리베이터','층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'},
   ],
 };
 
-const CATS={quadruped:{l:'4족 보행 로봇'},amr:{l:'AMR (자율이동로봇)'},manipulator:{l:'모바일 매니퓰레이터'},service:{l:'서비스 로봇'},iot:{l:'IoT 연동'}};
+const CATS={amr:{l:'AMR (자율이동로봇)'},manipulator:{l:'모바일 매니퓰레이터'},humanoid:{l:'휴머노이드'},arm:{l:'매니퓰레이터'},quadruped:{l:'4족 보행 로봇'},service:{l:'서비스 로봇'},m2m:{l:'MtoM IoT 연동'},iot:{l:'IoT 연동'},other:{l:'기타'}};
 
 /* ═══════════════════════════════════
    STATE
@@ -834,7 +1075,7 @@ const CATS={quadruped:{l:'4족 보행 로봇'},amr:{l:'AMR (자율이동로봇)'
 let activeSite='incheon', activeBld='all', activeFloor='all', activeManualId=null;
 let qaFltRobot='all', qaFltSite='all', qaFltType='all', qaPage=1;
 let QA_PP=10;
-let editingQaId=null, adminTabActive='accounts';
+let editingQaId=null, adminTabActive='accounts', qaAnswerEditId=null;
 
 /* ═══════════════════════════════════
    HELPERS
@@ -842,7 +1083,28 @@ let editingQaId=null, adminTabActive='accounts';
 function cState(r){if(r.power==='offline')return 'offline';if(r.rn==='warning'||r.mp==='warning')return 'warning';if(r.rn==='online'&&r.mp==='online')return 'online';return 'error';}
 function lc(s){return s==='online'?'green pulse':s==='warning'?'yellow pulse':s==='offline'?'gray':'red';}
 function st(s){return s==='online'?'정상':s==='warning'?'점검':s==='offline'?'오프':'오류';}
-function robots(){return ALL_ROBOTS[activeSite]||[];}
+function siteFloorsForIoT(siteKey){
+  const conf=SITE_CONF[siteKey];
+  if(!conf) return [];
+  if(conf.hasBuildings){
+    return Object.entries(conf.buildings).filter(([k])=>k!=='all').flatMap(([b,v])=>(v.floors||[]).map(f=>({bld:b,floor:f})));
+  }
+  return (conf.floors||[]).map(f=>({bld:'',floor:f}));
+}
+function generatedIoTForSite(siteKey){
+  return siteFloorsForIoT(siteKey).flatMap(({bld,floor})=>{
+    const suffix=[siteKey,bld||'site',floor].join('_').replace(/[^a-zA-Z0-9가-힣]+/g,'_');
+    const loc=bld?`${bld==='robotower'?'로보타워':'R&D센터'} ${floor}`:floor;
+    return [
+      {id:`door_${suffix}`,bld,name:`자동문 (${loc})`,cat:'m2m',icon:'🚪',type:'MtoM IoT',floor,power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'RN ID':`door-${suffix}`},startup:['TOM ON','자동문 제어 모듈 확인','Rubberneck 연결'],checklist:['TOM','센서 동작','Rubberneck'],ctrl:['개방/폐쇄','수동 오버라이드'],mdFile:'robots/door.md'},
+      {id:`elev_${suffix}`,bld,name:`엘리베이터 (${loc})`,cat:'m2m',icon:'🛗',type:'MtoM IoT',floor,power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',specs:{'RN ID':`elev-${suffix}`},startup:['TOM ON','엘리베이터 제어 모듈 확인','층 호출 테스트'],checklist:['TOM','제어 모듈','Rubberneck'],ctrl:['층 호출','로봇 연동 ON'],mdFile:'robots/elevator.md'}
+    ];
+  });
+}
+function robots(){
+  const base=(ALL_ROBOTS[activeSite]||[]).filter(r=>r.cat!=='iot'&&r.cat!=='m2m');
+  return [...base,...generatedIoTForSite(activeSite)];
+}
 function filteredRobots(){
   let r=robots();
   if(activeSite==='incheon'){
@@ -881,7 +1143,7 @@ function buildStatus(){
   document.getElementById('s-wn').textContent=wn;
   document.getElementById('s-of').textContent=of;
   document.getElementById('s-tot').textContent=rs.length;
-  document.getElementById('site-desc').textContent=SITE_CONF[activeSite].label;
+  document.getElementById('site-desc').textContent=SITE_CONF[activeSite].label + (SITE_CONF[activeSite].buildingName ? ' · ' + SITE_CONF[activeSite].buildingName : '');
 
   // building tabs (incheon only)
   const bldWrap=document.getElementById('bld-bar-wrap');
@@ -938,6 +1200,7 @@ function buildRobotGroups(container,list){
     el.innerHTML=`<div class="sec-title">${meta.l} — ${g.length}대</div><div class="rgrid">${g.map(r=>{
       const s=cState(r);
       return `<div class="rcard s-${s}" onclick="openManual('${r.id}')">
+        ${robotVisualHtml(r)}
         <div class="rcard-hdr"><div class="rcard-name">${r.icon} ${r.name}</div><div class="rcard-type">${r.type}</div></div>
         <div class="rchecks">
           <div class="rchk"><div class="led ${lc(r.power)}"></div>전원<span class="cv">${st(r.power)}</span></div>
@@ -955,45 +1218,110 @@ function buildRobotGroups(container,list){
 /* ═══════════════════════════════════
    MANUAL
 ═══════════════════════════════════ */
-function buildManualNav(){
-  const rs=robots();
-  const grouped={};
-  rs.forEach(r=>{(grouped[r.cat]=grouped[r.cat]||[]).push(r);});
-  let html='';
-  Object.entries(CATS).forEach(([cat,meta])=>{
-    const g=grouped[cat]; if(!g) return;
-    html+=`<div class="mnav-lbl">${meta.l}</div>`;
-    g.forEach(r=>{
-      const lclr=r.rn==='online'?'var(--green)':r.rn==='warning'?'var(--yellow)':'var(--gray)';
-      html+=`<div class="mnav-item ${r.id===activeManualId?'active':''}" onclick="showManual('${r.id}')" id="mnv-${r.id}"><div class="mdot" style="background:${lclr}"></div>${r.name}</div>`;
-    });
+let manualMode='user';
+const MANUAL_ROBOT_TYPES=[
+  {cat:'amr',label:'AMR',icon:'🛒'},
+  {cat:'manipulator',label:'모바일 매니퓰레이터',icon:'🦾'},
+  {cat:'humanoid',label:'휴머노이드',icon:'🤖'},
+  {cat:'arm',label:'매니퓰레이터',icon:'🦿'},
+  {cat:'quadruped',label:'4족 보행 로봇',icon:'🐕'},
+  {cat:'m2m',label:'MtoM IoT',icon:'🛗'},
+  {cat:'other',label:'기타',icon:'📦'},
+];
+function normalizeManualName(name){return name.replace(/\s*#\d+/g,'').replace(/\s*\d+호기/g,'').replace(/\s*\(건설로봇\)/g,'').replace('Piper','PiPER').trim();}
+function manualItems(){
+  const map=new Map();
+  robots().forEach(r=>{
+    const key=(r.mdFile||normalizeManualName(r.name));
+    if(!map.has(key)) map.set(key,{...r,displayName:normalizeManualName(r.name),sites:new Set([SITE_CONF[activeSite]?.label||''])});
+    else map.get(key).sites.add(SITE_CONF[activeSite]?.label||'');
   });
-  document.getElementById('mnav').innerHTML=html;
-  if(!activeManualId||!rs.find(r=>r.id===activeManualId)) activeManualId=rs[0]?.id;
+  if(![...map.values()].some(x=>x.cat==='arm'&&x.displayName==='PiPER')){
+    const p=(ALL_ROBOTS.suwon||[]).find(x=>normalizeManualName(x.name)==='PiPER'); if(p) map.set(p.mdFile,{...p,displayName:'PiPER',sites:new Set([SITE_CONF.suwon.label])});
+  }
+  return [...map.values()].sort((a,b)=>(CATS[a.cat]?.l||a.cat).localeCompare(CATS[b.cat]?.l||b.cat,'ko')||a.displayName.localeCompare(b.displayName,'ko'));
+}
+function buildManualNav(){
+  const items=manualItems();
+  let html='';
+  MANUAL_ROBOT_TYPES.forEach(cat=>{
+    const list=items.filter(r=>r.cat===cat.cat);
+    if(!list.length) return;
+    html+=`<div class="mnav-cat">${cat.label}</div>`;
+    html+=list.map(r=>`<div class="mnav-item" id="mnv-${r.id}" onclick="showManual('${r.id}')"><span class="mdot" style="background:${cat.cat==='amr'?'var(--green)':cat.cat==='manipulator'?'var(--accent)':cat.cat==='arm'?'var(--purple)':cat.cat==='iot'?'var(--yellow)':'var(--gray)'}"></span>${r.displayName}<span class="mnav-sub">${manualMode==='dev'?'DEV':'USER'}</span></div>`).join('');
+  });
+  document.getElementById('mnav').innerHTML=html||'<div style="padding:16px;color:var(--text-muted)">해당 사이트에 등록된 매뉴얼이 없습니다.</div>';
+  if(!activeManualId||!items.find(x=>x.id===activeManualId)) activeManualId=items[0]?.id||null;
   if(activeManualId) showManual(activeManualId);
 }
-
+function setManualMode(mode){
+  manualMode=mode;
+  document.getElementById('manual-mode-user').classList.toggle('on',mode==='user');
+  document.getElementById('manual-mode-dev').classList.toggle('on',mode==='dev');
+  if(activeManualId) showManual(activeManualId); else buildManualNav();
+}
+function getManualRobot(id){return manualItems().find(x=>x.id===id)||robots().find(x=>x.id===id);}
 function showManual(id){
   activeManualId=id;
   document.querySelectorAll('.mnav-item').forEach(e=>e.classList.remove('active'));
   const ni=document.getElementById('mnv-'+id); if(ni) ni.classList.add('active');
-  const rs=robots(); const r=rs.find(x=>x.id===id); if(!r) return;
-  const s=cState(r); const tc=s==='online'?'tg':s==='warning'?'ty':'';
+  const r=getManualRobot(id); if(!r) return;
+  const catMeta=CATS[r.cat]||{l:r.type||'기타'};
+  const title=`${r.displayName||normalizeManualName(r.name)} ${manualMode==='dev'?'개발자':'사용자'} 매뉴얼`;
+  const siteNote=manualMode==='dev'?'개발/배포/로그 확인 절차 중심':'현장 운영자 기동/점검/안전 절차 중심';
+  const startup=(manualMode==='dev'?[`md 파일: ${r.mdFile||'robots/common.md'}`,'AND/GERRI 프로세스 로그를 확인한다.','로봇별 SDK/드라이버 버전을 확인한다.','TOM 서비스 재시작 후 Rubberneck heartbeat를 확인한다.']:(r.startup||['전원 확인','TOM ON','Rubberneck 연결 확인']));
+  const checklist=(manualMode==='dev'?['네트워크 인터페이스/IP','systemd 서비스 상태','WebSocket heartbeat','로봇 SDK 예외 로그','배포 후 rollback 경로']:(r.checklist||['전원','TOM','Rubberneck']));
   document.getElementById('mbody').innerHTML=`
     <div class="m-rh">
-      <div class="m-rico">${r.icon}</div>
-      <div><div class="m-rtitle">${r.name}</div><div class="m-rmeta">${r.type} · ${r.floor} · RN: ${r.specs['RN ID']}</div>
-      <div><span class="mtag ${tc}">전원: ${st(r.power)}</span><span class="mtag ${tc}">Rubberneck: ${st(r.rn)}</span><span class="mtag">SOLAR: ${st(r.solar)}</span></div></div>
+      ${manualImageHtml(r)}
+      <div><div class="m-rtitle">${title}</div><div class="m-rmeta">${catMeta.l} · ${siteNote}</div>
+      <div><span class="mtag tg">${manualMode==='dev'?'Developer':'User'}</span><span class="mtag">${r.mdFile||'robots/common.md'}</span><span class="mtag ty">사이트별 매뉴얼 분기는 추후 적용 가능</span></div></div>
     </div>
-    <div class="msec"><div class="msec-title">시스템 정보</div><div class="info-grid">${Object.entries(r.specs).map(([k,v])=>`<div class="irow"><div class="ik">${k}</div><div class="iv">${v}</div></div>`).join('')}</div></div>
-    <div class="msec"><div class="msec-title">기동 절차</div><div class="step-list">${r.startup.map((s,i)=>`<div class="step-item"><div class="snum">${String(i+1).padStart(2,'0')}</div><div class="stxt">${s}</div></div>`).join('')}</div></div>
-    <div class="msec"><div class="msec-title">점검 체크리스트</div><div class="chk-list">${r.checklist.map((c,i)=>`<div class="chk-item" id="cw-${id}-${i}"><input type="checkbox" id="ck-${id}-${i}" onchange="tChk('cw-${id}-${i}')"><label for="ck-${id}-${i}">${c}</label></div>`).join('')}</div></div>
-    <div class="msec"><div class="msec-title">수동 제어</div><div class="step-list">${r.ctrl.map((s,i)=>`<div class="step-item"><div class="snum">${String(i+1).padStart(2,'0')}</div><div class="stxt">${s}</div></div>`).join('')}</div></div>
-    <div class="msec"><div class="msec-title">상세 매뉴얼 (Markdown)</div><div class="md-content" id="mdc"><div style="color:var(--text-muted);font-size:12px;background:var(--surface2);border:1px solid var(--border);border-radius:7px;padding:12px">📄 <code>${r.mdFile}</code> — GitHub Pages 배포 후 자동 렌더링</div></div></div>`;
-  fetch(r.mdFile).then(res=>{if(!res.ok)throw 0;return res.text();}).then(md=>{document.getElementById('mdc').innerHTML=marked.parse(md);}).catch(()=>{});
+    <div class="msec"><div class="msec-title">기종 정보</div><div class="info-grid">
+      <div class="irow"><div class="ik">ROBOT TYPE</div><div class="iv">${r.displayName||r.name}</div></div>
+      <div class="irow"><div class="ik">CATEGORY</div><div class="iv">${catMeta.l}</div></div>
+      <div class="irow"><div class="ik">SITE CONTEXT</div><div class="iv">${SITE_CONF[activeSite]?.label||'전체'}</div></div>
+      <div class="irow"><div class="ik">MANUAL SOURCE</div><div class="iv">${r.mdFile||'robots/common.md'}</div></div>
+    </div></div>
+    <div class="msec"><div class="msec-title">${manualMode==='dev'?'개발자 확인 절차':'기동 절차'}</div><div class="step-list">${startup.map((s,i)=>`<div class="step-item"><div class="snum">${String(i+1).padStart(2,'0')}</div><div class="stxt">${s}</div></div>`).join('')}</div></div>
+    <div class="msec"><div class="msec-title">점검 체크리스트</div><div class="chk-list">${checklist.map((c,i)=>`<div class="chk-item" id="cw-${id}-${i}"><input type="checkbox" id="ck-${id}-${i}" onchange="tChk('cw-${id}-${i}')"><label for="ck-${id}-${i}">${c}</label></div>`).join('')}</div></div>`;
 }
+function manualPlainText(fmt='txt'){
+  const r=getManualRobot(activeManualId); if(!r) return '';
+  const title=`${r.displayName||normalizeManualName(r.name)} ${manualMode==='dev'?'개발자':'사용자'} 매뉴얼`;
+  const lines=[`# ${title}`,'',`- 기종: ${r.displayName||r.name}`,`- 카테고리: ${(CATS[r.cat]||{}).l||r.type}`,`- 사이트: ${SITE_CONF[activeSite]?.label||'전체'}`,`- 원본 md: ${r.mdFile||'robots/common.md'}`,'','## 절차'];
+  const steps=manualMode==='dev'?[`md 파일: ${r.mdFile||'robots/common.md'}`,'AND/GERRI 프로세스 로그 확인','SDK/드라이버 버전 확인','TOM 서비스 재시작 후 heartbeat 확인']:(r.startup||[]);
+  steps.forEach((x,i)=>lines.push(`${i+1}. ${x}`));
+  return fmt==='txt'?lines.map(x=>x.replace(/^#+\s*/, '')).join('\n'):lines.join('\n');
+}
+function downloadText(filename,text,type='text/plain'){
+  const blob=new Blob([text],{type}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href);
+}
+function toggleExportMenu(e){
+  e.stopPropagation();
+  document.getElementById('export-options')?.classList.toggle('open');
+}
+document.addEventListener('click',()=>document.getElementById('export-options')?.classList.remove('open'));
+function printManual(){window.print();}
+function wordHtml(){
+  const text=manualPlainText('md').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  return `<!doctype html><html><head><meta charset="utf-8"><style>body{font-family:'Malgun Gothic',Arial,sans-serif;line-height:1.65}h1{font-size:20pt}</style></head><body>${text}</body></html>`;
+}
+function hwpxNotice(){
+  alert('브라우저 단일 HTML에서는 정식 HWPX 패키지(zip/XML 묶음)를 안정적으로 생성하기 어렵습니다. 대신 PDF 또는 MS Word(.doc)로 내보낸 뒤 한글에서 열어 HWPX로 저장하는 방식을 권장합니다.');
+}
+function exportManual(kind){
+  const r=getManualRobot(activeManualId); const base=(r?.displayName||'manual').replace(/\s+/g,'_');
+  document.getElementById('export-options')?.classList.remove('open');
+  if(kind==='pdf'){window.print(); showToast('PDF는 인쇄 창에서 “PDF로 저장”을 선택하세요.'); return;}
+  if(kind==='docx'){downloadText(`${base}_${manualMode}.docx`,wordHtml(),'application/vnd.openxmlformats-officedocument.wordprocessingml.document');return;}
+  if(kind==='doc'){downloadText(`${base}_${manualMode}.doc`,wordHtml(),'application/msword');return;}
+  if(kind==='hwpx'){hwpxNotice();return;}
+  if(kind==='md') downloadText(`${base}_${manualMode}.md`,manualPlainText('md'),'text/markdown');
+  else downloadText(`${base}_${manualMode}.txt`,manualPlainText('txt'),'text/plain');
+}
+function openManual(id){sw('manual',document.querySelectorAll('.nav-item')[2]); activeManualId=id; buildManualNav();}
 function tChk(id){const e=document.getElementById(id);e.classList.toggle('checked',e.querySelector('input').checked);}
-function openManual(id){sw('manual',document.querySelectorAll('.nav-item')[2]);activeManualId=id;buildManualNav();}
 
 /* ═══════════════════════════════════
    CONTROL
@@ -1030,7 +1358,7 @@ function buildCtrl(){
       <div class="ctrl-group-title">${g.m}</div>
       <div class="ctrl-list">${g.items.map(([icon,name])=>`
         <div class="ctrl-btn c-online" onclick="alert('${name} 로컬 수동 제어 인터페이스 — 구현 예정')">
-          <div class="cbi">${icon}</div><div class="cbn">${name}</div>
+          ${robotImageTag(name,'ctrl-img')||`<div class="cbi">${icon}</div>`}<div class="cbn">${name}</div>
           <div class="cbs">로컬 제어</div>
         </div>`).join('')}</div>
     </div>`).join('');
@@ -1039,28 +1367,49 @@ function buildCtrl(){
    Q&A
 ═══════════════════════════════════ */
 let QA_DATA=[
-  {id:1,title:'GoCart LT #2 Rubberneck 연결 불안정',author:'박운영',date:'2025-05-02',status:'done',views:34,secret:false,robot:'GoCart180',site:'인천 청라 로봇랜드',type:'장애/오류 신고',body:'GoCart LT #2가 Rubberneck에 간헐적으로 연결 끊김 현상이 발생합니다.',answer:'TOM 모듈 keepalive 설정 문제였습니다. 펌웨어 업데이트로 조치 완료하였습니다.'},
-  {id:2,title:'SPOT #1 E-Stop 해제 후 기립 불가',author:'이현장',date:'2025-04-28',status:'done',views:21,secret:false,robot:'SPOT',site:'인천 청라 로봇랜드',type:'장애/오류 신고',body:'E-Stop을 해제했는데도 SPOT #1이 기립하지 않습니다.',answer:'배터리 잔량 부족이 원인이었습니다. 충전 후 정상 동작 확인하였습니다.'},
-  {id:3,title:'Novatek #1 맵 업데이트 요청',author:'김관리',date:'2025-04-25',status:'wait',views:12,secret:false,robot:'Novatek',site:'인천 청라 로봇랜드',type:'사용법 문의',body:'5층 레이아웃 변경으로 Novatek #1 맵 재작성이 필요합니다.',answer:null},
-  {id:4,title:'비밀 문의 — 접근 권한 관련',author:'익명',date:'2025-04-20',status:'done',views:3,secret:true,robot:'기타',site:'전체',type:'기타',body:'[비밀글입니다]',answer:'[비밀 답변입니다]'},
-  {id:5,title:'SOLAR 대시보드 접속 오류',author:'나대리',date:'2025-04-18',status:'wait',views:8,secret:false,robot:'SOLAR',site:'인천 청라 로봇랜드',type:'장애/오류 신고',body:'SOLAR 플랫폼 로그인 시 "서버 오류" 반복됩니다.',answer:null},
-  {id:6,title:'GoCart SD #1 배터리 교체 주기 문의',author:'정운영',date:'2025-04-15',status:'done',views:16,secret:false,robot:'GoCart180',site:'인천 청라 로봇랜드',type:'사용법 문의',body:'GoCart SD #1 배터리 교체 주기와 스펙이 궁금합니다.',answer:'300회 충전 또는 1년 사용 시 교체 권장합니다.'},
-  {id:7,title:'TOM LED 점등 패턴 설명 요청',author:'한담당',date:'2025-04-10',status:'done',views:29,secret:false,robot:'TOM/하드웨어',site:'전체',type:'사용법 문의',body:'TOM 파란불, 초록불, 빨간불 의미가 궁금합니다.',answer:'파란불:부팅중 / 녹색점멸:정상 / 빨간불:오류. TOM 매뉴얼 2.3절 참고.'},
-  {id:8,title:'자이드모바일 자율주행 범위 조정',author:'박수서',date:'2025-04-05',status:'wait',views:11,secret:false,robot:'자이드모바일',site:'서울 강남 수서',type:'사용법 문의',body:'자이드모바일 자율주행 범위를 테스트필드 전체로 확장 요청드립니다.',answer:null},
-  {id:9,title:'Vision60 협업 프로젝트 제안',author:'외부팀',date:'2025-03-30',status:'wait',views:18,secret:false,robot:'Vision60',site:'강원 영월',type:'협업 문의',body:'Vision60을 활용한 공동 연구 제안드립니다. 담당자 연결 부탁드립니다.',answer:null},
-  {id:10,title:'SPOT 영월 순찰 경로 재설정 요청',author:'이영월',date:'2025-03-25',status:'done',views:42,secret:false,robot:'SPOT',site:'강원 영월',type:'사용법 문의',body:'발전소 3구역 공사로 순찰 경로 변경이 필요합니다.',answer:'천지영 담당자가 현장 방문 후 경로 재설정 완료하였습니다.'},
+  {id:1,title:'GoCart180 LT #2 Rubberneck 연결 불안정',author:'박운영',date:'2025-05-02',status:'done',views:34,secret:false,robot:'AMR',site:'인천 청라 로봇랜드',type:'장애/오류 신고',body:'GoCart180 LT #2가 Rubberneck에 간헐적으로 연결 끊김 현상이 발생합니다.',answer:'TOM 모듈 keepalive 설정 문제였습니다. 펌웨어 업데이트로 조치 완료하였습니다.',ownerId:'star_sw'},
+  {id:2,title:'SPOT #1 E-Stop 해제 후 기립 불가',author:'이현장',date:'2025-04-28',status:'done',views:21,secret:false,robot:'AMR',site:'인천 청라 로봇랜드',type:'장애/오류 신고',body:'E-Stop을 해제했는데도 SPOT #1이 기립하지 않습니다.',answer:'배터리 잔량 부족이 원인이었습니다. 충전 후 정상 동작 확인하였습니다.',ownerId:'itp_user'},
+  {id:3,title:'Novatek #1 맵 업데이트 요청',author:'김관리',date:'2025-04-25',status:'wait',views:12,secret:false,robot:'AMR',site:'인천 청라 로봇랜드',type:'사용법 문의',body:'5층 레이아웃 변경으로 Novatek #1 맵 재작성이 필요합니다.',answer:null,ownerId:'itp_user'},
+  {id:4,title:'비밀 문의 — 접근 권한 관련',author:'익명',date:'2025-04-20',status:'done',views:3,secret:true,robot:'기타',site:'전체',type:'기타',body:'[비밀글입니다]',answer:'[비밀 답변입니다]',ownerId:'itp_user'},
+  {id:5,title:'SOLAR 대시보드 접속 오류',author:'나대리',date:'2025-04-18',status:'wait',views:8,secret:false,robot:'SOLAR',site:'인천 청라 로봇랜드',type:'장애/오류 신고',body:'SOLAR 플랫폼 로그인 시 "서버 오류" 반복됩니다.',answer:null,ownerId:'star_sw'},
+  {id:6,title:'GoCart180 SD #1 배터리 교체 주기 문의',author:'정운영',date:'2025-04-15',status:'done',views:16,secret:false,robot:'AMR',site:'인천 청라 로봇랜드',type:'사용법 문의',body:'GoCart180 SD #1 배터리 교체 주기와 스펙이 궁금합니다.',answer:'300회 충전 또는 1년 사용 시 교체 권장합니다.',ownerId:'star_sw'},
+  {id:7,title:'TOM LED 점등 패턴 설명 요청',author:'한담당',date:'2025-04-10',status:'done',views:29,secret:false,robot:'TOM',site:'전체',type:'사용법 문의',body:'TOM 파란불, 초록불, 빨간불 의미가 궁금합니다.',answer:'파란불:부팅중 / 녹색점멸:정상 / 빨간불:오류. TOM 매뉴얼 2.3절 참고.',ownerId:'itp_user'},
+  {id:8,title:'자이드모바일 자율주행 범위 조정',author:'박수서',date:'2025-04-05',status:'wait',views:11,secret:false,robot:'AMR',site:'서울 강남 로봇플러스 테스트필드',type:'사용법 문의',body:'자이드모바일 자율주행 범위를 테스트필드 전체로 확장 요청드립니다.',answer:null,ownerId:'star_sw'},
+  {id:9,title:'Vision60 협업 프로젝트 제안',author:'외부팀',date:'2025-03-30',status:'wait',views:18,secret:false,robot:'AMR',site:'강원 영월 남부발전소',type:'협업 문의',body:'Vision60을 활용한 공동 연구 제안드립니다. 담당자 연결 부탁드립니다.',answer:null,ownerId:'star_sw'},
+  {id:10,title:'SPOT 영월 순찰 경로 재설정 요청',author:'이영월',date:'2025-03-25',status:'done',views:42,secret:false,robot:'AMR',site:'강원 영월 남부발전소',type:'사용법 문의',body:'발전소 3구역 공사로 순찰 경로 변경이 필요합니다.',answer:'천지영 담당자가 현장 방문 후 경로 재설정 완료하였습니다.',ownerId:'itp_user'},
 ];
 let nextQaId=11;
 
-const QA_ROBOT_OPTS=['all','SPOT','Vision60','GoCart180','RB-Y1','Novatek','자이드모바일','일개미/집개미','COBOT','Piper','SOLAR','TOM/하드웨어','기타'];
-const QA_SITE_OPTS=['all','인천 청라 로봇랜드','서울 강남 수서','강원 영월','전체'];
-const QA_TYPE_OPTS=['all','사용법 문의','장애/오류 신고','협업 문의','네트워크/연결','하드웨어','기타'];
-const QA_OPT_LABELS={all:'전체',SPOT:'SPOT',Vision60:'Vision60',GoCart180:'GoCart180','인천 청라 로봇랜드':'인천','서울 강남 수서':'강남 수서','강원 영월':'영월','전체':'전체','사용법 문의':'사용법','장애/오류 신고':'장애/오류','협업 문의':'협업','네트워크/연결':'네트워크','하드웨어':'하드웨어',기타:'기타'};
+const QA_ROBOT_OPTS=['all',...SYSTEM_DEVICE_TYPES];
+const QA_SITE_OPTS=['all',...SITE_OPTIONS.filter(s=>s.key!=='all').map(s=>s.label),'전체'];
+const QA_TYPE_OPTS=['all','사용법 문의','장애/오류 신고','협업 문의','네트워크/연결','권한/계정','기타'];
+const QA_OPT_LABELS={all:'전체','전체':'전체','인천 청라 로봇랜드':'인천 청라 로봇랜드','서울 강남 로봇플러스 테스트필드':'서울 강남 로봇플러스 테스트필드','강원 영월 남부발전소':'강원 영월 남부발전소','관제 시스템(매뉴얼)':'관제/매뉴얼','사용법 문의':'사용법','장애/오류 신고':'장애/오류','협업 문의':'협업','네트워크/연결':'네트워크','권한/계정':'권한/계정','하드웨어':'하드웨어',기타:'기타'};
 
 function initQaFilters(){
   document.getElementById('flt-robot').innerHTML=QA_ROBOT_OPTS.map(o=>`<button class="qa-filter ${o===qaFltRobot?'on':''}" onclick="setQaFlt('robot','${o}')">${QA_OPT_LABELS[o]||o}</button>`).join('');
-  document.getElementById('flt-site').innerHTML=QA_SITE_OPTS.map(o=>`<button class="qa-filter ${o===qaFltSite?'on':''}" onclick="setQaFlt('site','${o}')">${QA_OPT_LABELS[o]||o}</button>`).join('');
+  document.getElementById('flt-site').innerHTML=['all',...allowedSiteOptions().map(o=>o.label),...(me?.role==='admin'?['전체']:[])].map(o=>`<button class="qa-filter ${o===qaFltSite?'on':''}" onclick="setQaFlt('site','${o}')">${QA_OPT_LABELS[o]||o}</button>`).join('');
   document.getElementById('flt-type').innerHTML=QA_TYPE_OPTS.map(o=>`<button class="qa-filter ${o===qaFltType?'on':''}" onclick="setQaFlt('type','${o}')">${QA_OPT_LABELS[o]||o}</button>`).join('');
+  populateQaSelects();
+}
+function populateQaSelects(){
+  const r=document.getElementById('qf-robot'); if(r) r.innerHTML=SYSTEM_DEVICE_TYPES.map(o=>`<option>${o}</option>`).join('');
+  const st=document.getElementById('qf-site'); if(st) st.innerHTML=allowedSiteOptions().map(o=>`<option>${o.label}</option>`).join('')+(me?.role==='admin'?'<option>전체</option>':'');
+}
+const QA_UNLOCKED=new Set();
+function canReadQa(q){return !q.secret || (me && (me.role==='admin' || q.ownerId===me.id || q.author===me.name)) || QA_UNLOCKED.has(q.id);}
+function canEditQa(q){return me && (me.role==='admin' || q.ownerId===me.id || q.author===me.name);}
+function canDeleteQa(q){return me && me.role==='admin';}
+function unlockQa(id){
+  const q=QA_DATA.find(x=>x.id===id); if(!q) return;
+  const pw=prompt('비밀글 비밀번호를 입력하세요.');
+  if(pw && pw===(q.password||'1234')){QA_UNLOCKED.add(id); showQaDetail(id);} else if(pw!==null) alert('비밀번호가 올바르지 않습니다.');
+}
+function saveQaAnswer(id){
+  const q=QA_DATA.find(x=>x.id===id); if(!q || me?.role!=='admin') return;
+  q.answer=document.getElementById('admin-answer-text').value.trim();
+  q.status=q.answer?'done':'wait';
+  qaAnswerEditId=null;
+  showToast('답변이 저장되었습니다 ✓'); showQaDetail(id); renderQa();
 }
 
 function setQaFlt(dim,val){
@@ -1072,6 +1421,7 @@ function setQaFlt(dim,val){
 
 function getFilteredQa(){
   let d=[...QA_DATA];
+  if(me && me.role!=='admin') d=d.filter(x=>x.site==='전체'||allowedSiteOptions().some(o=>o.label===x.site));
   const q=document.getElementById('qa-q')?.value.toLowerCase()||'';
   if(q) d=d.filter(x=>x.title.toLowerCase().includes(q)||x.author.toLowerCase().includes(q));
   if(qaFltRobot!=='all') d=d.filter(x=>x.robot===qaFltRobot);
@@ -1100,13 +1450,14 @@ function renderQa(){
   else{
     rows.innerHTML=slice.map(q=>{
       const badge=q.status==='done'?`<span class="qa-badge done">완료</span>`:`<span class="qa-badge wait">대기</span>`;
-      const ttl=q.secret?`🔒 ${q.title.startsWith('[비밀')?' 비밀 문의':q.title}`:q.title;
+      const locked=q.secret&&!canReadQa(q);
+      const ttl=q.secret?(locked?'🔒 비밀 문의':`🔒 ${q.title}`):q.title;
       return `<div class="qa-row" onclick="showQaDetail(${q.id})">
         <span class="qa-num">${q.id}</span>
         <span class="qa-title-cell">${badge}<span>${ttl}</span></span>
         <span style="color:var(--text-dim)">${q.author}</span>
         <span style="color:var(--text-muted);font-size:11px;font-family:var(--mono)">${q.date}</span>
-        <span style="font-size:11px;color:var(--text-muted)">${q.site==='전체'?'—':q.site.replace('인천 청라 로봇랜드','인천').replace('서울 강남 수서','강남수서').replace('강원 영월','영월')}</span>
+        <span style="font-size:11px;color:var(--text-muted)">${q.site==='전체'?'—':shortSiteLabel(q.site)}</span>
         <span style="font-family:var(--mono);font-size:11px;color:var(--text-muted)">${q.views}</span>
         <span>${q.secret?'🔒':''}</span>
       </div>`;
@@ -1123,6 +1474,7 @@ function showQaForm(id){
   document.getElementById('qa-form-view').style.display='block';
   if(id){
     const q=QA_DATA.find(x=>x.id===id);
+    if(q&&!canEditQa(q)){alert('수정 권한이 없습니다.'); cancelQa(); return;}
     if(q){document.getElementById('qft').textContent='문의 수정';document.getElementById('qf-title').value=q.title;document.getElementById('qf-body').value=q.body;document.getElementById('qf-author').value=q.author;document.getElementById('qf-secret').checked=q.secret;document.getElementById('qf-btn').textContent='수정 완료';}
   } else {
     document.getElementById('qft').textContent='신규 문의 작성';
@@ -1141,63 +1493,118 @@ function submitQa(){
   const site=document.getElementById('qf-site').value;
   const type=document.getElementById('qf-type').value;
   const secret=document.getElementById('qf-secret').checked;
-  if(editingQaId){const q=QA_DATA.find(x=>x.id===editingQaId);if(q){q.title=title;q.body=body;q.author=author;q.secret=secret;q.robot=robot;q.site=site;q.type=type;}}
-  else QA_DATA.push({id:nextQaId++,title,author,date:new Date().toISOString().slice(0,10),status:'wait',views:0,secret,robot,site,type,body,answer:null});
+  if(editingQaId){const q=QA_DATA.find(x=>x.id===editingQaId);if(q&&!canEditQa(q)){alert('수정 권한이 없습니다.');return;} if(q){q.title=title;q.body=body;q.author=author;q.secret=secret;q.robot=robot;q.site=canonicalSiteLabel(site);q.type=type;}}
+  else QA_DATA.push({id:nextQaId++,title,author,date:new Date().toISOString().slice(0,10),status:'wait',views:0,secret,robot,site:canonicalSiteLabel(site),type,body,answer:null,ownerId:me?.id||'guest',password:'1234'});
   cancelQa(); renderQa(); showToast(editingQaId?'수정되었습니다 ✓':'등록되었습니다 ✓');
 }
 function showQaDetail(id){
   const q=QA_DATA.find(x=>x.id===id); if(!q) return;
-  q.views++;
   document.getElementById('qa-list-view').style.display='none';
   document.getElementById('qa-form-view').style.display='none';
   document.getElementById('qa-detail-view').style.display='block';
   const badge=q.status==='done'?`<span class="qa-badge done">답변완료</span>`:`<span class="qa-badge wait">답변대기</span>`;
+  if(q.secret && !canReadQa(q)){
+    document.getElementById('qa-detail-content').innerHTML=`
+      <div class="qa-detail-hdr"><div class="qa-detail-title">${badge} 🔒 비밀 문의</div>
+        <div class="qa-detail-meta"><span>작성자: ${q.author}</span><span>작성일: ${q.date}</span><span>시스템/기기: ${q.robot}</span><span>사이트: ${q.site}</span></div></div>
+      <div class="qa-detail-body" style="text-align:center;padding:42px;color:var(--text-muted)">
+        <div style="font-size:32px;margin-bottom:10px">🔒</div>
+        <div style="font-weight:700;color:var(--text);margin-bottom:6px">비밀글입니다.</div>
+        <div>관리자 또는 작성자 본인이 아니면 비밀번호 입력 후 열람할 수 있습니다.</div>
+        <div class="secret-unlock"><button class="btn-primary" onclick="unlockQa(${q.id})">비밀번호 입력</button></div>
+      </div>`;
+    return;
+  }
+  q.views++;
   document.getElementById('qa-detail-content').innerHTML=`
     <div class="qa-detail-hdr">
       <div class="qa-detail-title">${badge} ${q.secret?'🔒 ':''} ${q.title}</div>
-      <div class="qa-detail-meta"><span>작성자: ${q.author}</span><span>작성일: ${q.date}</span><span>로봇: ${q.robot}</span><span>사이트: ${q.site}</span><span>유형: ${q.type}</span><span>조회: ${q.views}</span></div>
+      <div class="qa-detail-meta"><span>작성자: ${q.author}</span><span>작성일: ${q.date}</span><span>시스템/기기: ${q.robot}</span><span>사이트: ${q.site}</span><span>유형: ${q.type}</span><span>조회: ${q.views}</span></div>
     </div>
     <div class="qa-detail-body">${q.body.replace(/\n/g,'<br>')}</div>
     ${q.answer?`<div class="qa-answer"><div class="qa-answer-title">✅ STAR TEAM 답변</div><div class="qa-answer-body">${q.answer.replace(/\n/g,'<br>')}</div></div>`:''}
-    <div class="qa-detail-actions"><button class="btn-ghost" onclick="showQaForm(${q.id})">수정</button><button class="btn-danger" onclick="deleteQa(${q.id})">삭제</button></div>`;
+    ${me?.role==='admin'&&qaAnswerEditId===q.id?`<div class="qa-answer"><div class="qa-answer-title">🛠 관리자 답변 작성/수정</div><div class="answer-box"><textarea id="admin-answer-text" placeholder="답변 내용을 입력하세요">${q.answer||''}</textarea><div class="form-actions"><button class="btn-ghost" onclick="qaAnswerEditId=null;showQaDetail(${q.id})">취소</button><button class="btn-primary" onclick="saveQaAnswer(${q.id})">답변 저장</button></div></div></div>`:''}
+    <div class="qa-detail-actions">
+      ${me?.role==='admin'?`<button class="btn-ghost" onclick="qaAnswerEditId=${q.id};showQaDetail(${q.id})">${q.answer?'답변 수정':'답변 작성'}</button>`:''}
+      ${canEditQa(q)?`<button class="btn-ghost" onclick="showQaForm(${q.id})">문의 수정</button>`:''}
+      ${canDeleteQa(q)?`<button class="btn-danger" onclick="deleteQa(${q.id})">삭제</button>`:''}
+    </div>`;
 }
-function deleteQa(id){if(!confirm('삭제하시겠습니까?'))return;QA_DATA=QA_DATA.filter(x=>x.id!==id);backToQaList();showToast('삭제되었습니다');}
+function deleteQa(id){const q=QA_DATA.find(x=>x.id===id); if(!q||!canDeleteQa(q)){alert('관리자만 삭제할 수 있습니다.');return;} if(!confirm('삭제하시겠습니까?'))return;QA_DATA=QA_DATA.filter(x=>x.id!==id);backToQaList();showToast('삭제되었습니다');}
 function backToQaList(){document.getElementById('qa-detail-view').style.display='none';document.getElementById('qa-list-view').style.display='block';renderQa();}
 
 /* ═══════════════════════════════════
    CONTACT
 ═══════════════════════════════════ */
 const STAR=[
-  {name:'전세웅',rank:'수석 연구원 (총괄)',email:'daniel@keti.re.kr',phone:'010-9767-3102',ext:'032-6212-842',roles:['협업 문의','총괄'],senior:true,photo:null},
-  {name:'신장범',rank:'연구원',email:'roy_shin@keti.re.kr',phone:'010-9424-4958',ext:'—',roles:['운영 스케줄링','기타 문의'],photo:null},
-  {name:'이정제',rank:'연구원 (HW)',email:'milli7906@keti.re.kr',phone:'010-8300-7706',ext:'—',roles:['3D 모델링','하드웨어 제작'],photo:null},
-  {name:'Dr. Phung',rank:'연구원 (시니어)',email:'ngocpq@keti.re.kr',phone:'010-9215-2401',ext:'—',roles:['Rubberneck','AND','GERRI'],photo:null},
-  {name:'김강현',rank:'연구원 (팀장)',email:'khkim1207@keti.re.kr',phone:'010-7712-0094',ext:'—',roles:['TOM','COBOT','GoCart180','RB-Y1'],photo:null},
-  {name:'천지영',rank:'연구원',email:'c8599@keti.re.kr',phone:'010-2535-2709',ext:'—',roles:['TOM','SPOT','Vision60','자이드모바일'],photo:null},
-  {name:'정윤철',rank:'연구원',email:'ycpiglet@keti.re.kr',phone:'010-6506-2520',ext:'—',roles:['GoCart180','RB-Y1'],photo:'../src/assets/images/headshots/증명사진_정윤철.jpg'},
-  {name:'김형겸',rank:'연구원',email:'pkqwaszx@keti.re.kr',phone:'010-2235-3634',ext:'—',roles:['SOLAR','Novatek','엘리베이터/자동문'],photo:'../src/assets/images/headshots/증명사진_김형겸.jpg'},
-  {name:'홍석희',rank:'연구원',email:'hsh2001234@keti.re.kr',phone:'010-9925-9619',ext:'—',roles:['SOLAR UI'],photo:'../src/assets/images/headshots/증명사진_홍석희.JPG'},
+  {name:'전세웅',site:'all',rank:'수석 연구원 (총괄)',email:'daniel@keti.re.kr',phone:'010-9767-3102',ext:'032-6212-842',roles:['협업 문의','총괄'],senior:true,photo:null},
+  {name:'신장범',site:'all',rank:'연구원 (행정)',email:'roy_shin@keti.re.kr',phone:'010-9424-4958',ext:'—',roles:['운영 스케줄링','행정'],photo:null},
+  {name:'이정제',site:'all',rank:'연구원 (HW)',email:'milli7906@keti.re.kr',phone:'010-8300-7706',ext:'—',roles:['3D 모델링','하드웨어 제작'],photo:null},
+  {name:'Dr. Phung',site:'all',rank:'연구원 (시니어)',email:'ngocpq@keti.re.kr',phone:'010-9215-2401',ext:'—',roles:['Rubberneck','AND','GERRI'],photo:null},
+  {name:'김강현',site:'all',rank:'연구원 (팀장)',email:'khkim1207@keti.re.kr',phone:'010-7712-0094',ext:'—',roles:['TOM','COBOT','GoCart180','RB-Y1'],photo:null},
+  {name:'천지영',site:'all',rank:'연구원 (IoT)',email:'c8599@keti.re.kr',phone:'010-2535-2709',ext:'—',roles:['TOM','SPOT','Vision60','자이드모바일','IoT'],photo:null},
+  {name:'정윤철',site:'all',rank:'연구원 (로봇)',email:'ycpiglet@keti.re.kr',phone:'010-6506-2520',ext:'—',roles:['GoCart180','RB-Y1','로봇'],photo:'../src/assets/images/headshots/증명사진_정윤철.jpg'},
+  {name:'김형겸',site:'all',rank:'연구원 (백엔드)',email:'pkqwaszx@keti.re.kr',phone:'010-2235-3634',ext:'—',roles:['SOLAR','Novatek','엘리베이터/자동문','백엔드'],photo:'../src/assets/images/headshots/증명사진_김형겸.jpg'},
+  {name:'홍석희',site:'all',rank:'연구원 (UI/UX)',email:'hsh2001234@keti.re.kr',phone:'010-9925-9619',ext:'—',roles:['SOLAR UI','UI/UX'],photo:'../src/assets/images/headshots/증명사진_홍석희.JPG'},
 ];
 const ITP=[
-  {name:'한규환',rank:'센터장',email:'blinds@itp.or.kr',phone:'010-8511-3255',ext:'032-727-5010',roles:['인천 테크노파크 총괄']},
-  {name:'박재서',rank:'선임',email:'jspark@itp.or.kr',phone:'010-3168-2635',ext:'032-727-5015',roles:['현장 관리']},
-  {name:'나종원',rank:'대리',email:'njw@itp.or.kr',phone:'010-2508-2383',ext:'032-727-5016',roles:['현장 운영']},
-  {name:'성지현',rank:'대리',email:'sjh2327@itp.or.kr',phone:'010-5133-1369',ext:'032-727-5022',roles:['현장 운영']},
+  {name:'한규환',site:'incheon',rank:'센터장',email:'blinds@itp.or.kr',phone:'010-8511-3255',ext:'032-727-5010',roles:['인천 청라 로봇랜드 총괄']},
+  {name:'박재서',site:'incheon',rank:'선임',email:'jspark@itp.or.kr',phone:'010-3168-2635',ext:'032-727-5015',roles:['현장 관리']},
+  {name:'나종원',site:'incheon',rank:'대리',email:'njw@itp.or.kr',phone:'010-2508-2383',ext:'032-727-5016',roles:['현장 운영']},
+  {name:'성지현',site:'incheon',rank:'대리',email:'sjh2327@itp.or.kr',phone:'010-5133-1369',ext:'032-727-5022',roles:['현장 운영']},
+  {name:'김윤재',site:'suwon',rank:'연구원 (행정)',email:'yunj95@keti.re.kr',phone:'010-9013-7559',ext:'—',roles:['행정','수서 현장 운영'],org:'KETI / 지능로보틱스연구센터'},
+  {name:'방태준',site:'yeongwol',rank:'한국남부발전 영월빛드림본부',email:'btj124@kospo.co.kr',phone:'010-3397-5206',ext:'070-7713-7624',roles:['영월 현장 운영','한국남부발전'],org:'영월빛드림본부 / 발전운영부'},
 ];
 
 function copyText(t){navigator.clipboard.writeText(t).then(()=>showToast('복사되었습니다 ✓')).catch(()=>showToast('복사 실패'));}
 const CP_ICON=`<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>`;
 
+function syncContactFilters(){
+  const site=document.getElementById('contact-site');
+  if(site && !site.dataset.ready){
+    site.innerHTML='<option value="all">전체 사이트</option>'+SITE_OPTIONS.filter(o=>o.key!=='all').map(o=>`<option value="${o.key}">${o.label}</option>`).join('');
+    site.dataset.ready='1';
+  }
+  const role=document.getElementById('contact-role');
+  if(role && !role.dataset.ready){
+    const roles=[...new Set([...STAR,...ITP].flatMap(c=>c.roles||[]))].sort((a,b)=>a.localeCompare(b,'ko'));
+    role.innerHTML='<option value="all">전체 시스템/로봇</option>'+roles.map(r=>`<option value="${r}">${r}</option>`).join('');
+    role.dataset.ready='1';
+  }
+}
+function setContactSite(k){
+  const sel=document.getElementById('contact-site');
+  if(sel){sel.value=(sel.value===k?'all':k); buildContacts();}
+}
+function buildSiteAddresses(){
+  const box=document.getElementById('site-address-grid'); if(!box) return;
+  const current=document.getElementById('contact-site')?.value||'all';
+  const keys=['incheon','suwon','yeongwol'];
+  box.innerHTML=keys.map(k=>`<div class="site-address-card ${current===k?'active':''}" onclick="setContactSite('${k}')"><b>${SITE_CONF[k].label}</b><div class="addr-line"><span>${SITE_CONF[k].buildingName?SITE_CONF[k].buildingName+' · ':''}${SITE_CONF[k].address||'주소 미등록'}</span></div></div>`).join('');
+}
 function buildContacts(){
+  syncContactFilters();
+  buildSiteAddresses();
+  const q=(document.getElementById('contact-q')?.value||'').trim().toLowerCase();
+  const site=(document.getElementById('contact-site')?.value||'all');
+  const role=(document.getElementById('contact-role')?.value||'all');
+  function match(c){
+    const hay=[c.name,c.rank,c.email,c.phone,c.ext,...(c.roles||[])].join(' ').toLowerCase();
+    const siteOk=site==='all'||c.site==='all'||c.site===site;
+    const roleOk=role==='all'||(c.roles||[]).includes(role);
+    const qOk=!q||hay.includes(q);
+    return siteOk&&roleOk&&qOk;
+  }
   function card(c,isItp){
     const ph=`<div class="cav-placeholder ${c.senior?'senior':''}">${c.name[0]}</div>`;
     const av=c.photo?`<img class="cav" src="${c.photo}" alt="${c.name}" onerror="this.replaceWith(Object.assign(document.createElement('div'),{className:'cav-placeholder ${c.senior?'senior':''}',textContent:'${c.name[0]}' }))">`:ph;
     const roleColor=isItp?'background:#e8f5e9;color:#2e7d32':'';
     const roles=c.roles.map(r=>`<span class="crole" style="${roleColor}">${r}</span>`).join('');
+    const orgText=c.org || (c.site==='incheon'?'인천 테크노파크 / 로봇센터':c.site==='yeongwol'?'영월빛드림본부 / 발전운영부':'KETI / 지능로보틱스연구센터');
     const hasExt=c.ext&&c.ext!=='—';
     const extRow=hasExt?`<div class="cinfo-row"><span class="ck">내선</span><span class="cval">${c.ext}</span><button class="copy-btn" onclick="copyText('${c.ext}')">${CP_ICON}</button></div>`:`<div class="cinfo-row empty"><span class="ck">내선</span><span class="cval">&nbsp;</span><button class="copy-btn" style="visibility:hidden">${CP_ICON}</button></div>`;
     return `<div class="ccard">
-      <div class="ccard-hdr">${av}<div><div class="cname">${c.name}</div><div class="crank">${c.rank}</div><div class="corg">지능로보틱스연구센터</div></div></div>
+      <div class="ccard-hdr">${av}<div><div class="cname">${c.name}</div><div class="crank">${c.rank}</div><div class="corg">${orgText}</div></div></div>
       <div class="croles">${roles}</div>
       <div class="cinfo">
         <div class="cinfo-row"><span class="ck">이메일</span><a class="cval" href="mailto:${c.email}">${c.email}</a><button class="copy-btn" onclick="copyText('${c.email}')">${CP_ICON}</button></div>
@@ -1206,8 +1613,21 @@ function buildContacts(){
       </div>
     </div>`;
   }
-  document.getElementById('star-grid').innerHTML=STAR.map(c=>card(c,false)).join('');
-  document.getElementById('itp-grid').innerHTML=ITP.map(c=>card(c,true)).join('');
+  const star=STAR.filter(match).sort(contactSort);
+  const siteContacts=ITP.filter(match).sort(contactSort);
+  const starSec=document.getElementById('star-contact-sec');
+  if(starSec) starSec.style.display=(site==='all')?'block':'none';
+  document.getElementById('star-grid').innerHTML=star.length?star.map(c=>card(c,false)).join(''):'<div class="qa-empty">조건에 맞는 STAR TEAM 담당자가 없습니다.</div>'; 
+  const wrap=document.getElementById('contact-site-sections');
+  const siteKeys=SITE_OPTIONS.filter(o=>o.key!=='all').map(o=>o.key);
+  wrap.innerHTML=siteKeys.map(k=>{
+    const arr=siteContacts.filter(c=>c.site===k).sort(contactSort);
+    if(site!=='all' && site!==k) return '';
+    const title=SITE_CONF[k].label;
+    const sub=`<span class="contact-sec-sub">${SITE_CONF[k].address||'주소 미등록'} <button class="copy-btn" title="주소 복사" onclick="copyText('${SITE_CONF[k].address||''}')">${CP_ICON}</button></span>`;
+    const body=arr.length?arr.map(c=>card(c,true)).join(''):'<div class="qa-empty">조건에 맞는 사이트 운영 담당자가 없습니다.</div>';
+    return `<div class="contact-sec" style="margin-top:24px"><div class="contact-sec-head"><div class="contact-sec-title">${title}</div>${sub}</div><div class="cgrid">${body}</div></div>`;
+  }).join('');
 }
 
 /* ═══════════════════════════════════
@@ -1281,11 +1701,11 @@ function createUser(){
   renderUserTable(); showToast(`${name} 계정이 생성되었습니다`);
 }
 function renderSitePerms(){
-  const siteLabels={incheon:'인천 청라',suwon:'강남 수서',yeongwol:'강원 영월'};
+  const siteLabels={incheon:'인천 청라',suwon:'강남 테스트필드',yeongwol:'강원 영월'};
   document.getElementById('site-perms-table').innerHTML=`
     <div class="qa-table">
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:8px 14px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em">
-        <span>아이디</span><span>인천 청라</span><span>강남 수서</span><span>강원 영월</span>
+        <span>아이디</span><span>인천 청라</span><span>강남 테스트필드</span><span>강원 영월</span>
       </div>
       ${USERS_DB.map(u=>`<div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;padding:9px 14px;border-bottom:1px solid var(--border);font-size:12px;align-items:center">
         <span style="font-family:var(--mono)">${u.id} <span style="font-size:10px;color:var(--text-muted)">(${u.name})</span></span>
@@ -1405,8 +1825,8 @@ function restoreSession(){
   document.getElementById('urole').textContent=u.role==='admin'?'관리자':u.role==='staff'?'직원':'일반';
   const av=document.getElementById('uav'); av.textContent=u.name[0]; av.classList.toggle('admin-av',u.role==='admin');
   const sel=document.getElementById('site-sel');
-  Array.from(sel.options).forEach(o=>{ o.disabled=!u.sites.includes(o.value); if(!u.sites.includes(o.value)) o.style.display='none'; else o.style.display=''; });
-  sel.value=u.sites.includes(activeSite)?activeSite:u.sites[0];
+  Array.from(sel.options).forEach(o=>{ const ok=u.role==='admin'||u.sites.includes(o.value); o.disabled=!ok; o.style.display=ok?'':'none'; });
+  sel.value=(u.role==='admin'?(activeSite||'incheon'):(u.sites.includes(activeSite)?activeSite:u.sites[0]));
   onSiteChange();
   initApp();
 }
