@@ -1,0 +1,40 @@
+﻿vendorGroup,robot,name,file,type,date
+gocart180,GoCart180,GoCart180 LT 사용자 매뉴얼 V2.5,,manual,2023-12
+gocart180,GoCart180,GoCart180 SD 사용자 매뉴얼 V1.7,,manual,2023-12
+gocart180,GoCart180,YUJIN 소프트웨어 사용자 매뉴얼 V1.6,,manual,2024-06
+gocart180,GoCart180,Rocon Client Service API 매뉴얼 V1.3,,spec,2025-08
+gocart180,GoCart180,FMS Custom Service API 가이드,,spec,—
+gocart180,GoCart180,Concert WebSockets API Documentation v0.5,,spec,—
+rby1,RB-Y1,Quick Start Guide,,manual,—
+rby1,RB-Y1,기술 교육 자료 (2025-03),,manual,2025-03
+rby1,RB-Y1,Hardware Overview,,spec,—
+rby1,RB-Y1,Software Stack,,spec,—
+rby1,RB-Y1,Command and Control Architecture,,spec,—
+rby1,RB-Y1,Robot and Command,,spec,—
+rby1,RB-Y1,Robot Main Program,,spec,—
+rby1,RB-Y1,Mechanical Part,,spec,—
+rby1,RB-Y1,Electrical Part,,spec,—
+rby1,RB-Y1,Gripper,,spec,—
+rby1,RB-Y1,Model A 사양,,spec,—
+rby1,RB-Y1,Access Information,,spec,—
+rby1,RB-Y1,Battery Charger,,spec,—
+rby1,RB-Y1,Control Hold Time & Minimum Time,,spec,—
+rby1,RB-Y1,C++ 예제 코드,,spec,—
+rby1,RB-Y1,Python 예제 코드,,spec,—
+spot,SPOT,SPOT IFU v2.3 (사용 정보),,manual,—
+spot,SPOT,SPOT 사용 정보 v2.1.2 (한국어),,manual,—
+spot,SPOT,SPOT 제품 사양서,,datasheet,—
+spot,SPOT,SPOT 스펙 시트,,datasheet,—
+spot,SPOT,SPOT Arm IFU v2.1,,manual,—
+spot,SPOT,SPOT Arm 사용 정보 v1.0,,manual,—
+spot,SPOT,SPOT Arm 기술 명세,,spec,—
+spot,SPOT,도킹 스테이션 IFU v1.3,,spec,—
+spot,SPOT,도킹 스테이션 명세,,spec,—
+spot,SPOT,SPOT CAM+,,spec,—
+spot,SPOT,SPOT GXP,,spec,—
+spot,SPOT,배터리 전원 공급 장치 IFU v1.1,,cert,—
+spot,SPOT,배터리 SDS (Molicel),,cert,—
+spot,SPOT,SPOT Station IFU v1.1,,spec,—
+doosan,Doosan,Doosan 사용자 매뉴얼 V2.12.1 (MH 시리즈),,manual,—
+doosan,Doosan,Doosan 프로그래밍 매뉴얼 V2.12,,manual,—
+doosan,Doosan,Modbus-TCP Slave I/O 테이블,,spec,—

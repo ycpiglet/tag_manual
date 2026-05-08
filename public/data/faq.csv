@@ -1,0 +1,17 @@
+﻿cat,q,a
+access,로그인 계정은 어떻게 받나요?,담당자 연락망 탭에서 STAR TEAM 관리자(admin@keti.re.kr)에게 요청하세요. 역할(운영자/개발자/뷰어)과 접근 사이트를 명시해주시면 계정을 발급해 드립니다.
+access,비밀번호를 잊어버렸어요.,현재 비밀번호 재설정 기능은 구현되지 않았습니다. 관리자 계정(<code>admin/admin</code>)으로 로그인 후 관리자 페이지 → 계정 관리에서 비밀번호를 직접 수정할 수 있습니다.
+access,일반 계정에서 볼 수 없는 탭이 있나요?,관리자 페이지(ADMIN)는 <code>role: admin</code> 계정만 접근 가능합니다. 운영자(staff) 이상은 모든 운영 탭에 접근할 수 있습니다.
+robot,"로봇 상태가 ""경고""로 표시됩니다. 어떻게 해야 하나요?","경고는 Rubberneck 또는 SOLAR 중 하나의 연결이 불안정한 상태입니다. 전체 현황 탭에서 해당 로봇 카드를 확인하고, 담당자 연락망에서 현장 담당자에게 연락하세요. GoCart180의 경우 Rubberneck LED가 녹색인지 확인하세요."
+robot,GoCart180이 Start 버튼을 눌러도 움직이지 않아요.,<b>체크리스트:</b><br>① 브레이크 스위치 → ON 확인<br>② Joystick 스위치 → Auto 확인<br>③ 비상 정지 버튼 해제 확인 (시계 방향 회전)<br>④ 배터리 잔량 확인 (LED 주황색 = 저배터리)<br><br>자세한 내용은 운영 매뉴얼 → GoCart180 → 트러블슈팅을 참조하세요.
+robot,로봇 배터리가 완전히 방전됐을 때 어떻게 복구하나요?,① 배터리 덮개 열기 → ② 하드웨어 스위치 OFF → ③ 트리거 스위치 I→O→I 리셋 → ④ 하드웨어 스위치 ON → ⑤ 수동 충전 케이블로 최소 30분 충전 (24V 이상 확인). 운영 매뉴얼 8장을 참조하세요.
+robot,충전 스테이션 도킹이 계속 실패합니다.,① 충전 스테이션 앞 1800×1600mm 공간 확보<br>② 비주얼 마커(ArUco) 오염/가림 확인<br>③ 조도 300Lux 이상 확인 (직사광선·반사광 주의)<br>④ 충전 단자 높이 일치 확인<br>⑤ 충전 모드 스위치 → O (Auto) 확인
+platform,Rubberneck에 접속이 안 됩니다.,"① 네트워크 연결 상태 확인 (같은 인트라넷)<br>② <a href=""http://www.rubberneck.kr"" target=""_blank"">www.rubberneck.kr</a> 직접 접속 시도<br>③ 사이드바 → Rubberneck 탭 클릭 시 리다이렉트 확인<br>④ 담당자: Dr. Phung (ngocpq@keti.re.kr)"
+platform,SOLAR에서 임무를 등록했는데 로봇이 출발하지 않아요.,① SOLAR-로봇 연결 상태 확인 (전체 현황 탭)<br>② 로봇이 Start 상태인지 확인<br>③ 임무 경로의 로컬라이제이션 완료 여부 확인<br>④ 담당자: 김형겸 (pkqwaszx@keti.re.kr)
+platform,Rubberneck과 SOLAR의 차이가 무엇인가요?,"<b>Rubberneck</b>은 WebRTC 기반 실시간 원격 관제 플랫폼입니다. 영상 스트리밍과 수동 원격 조작(WASD)을 제공합니다.<br><br><b>SOLAR</b>는 Fleet 관리 플랫폼입니다. 자율 임무 스케줄링, 경로 계획, 다수 로봇 동시 운영에 초점을 맞춥니다.<br><br>자세한 정의는 용어사전 탭을 참조하세요."
+manual,"매뉴얼이 ""Fallback""으로 표시됩니다.",매뉴얼 파일을 서버에서 불러오지 못한 상태입니다. 두 가지 원인이 있습니다:<br>① <b>파일 직접 열기(file://)</b>: 브라우저 보안 정책상 로컬 파일 fetch가 차단됩니다. <code>python3 -m http.server 8080</code>으로 로컬 서버를 실행하세요.<br>② <b>파일 미존재</b>: <code>docs/manuals/{robot}/</code> 경로에 .md 파일이 있는지 확인하세요.
+manual,새로운 로봇 매뉴얼을 추가하려면 어떻게 하나요?,"① <code>docs/manuals/{robot}/user_manual.md</code> 작성<br>② HTML의 <code>MANUAL_MD_BY_KEY</code>에 항목 추가<br>③ 오프라인 지원이 필요하면 <code>EMBEDDED_MANUALS</code>에 내용 임베드<br>④ 로봇 이미지를 <code>src/assets/images/robots/{robot}/</code>에 배치<br>자세한 내용은 CLAUDE.md의 ""새 로봇 추가"" 섹션을 참조하세요."
+manual,벤더 매뉴얼 PDF를 추가하려면 어떻게 하나요?,"① PDF를 <code>docs/vendor_docs/{robot}/</code>에 저장<br>② HTML의 <code>VENDOR_DOCS</code> 배열에 항목 추가 (robot, type, name, path, date, size 필드)<br>운영 매뉴얼 탭 → 벤더 매뉴얼에서 바로 확인 가능합니다."
+trouble,전체 현황 탭에서 로봇이 보이지 않아요.,① 사이트 선택 드롭다운(탑바)에서 올바른 사이트가 선택됐는지 확인<br>② 해당 사이트에 로봇 데이터가 등록됐는지 개발자에게 확인 요청<br>③ 로그인 계정의 사이트 접근 권한 확인 (관리자 페이지 → 계정 관리)
+trouble,화면이 전혀 반응하지 않거나 로그인이 안 됩니다.,"① 브라우저 콘솔(F12)에서 JavaScript 오류 확인<br>② 브라우저 캐시 강제 새로고침: <code>Ctrl+Shift+R</code> (Mac: <code>Cmd+Shift+R</code>)<br>③ 다른 브라우저(Chrome, Edge, Firefox)에서 시도<br>④ 파일 직접 열기 환경이라면 로컬 서버 사용 권장"
+trouble,PDF 내보내기를 해도 다운로드가 안 됩니다.,"Claude 프리뷰 패널 또는 파일 직접 열기(file://) 환경에서는 브라우저 보안 정책상 자동 다운로드가 차단될 수 있습니다. 이 경우 인쇄 창이 열리면 ""PDF로 저장""을 선택하세요. 로컬 서버 환경에서는 직접 다운로드가 정상 작동합니다."

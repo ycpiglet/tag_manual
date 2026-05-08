@@ -1,0 +1,25 @@
+﻿term,en,cat,def,related
+AMR,Autonomous Mobile Robot,robot,자율이동로봇. 자체 센서와 소프트웨어로 경로를 스스로 계획·탐색하는 로봇. AGV와 달리 고정 트랙 없이 동적 환경에서 운영된다.,AGV|SLAM|LiDAR
+AGV,Automated Guided Vehicle,robot,"자동안내차량. 자기테이프, 레일, QR 등 고정 가이드를 따라 이동하는 자율화 운반 로봇. AMR보다 유연성이 낮다.",AMR
+SLAM,Simultaneous Localization and Mapping,nav,동시 위치 추정 및 지도 작성. 로봇이 주행하며 주변 환경 지도를 만드는 동시에 지도 내 자신의 위치를 추정하는 기술.,LiDAR|로컬라이제이션|매핑
+로컬라이제이션,Localization,nav,로봇이 이미 작성된 지도 내에서 자신의 위치를 계산하는 과정. SLAM의 매핑이 완료된 후 운영 단계에서 사용된다.,SLAM|매핑
+매핑,Mapping,nav,로봇이 공간을 이동하며 주변 환경을 2D 또는 3D 지도로 기록하는 과정. 이후 내비게이션의 기반이 된다.,SLAM|로컬라이제이션
+LiDAR,Light Detection and Ranging,robot,"레이저 펄스를 발사해 반사 시간으로 거리를 측정하는 센서. 2D LiDAR는 평면 장애물을, 3D LiDAR는 입체 공간을 감지한다.",AMR|SLAM
+BMS,Battery Management System,robot,"배터리 관리 시스템. 충전 상태, 온도, 셀 균형 등을 모니터링하고 과충전/과방전을 방지한다.",도킹|충전 스테이션
+도킹,Docking,robot,로봇이 자동으로 충전 스테이션에 접근·정렬·접촉하는 과정. 비주얼 마커(ArUco) 인식을 통해 정밀 위치 보정을 수행한다.,BMS|충전 스테이션
+충전 스테이션,Charging Station,robot,"로봇의 자동 충전을 위한 도킹 장치. 접촉 단자로 전력을 공급하며, LED로 대기/충전/완충 상태를 표시한다.",도킹|BMS
+Fleet,Fleet Management,platform,"다수의 로봇을 통합 관리하는 시스템 또는 개념. 임무 배분, 충전 스케줄링, 트래픽 제어 등을 포함한다.",SOLAR|TOM
+TOM,TOM AND GERRI Framework,platform,KETI에서 개발한 이기종 로봇 통합 프레임워크의 서버 측 컴포넌트. AND 데몬을 통해 로봇-플랫폼 간 통신을 중계한다.,GERRI|AND|Rubberneck
+GERRI,Generic Environment for Robot Remote Interaction,platform,TOM AND GERRI 프레임워크의 로봇 측 컴포넌트. BaseController/SubController 구조로 다양한 로봇 SDK를 추상화한다.,TOM|AND
+AND,Adaptive Network Daemon,platform,TOM AND GERRI의 통신 미들웨어. Pub/Sub 패턴으로 로봇과 관제 서버 간 메시지를 비동기적으로 전달한다.,TOM|GERRI
+Rubberneck,Rubberneck,platform,"KETI STAR TEAM의 WebRTC 기반 원격 관제 플랫폼. 영상 스트리밍, 원격 조작, 로봇 상태 모니터링을 제공한다.",WebRTC|TOM|SOLAR
+SOLAR,SOLAR,platform,"Fleet 관리 및 임무 스케줄링 플랫폼. 다수 로봇의 경로 계획, 임무 배분, 운영 현황 대시보드를 제공한다.",Fleet|Rubberneck
+ketirtc,ketirtc,protocol,KETI에서 개발한 WebRTC 기반 로봇 통신 라이브러리. GoCart180 등에 사용되며 Rubberneck 서버와 연동된다.,WebRTC|Rubberneck
+WebRTC,Web Real-Time Communication,protocol,브라우저 간 P2P 실시간 통신 표준. 영상·음성·데이터를 별도 플러그인 없이 낮은 지연(< 200ms)으로 전송한다.,WebSocket|ketirtc
+WebSocket,WebSocket,protocol,단일 TCP 연결 위에서 전이중(full-duplex) 통신을 지원하는 프로토콜. HTTP 핸드셰이크 후 지속 연결을 유지한다.,WebRTC
+ROS2,Robot Operating System 2,protocol,로봇 개발을 위한 미들웨어 프레임워크. DDS 기반으로 노드 간 메시지를 교환하며 실시간성을 보장한다.,AND|GERRI
+데드맨 스위치,Deadman Switch,safety,조작자가 스위치를 누른 상태에서만 로봇이 동작하는 안전 장치. 손을 놓으면 즉시 정지. Logitech 조이스틱의 LB 버튼.,비상 정지|FuSa
+비상 정지,Emergency Stop (E-Stop),safety,즉각적으로 모터 전원을 차단하는 하드웨어 버튼. GoCart180 좌·우측에 각 1개 장착. 시계 방향 회전으로 잠금 해제.,데드맨 스위치|FuSa
+FuSa,Functional Safety,safety,기능 안전. 시스템 오작동 시 허용 위험 수준 이내로 동작을 보장하는 설계 원칙. GoCart180은 PL-d 수준의 2D LiDAR 기반 안전 기능을 탑재.,비상 정지|LiDAR
+PL-d,Performance Level d,safety,ISO 13849 기계 안전 성능 등급 a~e 중 두 번째로 높은 수준. 심각한 부상 위험 기계에 요구된다.,FuSa
+ArUco,ArUco Marker,nav,컴퓨터 비전용 정사각형 이진 마커. GoCart180의 충전 스테이션 도킹 정렬에 활용되며 카메라로 위치·방향을 정밀 추정한다.,도킹|로컬라이제이션

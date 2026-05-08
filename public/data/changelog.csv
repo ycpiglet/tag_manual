@@ -1,0 +1,26 @@
+﻿version,date,type,text
+v1.4.0,2025-05,add,벤더 매뉴얼 서브탭 — 인라인 PDF 뷰어 (분할 레이아웃)
+v1.4.0,2025-05,add,"용어사전 탭 — 24개 용어, 카테고리 필터, 연관 용어 링크"
+v1.4.0,2025-05,add,변경 이력 탭
+v1.4.0,2025-05,add,언어 전환 토글 (KO/EN) — 탑바 우측
+v1.4.0,2025-05,add,운영 매뉴얼 nav 검색/카테고리 필터
+v1.4.0,2025-05,fix,toggleTheme 함수 선언 누락 syntax error 수정
+v1.3.0,2025-04,add,"다크 모드 — CSS 변수 오버라이드, localStorage 유지"
+v1.3.0,2025-04,add,협력업체 탭 — 6개사 연락처
+v1.3.0,2025-04,add,highlight.js 코드 하이라이팅 + 복사 버튼
+v1.3.0,2025-04,add,"GFM callout 블록, 토글/접기 블록 지원"
+v1.3.0,2025-04,change,PDF 내보내기 → html2pdf.js 직접 다운로드
+v1.2.0,2025-03,add,"Pretendard Variable 폰트 — SF Pro 레퍼런스, OFL 라이선스"
+v1.2.0,2025-03,add,EMBEDDED_MANUALS 패턴 — file:// 오프라인 지원
+v1.2.0,2025-03,add,엘리베이터·자동문(엠투엠테크) 이미지 추가
+v1.2.0,2025-03,fix,로봇 카드 이미지 mix-blend-mode: multiply — 흰 배경 제거
+v1.2.0,2025-03,change,"사이드바 아이콘 통일 (Rubberneck→모니터, SOLAR→태양, 수동제어→게임패드)"
+v1.1.0,2025-02,add,GoCart180 사용자/개발자 매뉴얼 분리 구조
+v1.1.0,2025-02,add,docs/manuals/{robot}/ 폴더 체계
+v1.1.0,2025-02,add,vendor_docs/ — 유진로봇 공식 매뉴얼 PDF
+v1.1.0,2025-02,change,MANUAL_MD_BY_KEY split: true 플래그 도입
+v1.0.0,2025-01,add,STAR TEAM 원격 관제 시스템 초기 릴리즈
+v1.0.0,2025-01,add,3개 사이트 로봇 현황 모니터링
+v1.0.0,2025-01,add,Markdown 기반 운영 매뉴얼 뷰어
+v1.0.0,2025-01,add,"담당자 연락망, Q&A"
+v1.0.0,2025-01,add,"Apple 디자인 시스템, 3단계 권한"
