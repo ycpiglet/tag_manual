@@ -13,4 +13,5 @@ QA는 이 목록을 기반으로 기술적 버그 리포트(BUG-{번호})를 작
 | BTC-002 | 로그인 화면에 비밀번호 노출 | 이상하다 (보안) | 미수정 | — | Lead Engineer 판단 |
 | BTC-003 | 새로고침 후 로그인 유지 (공용 PC 위험) | 이상하다 | 미수정 | — | Backend/Lead |
 | BTC-004 | GPS 기능 외부 IP HTTP 환경에서 비작동 | 불편하다 | 미수정 | — | Backend |
-| BTC-005 | 개발 내부 파일 전체가 브라우저로 열림 (.git, agents/, deploy.sh 등) | 이상하다 (보안) | 신규 | — | Backend |
+| BTC-005 | 개발 내부 파일 전체가 브라우저로 열림 (.git, agents/, deploy.sh 등) | 이상하다 (보안) | 미수정(로컬) / Vercel .vercelignore 차단 | — | Backend |
+| BTC-006 | Vercel 배포 환경에서 로봇/담당자 사진 미로딩 | 불편하다 | 수정 완료 | — | Backend |

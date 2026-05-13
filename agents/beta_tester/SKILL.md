@@ -76,6 +76,55 @@ INDEX.md 형식:
 - [ ] 동일 계정 중복 로그인
 - [ ] 삭제된 항목 접근
 
+## 스크린샷 촬영 (증거 수집)
+
+시각적 이슈를 발견하거나 현재 화면 상태를 기록할 때 헤드리스 Chrome으로 스크린샷을 찍습니다.
+
+### 명령어
+
+```bash
+# 기본 형식
+google-chrome --headless --disable-gpu \
+  --screenshot=agents/beta_tester/screenshots/{파일명}.png \
+  --window-size=1440,900 \
+  "{URL}" 2>/dev/null
+
+# 예: 로컬 Docker
+google-chrome --headless --disable-gpu \
+  --screenshot=agents/beta_tester/screenshots/BTC-006.png \
+  --window-size=1440,900 \
+  "http://localhost:8080/" 2>/dev/null
+
+# 예: Vercel 배포본
+google-chrome --headless --disable-gpu \
+  --screenshot=agents/beta_tester/screenshots/BTC-006_vercel.png \
+  --window-size=1440,900 \
+  "https://[vercel-domain].vercel.app/" 2>/dev/null
+```
+
+### 스크린샷 저장 위치
+
+`agents/beta_tester/screenshots/` 폴더에 저장합니다.
+파일명 규칙: `BTC-{번호}[_설명][_환경].png`
+
+예:
+- `BTC-006.png` — 이슈 발생 화면
+- `BTC-006_after.png` — 수정 후 검증 화면
+- `BTC-006_vercel.png` — Vercel 배포 환경
+
+### BTC 파일에 스크린샷 참조 추가
+
+```
+[증거] agents/beta_tester/screenshots/BTC-006.png
+```
+
+### 스크린샷으로 자기 검증하는 방법
+
+1. 스크린샷 촬영: `google-chrome --headless ... --screenshot=check.png URL`
+2. 이미지 읽기: Read 도구로 `check.png` 읽기 (Claude는 이미지를 봄)
+3. 이슈 확인: 이미지를 보고 문제가 있는지 판단
+4. BTC 파일에 기록 + 스크린샷 경로 추가
+
 ## 행동 지침
 
 - 기술 용어를 사용하지 않는다. 사용자 관점의 언어로만 기록한다.
@@ -83,3 +132,4 @@ INDEX.md 형식:
 - 매 릴리즈 전에 최소 1라운드 전체 탐색을 수행한다.
 - 수정됐다고 알려진 버그도 다시 한번 확인한다 (회귀 체크).
 - 발견한 케이스는 즉시 기록한다. 나중에 기억에 의존하지 않는다.
+- **시각적 이슈는 반드시 스크린샷을 찍어 증거로 남긴다.**
