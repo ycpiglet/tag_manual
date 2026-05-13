@@ -5383,7 +5383,7 @@ restoreSession();
       partnerCsvReady=true; return;
     }
     try{
-      const res=await fetch('./partners.csv?ts='+Date.now(),{cache:'no-store'});
+      const res=await fetch('./data/partners.csv?ts='+Date.now(),{cache:'no-store'});
       if(!res.ok) throw new Error('HTTP '+res.status);
       const text=await res.text();
       if(text){ partnerCsvText=text; normalize(text); }
@@ -5455,64 +5455,160 @@ restoreSession();
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   Q&A 태그 멘션 + 댓글 시스템
+   Q&A 태그 멘션 + 댓글 시스템 (GitHub-style)
    기존 코드 무수정 — wrapper & injection only
 ═══════════════════════════════════════════════════════════ */
 (function() {
 
-/* ── 상태 ─────────────────────────────────────────────────── */
 window.__qaFltMention = 'all';
 let __commentNextId = 1;
+let __editingComment = null; // {qaId, commentId}
 
 /* ── 유틸 ─────────────────────────────────────────────────── */
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
 function getAllContacts() {
-  // window.__cmap (contact card 기능이 빌드한 맵) 활용
   const map = window.__cmap || {};
   const all = Object.values(map);
-  // __cmap이 아직 비어있으면 STAR/ITP fallback
   if (!all.length && typeof STAR !== 'undefined') return [...(STAR||[]), ...(ITP||[])];
   return all;
 }
 
+function getContactByName(name) {
+  return getAllContacts().find(c => c.name === name);
+}
+
+/* 멘션 형식:
+   - @김강현       (공백 없는 단일 이름)
+   - @[Dr. Phung] (공백 포함 이름은 대괄호로 감쌈)
+*/
 function parseMentions(text) {
-  const matches = (text || '').match(/@([^\s@,!?]+)/g) || [];
-  return [...new Set(matches.map(m => m.slice(1)))];
+  const re = /@\[([^\]]+)\]|@([^\s@,!?<\[]+)/g;
+  const names = new Set();
+  let m;
+  while ((m = re.exec(text || '')) !== null) {
+    names.add(m[1] || m[2]);
+  }
+  return [...names];
 }
 
 function renderMentionText(text) {
   if (!text) return '';
-  const esc = s => s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
-  return esc(text).replace(/@([^\s@,!?<]+)/g,
-    '<span class="qa-mention">@$1</span>');
+  let s = escHtml(text);
+  // code blocks (multi-line) — protect content first
+  s = s.replace(/```([\s\S]*?)```/g, (_, code) =>
+    '<pre class="md-pre"><code>' + code.replace(/^\n/, '') + '</code></pre>');
+  // inline code
+  s = s.replace(/`([^`\n]+)`/g, '<code class="md-code">$1</code>');
+  // bold (before italic)
+  s = s.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
+  // italic — 양 끝이 non-space인 경우 매치 (한글/숫자/영문 인접 OK)
+  s = s.replace(/\*(\S[^*\n]*?\S|\S)\*/g, '<em>$1</em>');
+  // strikethrough
+  s = s.replace(/~~([^~\n]+)~~/g, '<del>$1</del>');
+  // links [text](http://...)
+  s = s.replace(/\[([^\]\n]+)\]\((https?:\/\/[^\s)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener" class="md-link">$1</a>');
+  // mentions (after markdown)
+  s = s.replace(/@\[([^\]]+)\]|@([^\s@,!?&;\[<]+)/g, (_, br, simple) => {
+    const name = br || simple;
+    return '<span class="qa-mention">@' + name + '</span>';
+  });
+  // line breaks — but not inside <pre>
+  const parts = s.split(/(<pre[\s\S]*?<\/pre>)/);
+  for (let i = 0; i < parts.length; i++) {
+    if (!parts[i].startsWith('<pre')) parts[i] = parts[i].replace(/\n/g, '<br>');
+  }
+  return parts.join('');
 }
 
-/* ── CSS (한 번만) ─────────────────────────────────────────── */
+function fmtMentionToken(name) {
+  return /\s/.test(name) ? ('@[' + name + ']') : ('@' + name);
+}
+
+/* ── CSS ──────────────────────────────────────────────────── */
 if (!document.getElementById('qa-mention-style')) {
   const s = document.createElement('style');
   s.id = 'qa-mention-style';
   s.textContent = `
-.qa-mention{background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:1px 5px;font-weight:600;font-size:.92em}
-.mention-drop{position:fixed;z-index:9500;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:200px;overflow-y:auto;min-width:180px;display:none}
+.qa-mention{background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:1px 6px;font-weight:600;font-size:.92em;cursor:default}
+.mention-drop{position:fixed;z-index:9500;background:var(--surface);border:1px solid var(--border);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,.15);max-height:240px;overflow-y:auto;min-width:200px;display:none}
 .mention-drop.open{display:block}
-.mention-item{padding:7px 12px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:8px;color:var(--text)}
+.mention-item{padding:8px 14px;cursor:pointer;font-size:12px;display:flex;align-items:center;gap:10px;color:var(--text)}
 .mention-item:hover,.mention-item.sel{background:var(--accent-light);color:var(--accent)}
-.mention-item .mi-name{font-weight:700}
+.mention-item .mi-av{width:24px;height:24px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0}
+.mention-item .mi-av img{width:100%;height:100%;border-radius:50%;object-fit:cover}
+.mention-item .mi-info{display:flex;flex-direction:column;gap:1px}
+.mention-item .mi-name{font-weight:700;font-size:12px}
 .mention-item .mi-rank{font-size:10px;color:var(--text-muted)}
-.qa-comments{margin-top:24px;border-top:2px solid var(--border);padding-top:20px}
-.qa-comments-title{font-size:13px;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:6px}
-.qa-comment{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px 14px;margin-bottom:10px}
-.qa-comment-meta{display:flex;align-items:center;gap:8px;margin-bottom:6px;font-size:11px;color:var(--text-muted)}
-.qa-comment-author{font-weight:700;color:var(--text);font-size:12px}
-.qa-comment-body{font-size:12px;color:var(--text-dim);line-height:1.7}
-.qa-comment-form{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px;margin-top:12px}
-.qa-comment-form textarea{width:100%;min-height:72px;resize:vertical;border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:12px;font-family:inherit;color:var(--text);background:var(--surface2);box-sizing:border-box}
-.qa-comment-form textarea:focus{outline:none;border-color:var(--accent)}
-.qa-comment-actions{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-.qa-comment-hint{font-size:10px;color:var(--text-subtle)}
-.flt-mention-btn{padding:3px 10px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);font-size:11px;cursor:pointer;transition:all .12s}
+.mention-item.sel .mi-rank{color:var(--accent)}
+
+/* ── GitHub-style comment thread ── */
+.qa-comments{margin-top:32px;padding:28px 24px 8px;border-top:1px solid var(--border)}
+.qa-comments-title{font-size:14px;font-weight:700;color:var(--text);margin-bottom:20px;display:flex;align-items:center;gap:8px;padding-left:4px}
+.qa-comments-title .qac-count{font-weight:500;font-size:12px;color:var(--text-muted);background:var(--surface2);padding:2px 10px;border-radius:999px}
+
+.qac-thread{display:flex;flex-direction:column;gap:16px;margin-bottom:24px}
+.qac{display:flex;gap:14px}
+.qac-avatar{width:36px;height:36px;border-radius:50%;flex-shrink:0;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:14px;border:1px solid var(--border);overflow:hidden}
+.qac-avatar img{width:100%;height:100%;object-fit:cover}
+.qac-box{flex:1;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.qac-head{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--surface2);border-bottom:1px solid var(--border);font-size:12px}
+.qac-meta{display:flex;align-items:center;gap:8px;color:var(--text-muted);min-width:0}
+.qac-author{font-weight:700;color:var(--text);font-size:13px}
+.qac-date{font-size:11px;font-family:var(--mono)}
+.qac-edited{font-size:10px;color:var(--text-subtle);font-style:italic}
+.qac-actions{display:flex;gap:2px}
+.qac-act-btn{background:none;border:none;cursor:pointer;color:var(--text-muted);font-size:11px;padding:4px 8px;border-radius:4px;transition:all .12s}
+.qac-act-btn:hover{background:var(--border);color:var(--text)}
+.qac-act-btn.danger:hover{background:#fee2e2;color:#dc2626}
+.qac-body{padding:14px 16px;font-size:13px;color:var(--text);line-height:1.7;word-break:break-word}
+.qac-edit-area{padding:14px 16px}
+.qac-edit-area textarea{width:100%;min-height:80px;resize:vertical;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--text);background:var(--surface);box-sizing:border-box;line-height:1.7}
+.qac-edit-area textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light)}
+.qac-edit-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:10px}
+.qac-edit-btn{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;border:1px solid transparent;transition:all .12s}
+.qac-edit-btn.primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.qac-edit-btn.primary:hover{background:#1d4ed8}
+.qac-edit-btn.ghost{background:var(--surface);color:var(--text-dim);border-color:var(--border)}
+.qac-edit-btn.ghost:hover{background:var(--surface2);color:var(--text)}
+
+/* Compose box */
+.qac-compose{display:flex;gap:14px;padding-top:8px;border-top:1px dashed var(--border)}
+.qac-compose-main{flex:1;min-width:0;background:var(--surface);border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.qac-compose-tabs{display:flex;background:var(--surface2);border-bottom:1px solid var(--border);padding:0 14px}
+.qac-compose-tab{padding:10px 16px;font-size:12px;font-weight:600;color:var(--text-muted);cursor:default;border-bottom:2px solid var(--accent);margin-bottom:-1px}
+.qac-compose-body{padding:14px 16px}
+.qac-compose-body textarea{width:100%;min-height:96px;resize:vertical;border:1px solid var(--border);border-radius:6px;padding:10px 12px;font-size:13px;font-family:inherit;color:var(--text);background:var(--surface2);box-sizing:border-box;line-height:1.7}
+.qac-compose-body textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-light);background:var(--surface)}
+.qac-compose-foot{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--surface2);border-top:1px solid var(--border)}
+.qac-compose-hint{font-size:11px;color:var(--text-subtle)}
+.qac-compose-hint code{font-family:var(--mono);background:var(--surface);padding:1px 5px;border-radius:3px;border:1px solid var(--border);font-size:10px}
+.qac-compose-submit{padding:7px 18px;background:var(--accent);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;transition:background .12s}
+.qac-compose-submit:hover{background:#1d4ed8}
+.qac-compose-submit:disabled{background:var(--border);cursor:not-allowed}
+
+/* Markdown styling — comment body + QA detail body + answer body */
+.qac-body strong, .qa-detail-body strong, .qa-answer-body strong{font-weight:700;color:var(--text)}
+.qac-body em, .qa-detail-body em, .qa-answer-body em{font-style:italic}
+.qac-body del, .qa-detail-body del, .qa-answer-body del{text-decoration:line-through;color:var(--text-muted)}
+.qac-body code.md-code, .qa-detail-body code.md-code, .qa-answer-body code.md-code{background:rgba(0,0,0,.06);padding:2px 6px;border-radius:4px;font-family:var(--mono);font-size:.9em;color:#be185d}
+.qac-body pre.md-pre, .qa-detail-body pre.md-pre, .qa-answer-body pre.md-pre{background:#1e293b;color:#e2e8f0;padding:12px 14px;border-radius:6px;font-family:var(--mono);font-size:12px;overflow-x:auto;margin:8px 0;line-height:1.5}
+.qac-body pre.md-pre code, .qa-detail-body pre.md-pre code, .qa-answer-body pre.md-pre code{background:none;padding:0;color:inherit}
+.qac-body a.md-link, .qa-detail-body a.md-link, .qa-answer-body a.md-link{color:var(--accent);text-decoration:underline}
+.qac-body a.md-link:hover, .qa-detail-body a.md-link:hover, .qa-answer-body a.md-link:hover{opacity:.8}
+
+/* Filter buttons (tag filter row) */
+.flt-mention-btn{padding:4px 12px;border-radius:999px;border:1px solid var(--border);background:var(--surface);color:var(--text-dim);font-size:11px;cursor:pointer;transition:all .12s}
+.flt-mention-btn:hover{border-color:var(--accent);color:var(--accent)}
 .flt-mention-btn.active{background:var(--accent);color:#fff;border-color:var(--accent)}
-.qa-row-tags{display:inline-flex;gap:3px;margin-left:6px}
-.qa-row-tag{background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:600}
+.flt-mention-btn .ct{opacity:.65;margin-left:4px;font-size:9px}
+
+/* List row tags */
+.qa-row-tags{display:inline-flex;gap:3px;margin-left:6px;flex-wrap:wrap}
+.qa-row-tag{background:#dbeafe;color:#1d4ed8;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:600}
   `;
   document.head.appendChild(s);
 }
@@ -5522,6 +5618,7 @@ let __drop = null;
 let __dropTarget = null;
 let __dropSelIdx = -1;
 let __mentionStart = -1;
+let __dropItems = [];
 
 function getMentionDrop() {
   if (!__drop) {
@@ -5538,6 +5635,7 @@ function closeMentionDrop() {
   d.classList.remove('open');
   __dropSelIdx = -1;
   __mentionStart = -1;
+  __dropItems = [];
 }
 
 function showMentionDrop(textarea, query) {
@@ -5551,35 +5649,43 @@ function showMentionDrop(textarea, query) {
 
   const d = getMentionDrop();
   if (!matches.length) { closeMentionDrop(); return; }
+  __dropItems = matches;
 
-  d.innerHTML = matches.map((c, i) =>
-    '<div class="mention-item" data-name="' + c.name + '" data-idx="' + i + '">' +
-    '<span class="mi-name">' + c.name + '</span>' +
-    '<span class="mi-rank">' + (c.rank || '') + '</span>' +
-    '</div>'
-  ).join('');
+  d.innerHTML = matches.map((c, i) => {
+    const ch = String(c.name||'?')[0];
+    const av = c.photo
+      ? '<span class="mi-av"><img src="'+c.photo+'" alt="'+escHtml(c.name)+'" onerror="this.outerHTML=\'' + ch + '\'"></span>'
+      : '<span class="mi-av">'+ch+'</span>';
+    return '<div class="mention-item' + (i===0?' sel':'') + '" data-idx="' + i + '">' +
+      av +
+      '<span class="mi-info"><span class="mi-name">' + escHtml(c.name) + '</span>' +
+      '<span class="mi-rank">' + escHtml(c.rank||'') + '</span></span>' +
+      '</div>';
+  }).join('');
 
   d.querySelectorAll('.mention-item').forEach(function(el) {
     el.addEventListener('mousedown', function(e) {
       e.preventDefault();
-      insertMention(textarea, el.dataset.name);
+      const idx = parseInt(el.dataset.idx, 10);
+      insertMention(textarea, __dropItems[idx].name);
     });
   });
 
   const rect = textarea.getBoundingClientRect();
   d.style.left = rect.left + 'px';
   d.style.top  = (rect.bottom + 4) + 'px';
-  d.style.width = Math.min(260, rect.width) + 'px';
+  d.style.width = Math.min(280, rect.width) + 'px';
   d.classList.add('open');
-  __dropSelIdx = -1;
+  __dropSelIdx = 0; // 항상 첫 항목 자동 선택 — Tab 즉시 동작
 }
 
 function insertMention(textarea, name) {
   const val = textarea.value;
   const before = val.slice(0, __mentionStart);
   const after = val.slice(textarea.selectionStart);
-  textarea.value = before + '@' + name + ' ' + after;
-  const pos = before.length + name.length + 2;
+  const token = fmtMentionToken(name);
+  textarea.value = before + token + ' ' + after;
+  const pos = before.length + token.length + 1;
   textarea.setSelectionRange(pos, pos);
   closeMentionDrop();
   textarea.focus();
@@ -5595,6 +5701,8 @@ function initMentionAutocomplete(textarea) {
     const before = val.slice(0, pos);
     const atIdx = before.lastIndexOf('@');
     if (atIdx === -1) { closeMentionDrop(); return; }
+    const after = before.slice(atIdx);
+    if (after.indexOf('[') !== -1) { closeMentionDrop(); return; } // 완성된 멘션
     const query = before.slice(atIdx + 1);
     if (/\s/.test(query)) { closeMentionDrop(); return; }
     __mentionStart = atIdx;
@@ -5614,9 +5722,11 @@ function initMentionAutocomplete(textarea) {
       e.preventDefault();
       __dropSelIdx = Math.max(__dropSelIdx - 1, 0);
       items.forEach((el, i) => el.classList.toggle('sel', i === __dropSelIdx));
-    } else if ((e.key === 'Enter' || e.key === 'Tab') && __dropSelIdx >= 0) {
+    } else if (e.key === 'Enter' || e.key === 'Tab') {
+      // Tab 또는 Enter: 현재 선택 항목 (없으면 0번) 삽입
       e.preventDefault();
-      insertMention(textarea, items[__dropSelIdx].dataset.name);
+      const idx = __dropSelIdx >= 0 ? __dropSelIdx : 0;
+      if (items[idx]) insertMention(textarea, __dropItems[idx].name);
     } else if (e.key === 'Escape') {
       closeMentionDrop();
     }
@@ -5627,43 +5737,107 @@ function initMentionAutocomplete(textarea) {
   });
 }
 
-/* ── 댓글 섹션 ────────────────────────────────────────────── */
-function renderComments(q) {
-  const comments = q.comments || [];
-  const html = comments.map(function(c) {
-    return '<div class="qa-comment">' +
-      '<div class="qa-comment-meta">' +
-        '<span class="qa-comment-author">' + c.author + '</span>' +
-        '<span>' + c.date + '</span>' +
+/* ── 댓글 권한 체크 ──────────────────────────────────────── */
+function canManageComment(c) {
+  if (typeof me === 'undefined' || !me) return false;
+  if (me.role === 'admin') return true;
+  return (me.name || me.id) === c.author;
+}
+
+/* ── 댓글 단일 렌더 ──────────────────────────────────────── */
+function renderOneComment(qaId, c) {
+  const contact = getContactByName(c.author);
+  const initCh = String(c.author||'?')[0];
+  const avatar = contact && contact.photo
+    ? '<div class="qac-avatar"><img src="' + contact.photo + '" onerror="this.parentNode.textContent=\'' + initCh + '\'"></div>'
+    : '<div class="qac-avatar">' + initCh + '</div>';
+
+  const editing = __editingComment && __editingComment.qaId === qaId && __editingComment.commentId === c.id;
+  const editedMark = c.editedAt ? '<span class="qac-edited">(편집됨)</span>' : '';
+  const canManage = canManageComment(c);
+
+  const actionsHtml = canManage && !editing
+    ? '<div class="qac-actions">' +
+        '<button class="qac-act-btn" onclick="window.editQaComment(' + qaId + ',' + c.id + ')">편집</button>' +
+        '<button class="qac-act-btn danger" onclick="window.deleteQaComment(' + qaId + ',' + c.id + ')">삭제</button>' +
+      '</div>'
+    : '';
+
+  const bodyHtml = editing
+    ? '<div class="qac-edit-area">' +
+        '<textarea id="qac-edit-' + c.id + '">' + escHtml(c.body) + '</textarea>' +
+        '<div class="qac-edit-actions">' +
+          '<button class="qac-edit-btn ghost" onclick="window.cancelQaCommentEdit()">취소</button>' +
+          '<button class="qac-edit-btn primary" onclick="window.saveQaCommentEdit(' + qaId + ',' + c.id + ')">저장</button>' +
+        '</div>' +
+      '</div>'
+    : '<div class="qac-body">' + renderMentionText(c.body) + '</div>';
+
+  return '<div class="qac" data-cid="' + c.id + '">' +
+    avatar +
+    '<div class="qac-box">' +
+      '<div class="qac-head">' +
+        '<div class="qac-meta">' +
+          '<span class="qac-author">' + escHtml(c.author) + '</span>' +
+          '<span class="qac-date">' + c.date + '</span>' +
+          editedMark +
+        '</div>' +
+        actionsHtml +
       '</div>' +
-      '<div class="qa-comment-body">' + renderMentionText(c.body) + '</div>' +
-    '</div>';
-  }).join('');
+      bodyHtml +
+    '</div>' +
+  '</div>';
+}
+
+/* ── 댓글 섹션 전체 렌더 ─────────────────────────────────── */
+function renderCommentSection(q) {
+  if (!q.comments) q.comments = [];
+  const thread = q.comments.map(c => renderOneComment(q.id, c)).join('') ||
+    '<div style="color:var(--text-muted);font-size:12px;padding:12px 0">아직 댓글이 없습니다.</div>';
+
+  // compose box: 작성자 아바타
+  const meName = (typeof me !== 'undefined' && me && me.name) ? me.name : '익명';
+  const meContact = getContactByName(meName);
+  const meCh = String(meName||'?')[0];
+  const meAvatar = meContact && meContact.photo
+    ? '<div class="qac-avatar"><img src="' + meContact.photo + '" onerror="this.parentNode.textContent=\'' + meCh + '\'"></div>'
+    : '<div class="qac-avatar">' + meCh + '</div>';
 
   return '<div class="qa-comments">' +
-    '<div class="qa-comments-title">💬 댓글 <span style="color:var(--text-muted);font-weight:400;font-size:11px">' + comments.length + '개</span></div>' +
-    html +
-    '<div class="qa-comment-form">' +
-      '<textarea id="qa-comment-input-' + q.id + '" placeholder="댓글 작성… @이름 으로 담당자를 호출할 수 있습니다"></textarea>' +
-      '<div class="qa-comment-actions">' +
-        '<span class="qa-comment-hint">@ 입력으로 담당자 호출 · Enter+Ctrl 등록</span>' +
-        '<button class="btn-primary" style="font-size:11px;padding:5px 14px" onclick="window.submitQaComment(' + q.id + ')">댓글 등록</button>' +
+    '<div class="qa-comments-title">💬 댓글 <span class="qac-count">' + q.comments.length + '</span></div>' +
+    '<div class="qac-thread">' + thread + '</div>' +
+    '<div class="qac-compose">' +
+      meAvatar +
+      '<div class="qac-compose-main">' +
+        '<div class="qac-compose-tabs"><div class="qac-compose-tab">댓글 작성</div></div>' +
+        '<div class="qac-compose-body">' +
+          '<textarea id="qa-comment-input-' + q.id + '" placeholder="@ 입력으로 담당자를 호출할 수 있습니다."></textarea>' +
+        '</div>' +
+        '<div class="qac-compose-foot">' +
+          '<span class="qac-compose-hint"><code>@</code> 호출 · <code>Tab</code> 자동완성 · <code>**bold**</code> <code>`code`</code> <code>[link](url)</code> · <code>Ctrl+Enter</code> 등록</span>' +
+          '<button class="qac-compose-submit" onclick="window.submitQaComment(' + q.id + ')">댓글 등록</button>' +
+        '</div>' +
       '</div>' +
     '</div>' +
   '</div>';
 }
 
-function appendQaCommentSection(qaId) {
-  const q = QA_DATA.find(function(x) { return x.id === qaId; });
+function refreshCommentSection(qaId) {
+  const q = QA_DATA.find(x => x.id === qaId);
   if (!q) return;
-  // secret 잠긴 글은 건너뜀
   const detail = document.getElementById('qa-detail-content');
-  if (!detail || detail.querySelector('.qa-comments')) return;
-  if (!q.comments) q.comments = [];
-  const wrap = document.createElement('div');
-  wrap.innerHTML = renderComments(q);
-  detail.appendChild(wrap.firstChild);
-  // 댓글 textarea에 @멘션 자동완성 부착
+  if (!detail) return;
+  const existing = detail.querySelector('.qa-comments');
+  const html = renderCommentSection(q);
+  if (existing) {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    existing.replaceWith(tmp.firstChild);
+  } else {
+    const tmp = document.createElement('div');
+    tmp.innerHTML = html;
+    detail.appendChild(tmp.firstChild);
+  }
   const ta = document.getElementById('qa-comment-input-' + qaId);
   if (ta) {
     initMentionAutocomplete(ta);
@@ -5671,6 +5845,16 @@ function appendQaCommentSection(qaId) {
       if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); window.submitQaComment(qaId); }
     });
   }
+  const editTa = __editingComment && __editingComment.qaId === qaId
+    ? document.getElementById('qac-edit-' + __editingComment.commentId) : null;
+  if (editTa) {
+    initMentionAutocomplete(editTa);
+    editTa.focus();
+  }
+}
+
+function appendQaCommentSection(qaId) {
+  refreshCommentSection(qaId);
 }
 
 window.submitQaComment = function(qaId) {
@@ -5678,7 +5862,7 @@ window.submitQaComment = function(qaId) {
   if (!ta) return;
   const body = ta.value.trim();
   if (!body) return;
-  const q = QA_DATA.find(function(x) { return x.id === qaId; });
+  const q = QA_DATA.find(x => x.id === qaId);
   if (!q) return;
   if (!q.comments) q.comments = [];
   q.comments.push({
@@ -5687,38 +5871,75 @@ window.submitQaComment = function(qaId) {
     body: body,
     date: new Date().toISOString().slice(0, 10)
   });
-  // 댓글 섹션 새로고침
-  const existing = document.querySelector('.qa-detail-wrap .qa-comments, #qa-detail-content .qa-comments');
-  if (existing) existing.outerHTML = renderComments(q);
-  else appendQaCommentSection(qaId);
-  // @멘션 다시 바인딩
-  const newTa = document.getElementById('qa-comment-input-' + qaId);
-  if (newTa) {
-    initMentionAutocomplete(newTa);
-    newTa.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter' && e.ctrlKey) { e.preventDefault(); window.submitQaComment(qaId); }
-    });
-  }
+  refreshCommentSection(qaId);
   if (typeof showToast === 'function') showToast('댓글이 등록됐습니다.');
+};
+
+window.editQaComment = function(qaId, commentId) {
+  __editingComment = { qaId, commentId };
+  refreshCommentSection(qaId);
+};
+
+window.cancelQaCommentEdit = function() {
+  if (!__editingComment) return;
+  const qaId = __editingComment.qaId;
+  __editingComment = null;
+  refreshCommentSection(qaId);
+};
+
+window.saveQaCommentEdit = function(qaId, commentId) {
+  const ta = document.getElementById('qac-edit-' + commentId);
+  if (!ta) return;
+  const newBody = ta.value.trim();
+  if (!newBody) return;
+  const q = QA_DATA.find(x => x.id === qaId);
+  if (!q) return;
+  const c = (q.comments || []).find(x => x.id === commentId);
+  if (!c) return;
+  if (!canManageComment(c)) {
+    if (typeof showToast === 'function') showToast('수정 권한이 없습니다.');
+    return;
+  }
+  c.body = newBody;
+  c.editedAt = new Date().toISOString().slice(0, 10);
+  __editingComment = null;
+  refreshCommentSection(qaId);
+  if (typeof showToast === 'function') showToast('댓글이 수정됐습니다.');
+};
+
+window.deleteQaComment = function(qaId, commentId) {
+  const q = QA_DATA.find(x => x.id === qaId);
+  if (!q) return;
+  const c = (q.comments || []).find(x => x.id === commentId);
+  if (!c) return;
+  if (!canManageComment(c)) {
+    if (typeof showToast === 'function') showToast('삭제 권한이 없습니다.');
+    return;
+  }
+  if (!confirm('이 댓글을 삭제할까요?')) return;
+  q.comments = q.comments.filter(x => x.id !== commentId);
+  if (__editingComment && __editingComment.commentId === commentId) __editingComment = null;
+  refreshCommentSection(qaId);
+  if (typeof showToast === 'function') showToast('댓글이 삭제됐습니다.');
 };
 
 /* ── 태그 필터 UI ─────────────────────────────────────────── */
 function buildMentionFilterBtns() {
   const el = document.getElementById('flt-mention');
   if (!el) return;
-  // 전체 QA에서 @멘션 수집
   const names = {};
-  QA_DATA.forEach(function(q) {
-    parseMentions(q.body).forEach(function(n) { names[n] = (names[n] || 0) + 1; });
-    (q.comments || []).forEach(function(c) {
-      parseMentions(c.body).forEach(function(n) { names[n] = (names[n] || 0) + 1; });
+  QA_DATA.forEach(q => {
+    parseMentions(q.body).forEach(n => { names[n] = (names[n]||0) + 1; });
+    (q.comments||[]).forEach(c => {
+      parseMentions(c.body).forEach(n => { names[n] = (names[n]||0) + 1; });
     });
   });
   const cur = window.__qaFltMention;
   el.innerHTML =
     '<button class="flt-mention-btn' + (cur === 'all' ? ' active' : '') + '" onclick="window.__qaFltMention=\'all\';renderQa()">전체</button>' +
-    Object.keys(names).sort().map(function(n) {
-      return '<button class="flt-mention-btn' + (cur === n ? ' active' : '') + '" onclick="window.__qaFltMention=\'' + n + '\';renderQa()">@' + n + '<span style="opacity:.6;margin-left:3px;font-size:9px">' + names[n] + '</span></button>';
+    Object.keys(names).sort().map(n => {
+      const enc = n.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+      return '<button class="flt-mention-btn' + (cur === n ? ' active' : '') + '" onclick="window.__qaFltMention=\'' + enc + '\';renderQa()">@' + escHtml(n) + '<span class="ct">' + names[n] + '</span></button>';
     }).join('');
 }
 
@@ -5732,25 +5953,22 @@ function injectMentionFilterRow() {
   panel.appendChild(row);
 }
 
-/* ── QA 목록에 태그 표시 ──────────────────────────────────── */
 function addTagsToQaRows() {
-  document.querySelectorAll('#qa-rows .qa-row').forEach(function(row) {
+  document.querySelectorAll('#qa-rows .qa-row').forEach(row => {
     const onclick = row.getAttribute('onclick') || '';
     const m = onclick.match(/showQaDetail\((\d+)\)/);
     if (!m) return;
-    const q = QA_DATA.find(function(x) { return x.id === parseInt(m[1]); });
+    const q = QA_DATA.find(x => x.id === parseInt(m[1]));
     if (!q) return;
     const mentions = parseMentions(q.body);
-    const commentMentions = (q.comments || []).flatMap(function(c) { return parseMentions(c.body); });
-    const all = [...new Set([...mentions, ...commentMentions])];
+    const cmentions = (q.comments||[]).flatMap(c => parseMentions(c.body));
+    const all = [...new Set([...mentions, ...cmentions])];
     if (!all.length) return;
     const titleCell = row.querySelector('.qa-title-cell');
     if (!titleCell || titleCell.querySelector('.qa-row-tags')) return;
     const wrap = document.createElement('span');
     wrap.className = 'qa-row-tags';
-    wrap.innerHTML = all.slice(0, 3).map(function(n) {
-      return '<span class="qa-row-tag">@' + n + '</span>';
-    }).join('');
+    wrap.innerHTML = all.slice(0, 3).map(n => '<span class="qa-row-tag">@' + escHtml(n) + '</span>').join('');
     titleCell.appendChild(wrap);
   });
 }
@@ -5761,9 +5979,9 @@ window.getFilteredQa = function() {
   let d = _orig_getFilteredQa();
   if (window.__qaFltMention && window.__qaFltMention !== 'all') {
     const name = window.__qaFltMention;
-    d = d.filter(function(q) {
+    d = d.filter(q => {
       return parseMentions(q.body).includes(name) ||
-        (q.comments || []).some(function(c) { return parseMentions(c.body).includes(name); });
+        (q.comments||[]).some(c => parseMentions(c.body).includes(name));
     });
   }
   return d;
@@ -5779,18 +5997,85 @@ window.renderQa = function() {
 
 const _orig_showQaDetail = window.showQaDetail || showQaDetail;
 window.showQaDetail = function(id) {
+  __editingComment = null;
   _orig_showQaDetail(id);
+  // 본문/답변에도 마크다운 적용 — 원본 코드 무수정, innerHTML 후처리
+  try {
+    const q = (typeof QA_DATA !== 'undefined') ? QA_DATA.find(x => x.id === id) : null;
+    if (q) {
+      const bodyEl = document.querySelector('#qa-detail-content .qa-detail-body');
+      if (bodyEl && q.body) bodyEl.innerHTML = renderMentionText(q.body);
+      const answerEl = document.querySelector('#qa-detail-content .qa-answer-body');
+      if (answerEl && q.answer) answerEl.innerHTML = renderMentionText(q.answer);
+    }
+  } catch (err) { console.warn('[Markdown post-process]', err); }
   appendQaCommentSection(id);
 };
 
 const _orig_showQaForm = window.showQaForm || showQaForm;
 window.showQaForm = function(id) {
   _orig_showQaForm(id);
-  // 폼 textarea에 @멘션 자동완성
-  setTimeout(function() {
-    initMentionAutocomplete(document.getElementById('qf-body'));
-  }, 0);
+  setTimeout(() => initMentionAutocomplete(document.getElementById('qf-body')), 0);
 };
+
+/* submitQa wrapper: 수정 완료 시 detail로 복귀 (목록이 아닌) */
+const _orig_submitQa = window.submitQa || (typeof submitQa !== 'undefined' ? submitQa : null);
+if (_orig_submitQa) {
+  window.submitQa = function() {
+    // editingQaId는 top-level let 이라 다른 script에서 직접 참조 가능
+    let wasEditingId = null;
+    try {
+      if (typeof editingQaId !== 'undefined' && editingQaId !== null) {
+        wasEditingId = editingQaId;
+      }
+    } catch (e) {}
+    const result = _orig_submitQa.apply(this, arguments);
+    if (wasEditingId !== null) {
+      // 원본은 cancelQa → 목록으로. 우리는 다시 detail로 돌려보냄.
+      setTimeout(function() {
+        if (typeof window.showQaDetail === 'function') window.showQaDetail(wasEditingId);
+      }, 0);
+    }
+    return result;
+  };
+}
+
+/* ─── 협력업체 카드 팝업 연동 (document-level delegation) ───
+   원본 buildPartners가 IIFE closure 안에서 자체 호출되어 window wrap을 우회하므로
+   render 시점에 의존하지 않는 document-level capture로 처리한다. */
+document.addEventListener('click', function(e) {
+  const card = e.target.closest('#partner-site-sections .ccard');
+  if (!card) return;
+  if (e.target.closest('.copy-btn') || e.target.closest('a')) return;
+  if (typeof PARTNER_CONTACTS === 'undefined') return;
+
+  const nameEl = card.querySelector('.cname');
+  if (!nameEl) return;
+  const name = nameEl.textContent.trim();
+  const emailLink = card.querySelector('a[href^="mailto:"]');
+  const email = emailLink ? (emailLink.getAttribute('href') || '').replace(/^mailto:/, '').trim() : '';
+
+  const partner = PARTNER_CONTACTS.find(p =>
+    p.name === name && (email ? p.email === email : true)
+  );
+  if (!partner) return;
+
+  const company = (typeof getPartnerCompany === 'function')
+    ? getPartnerCompany(partner.site) : { label: partner.site || '' };
+  const enriched = Object.assign({}, partner, {
+    org: company.label + (company.labelEn ? ' / ' + company.labelEn : '')
+  });
+  const key = partner.email || ('partner:' + partner.name + ':' + partner.site);
+  enriched.email = enriched.email || '';
+  window.__cmap[key] = enriched;
+  window.openContactCard(key);
+}, true);
 
 })();
 </script>
+
+
+
+</body>
+</html>
+
