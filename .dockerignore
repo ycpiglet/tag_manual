@@ -1,0 +1,5 @@
+agents/
+.git/
+scripts/
+*.md
+!README.md
