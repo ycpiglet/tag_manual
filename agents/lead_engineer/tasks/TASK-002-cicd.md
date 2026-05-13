@@ -1,6 +1,6 @@
 # TASK-002 | CI/CD Engineer
 
-상태: 대기
+상태: 완료
 담당: CI/CD Engineer
 생성일: 2026-05-13
 
@@ -53,12 +53,21 @@ echo "배포 완료: http://localhost:8080/public/index.html"
 - TASK-001 완료 후: nginx.conf, Dockerfile, docker-compose.yml이 커밋됨
 - `git log --oneline -3`으로 커밋 내역 확인 가능
 
-## 완료 기록 (작업 후 이 섹션을 채울 것)
+## 완료 기록
 
 ```
-완료일:
-결과:
+완료일: 2026-05-13
+결과: .gitignore, deploy.sh 생성 + feature/deploy 브랜치에 커밋 완료
 변경 파일:
-이슈:
+  - .gitignore  (신규)
+  - deploy.sh   (신규, chmod +x)
+브랜치: feature/deploy (커밋: fc9a4b6)
+커밋 포함 파일: nginx.conf, Dockerfile, docker-compose.yml, .dockerignore,
+               deploy.sh, .gitignore, agents/, CLAUDE.md
+미스테이징(의도적 제외): public/final.html 삭제, public/index.html 수정
+  → 우리 작업이 아닌 pre-existing 변경. 별도 커밋 필요 시 Lead Engineer 판단 요청.
+이슈: 없음
 인수 사항:
+  - main으로 머지 전 PR 생성 필요
+  - public/final.html 삭제 + public/index.html 변경은 별도 처리 필요
 ```

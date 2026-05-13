@@ -1,6 +1,6 @@
 # TASK-003 | UI/UX Designer
 
-상태: 대기
+상태: 완료
 담당: UI/UX Designer
 생성일: 2026-05-13
 
@@ -59,12 +59,20 @@ index.html에서 발견된 주요 경로들:
 - 누락 파일 중 폴백 없는 항목이 있으면 Lead Engineer에 보고
 - index.html 수정이 있었다면 변경 내용 명시
 
-## 완료 기록 (작업 후 이 섹션을 채울 것)
+## 완료 기록
 
 ```
-완료일:
-결과: (이상 없음 / X개 이슈 발견)
-변경 파일: (없음 또는 파일명)
-이슈:
-인수 사항:
+완료일: 2026-05-13
+결과: 이상 없음 — 코드 수정 불필요
+변경 파일: 없음
+검증 내용:
+  - ../src/assets/images/ 참조 15개 전수 확인: 모두 파일 존재 (OK 15/15)
+  - profiles/: profile_hk_kim.jpg, profile_jj_lee.jpg, profile_sh_hong.JPG, profile_yc_jung.jpg 존재
+  - robots/: doosan, gaemi(indoor/outdoor), gocart180, mtomtech(door/elevator),
+             piper, rby1, spot, vision60 모두 존재
+  - logos/: logo_keti.jpg, logo_rubberneck.png 존재
+  - GydTech/Novatek/COBOT 등 ROBOT_IMAGE_MAP에 없는 로봇: onerror 폴백 처리됨 (정상)
+  - profile_sh_hong.JPG: 대문자 확장자, index.html 참조와 파일명 일치하므로 정상
+이슈: 없음
+인수 사항: 없음
 ```

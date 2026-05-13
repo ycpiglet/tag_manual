@@ -1,6 +1,6 @@
 # TASK-004 | QA
 
-상태: 대기
+상태: 완료
 담당: QA
 생성일: 2026-05-13
 
@@ -65,13 +65,48 @@ cd public && python3 -m http.server 8080
 - 체크리스트 전체 확인 완료
 - 통과/보류 판정 기록
 
-## 완료 기록 (작업 후 이 섹션을 채울 것)
+## 완료 기록
 
 ```
-완료일:
-체크리스트: X/Y 통과
-버그: BUG 번호 목록 (없으면 "없음")
-판정: 통과 / 보류
-보류 사유:
+완료일: 2026-05-13
+서버: http://localhost:8080/public/index.html (Docker, tag_manual-web-1)
+
+HTTP 검증 결과:
+  핵심 경로:
+    200  /public/index.html
+    200  /src/assets/images/logos/logo_keti.jpg
+    200  /src/assets/images/logos/logo_rubberneck.png
+    200  /src/assets/images/logos/logo_itp.png
+    200  /public/data/robots.csv
+    200  /public/data/contacts.json
+    200  /public/data/sites.csv
+
+  매뉴얼 (15/15 OK):
+    200  /docs/manuals/gocart180/user_manual.md
+    200  /docs/manuals/spot/user_manual.md
+    200  /docs/manuals/gaemi/ilgaemi/user_manual.md
+    200  /docs/manuals/gaemi/jipgaemi/user_manual.md
+    200  /docs/manuals/rby1/user_manual.md
+    200  /docs/manuals/piper/user_manual.md
+    200  /docs/manuals/vision60/user_manual.md
+    200  /docs/manuals/mtomtech/elevator/user_manual.md
+    200  /docs/manuals/mtomtech/door/user_manual.md
+    200  /docs/manuals/novatek/user_manual.md
+    200  /docs/manuals/cobot/user_manual.md
+    200  /docs/manuals/orderpicking/user_manual.md
+    200  /docs/manuals/gydtech/user_manual.md
+    200  /docs/manuals/rubberneck/user_manual.md
+    200  /docs/manuals/solar/user_manual.md
+
+  vendor PDF (gocart180: 6개, spot: 12개, doosan: 3개 = 21개 확인):
+    모두 200 (RB-Y1 공백 포함 파일명은 URL인코딩 시 200 확인)
+
+브라우저 기능 테스트 항목 (HTTP 자동화 범위 외):
+  → T6 Beta Tester가 실제 브라우저 탐색으로 검증
+
+버그: 없음 (HTTP 레벨)
+판정: 통과 (HTTP 레벨 검증 기준)
 인수 사항:
+  - 브라우저 기능 검증(로그인, 렌더링, 다크모드 등)은 T6 Beta Tester 담당
+  - RB-Y1 PDF 파일명에 공백 포함 → 브라우저에서 자동 인코딩되므로 실사용 무관
 ```
