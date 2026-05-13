@@ -62,6 +62,71 @@
 프로덕션   → CEO 승인 후 배포
 ```
 
+## Python 툴체인
+
+이 프로젝트의 스크립트는 Python 우선으로 운영됩니다.
+
+### Supabase (supabase-py)
+
+```python
+from supabase import create_client
+sb = create_client(SUPABASE_URL, SUPABASE_KEY)          # anon (RLS 적용)
+sb_admin = create_client(SUPABASE_URL, SERVICE_ROLE_KEY) # 관리자 (RLS 우회)
+
+# 데이터 조회
+rows = sb.table("robots").select("*").execute().data
+
+# Upsert (마이그레이션)
+sb_admin.table("contacts").upsert(rows).execute()
+```
+
+| 스크립트 | 용도 |
+|----------|------|
+| `scripts/migrate.py` | CSV → Supabase 테이블 마이그레이션 (migrate.mjs 대체) |
+| `scripts/test_connect.py` | Supabase 연결 및 테이블 존재 확인 (test_connect.mjs 대체) |
+
+실행:
+```bash
+python scripts/migrate.py              # 전체 마이그레이션
+python scripts/migrate.py contacts     # 특정 테이블만
+python scripts/test_connect.py         # 연결 테스트
+```
+
+### Sentry (sentry-sdk)
+
+스크립트 실행 중 발생하는 예외를 Sentry로 자동 전송합니다.
+
+```python
+import sentry_sdk
+sentry_sdk.init(dsn=os.getenv("SENTRY_DSN"), environment="migration")
+# 이후 unhandled exception은 자동 캡처
+sentry_sdk.capture_exception(e)   # 명시적 캡처
+```
+
+- 프론트엔드 Sentry JS SDK는 `public/index.html` 라인 11에 이미 로드됨
+- Python 스크립트용 DSN도 동일 프로젝트 사용 가능
+
+### 환경 변수
+
+```bash
+cp .env.example .env   # 실제 값 채우기
+```
+
+| 변수 | 용도 | 공개 여부 |
+|------|------|----------|
+| `SUPABASE_URL` | Supabase 프로젝트 URL | 공개 (index.html에도 있음) |
+| `SUPABASE_KEY` | Anon 키 | 공개 (RLS가 보호) |
+| `SUPABASE_SERVICE_ROLE_KEY` | 관리자 키 | **비공개 — 절대 커밋 금지** |
+| `SENTRY_DSN` | Sentry 엔드포인트 | 공개 가능 |
+| `VERCEL_TOKEN` | Vercel API 토큰 | **비공개** |
+
+### supabase/schema.sql
+
+스키마 변경 시:
+1. `supabase/schema.sql` 수정
+2. Supabase Dashboard → SQL Editor에서 실행
+3. `scripts/test_connect.py`로 테이블 존재 확인
+
 ## 행동 지침
 
 - API를 구현하기 전에 명세를 먼저 작성하고 Lead Engineer에게 검토 요청한다.
@@ -69,3 +134,4 @@
 - 성능 최적화는 측정 후 진행한다. 추측 기반 최적화는 하지 않는다.
 - 외부 서비스 의존성이 생기면 Lead Engineer에게 즉시 알린다.
 - 프로덕션 데이터에 직접 접근하는 작업은 Lead Engineer 또는 CEO 승인 후 진행한다.
+- **`SUPABASE_SERVICE_ROLE_KEY`, `VERCEL_TOKEN`은 절대 커밋하지 않는다.**
