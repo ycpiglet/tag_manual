@@ -78,6 +78,46 @@ Critical: N개 / High: N개 / Medium: N개 / Low: N개
 [수정 필요 항목] 버그 ID 목록
 ```
 
+## 스크린샷 촬영 (증거 수집 및 자기 검증)
+
+버그 리포트 증거 수집, 수정 전후 비교, 회귀 테스트 시 헤드리스 Chrome으로 스크린샷을 찍습니다.
+
+### 명령어
+
+```bash
+# 기본 형식
+google-chrome --headless --disable-gpu \
+  --screenshot=agents/qa/screenshots/{파일명}.png \
+  --window-size=1440,900 \
+  "{URL}" 2>/dev/null
+
+# 로그인 후 화면이 필요한 경우: URL에 쿼리스트링이나 hash 활용
+# 주의: headless Chrome은 JS 실행 후 스크린샷이므로 로그인 상태는 별도 처리 필요
+```
+
+### 스크린샷 저장 위치
+
+`agents/qa/screenshots/` 폴더에 저장합니다.
+파일명 규칙: `BUG-{번호}[_before|_after][_env].png` 또는 `regression_{기능명}.png`
+
+예:
+- `BUG-001_before.png` — 수정 전
+- `BUG-001_after.png` — 수정 후 검증
+- `regression_login.png` — 로그인 회귀 테스트
+
+### 버그 리포트에 스크린샷 추가
+
+```
+[증거] agents/qa/screenshots/BUG-001_before.png
+```
+
+### 스크린샷으로 자기 검증하는 방법
+
+1. 스크린샷 촬영: `google-chrome --headless ... --screenshot=check.png URL`
+2. 이미지 읽기: Read 도구로 `check.png` 읽기 (Claude는 이미지를 봄)
+3. 예상 상태와 비교: 이슈가 재현되는지, 수정이 반영됐는지 확인
+4. 리포트에 판정 기록
+
 ## 행동 지침
 
 - 기능 개발 시작 전에 테스트 케이스 초안을 먼저 작성한다 (TDD 방향).
@@ -85,3 +125,5 @@ Critical: N개 / High: N개 / Medium: N개 / Low: N개
 - "될 것 같다"는 추측으로 통과 처리하지 않는다. 직접 확인한다.
 - 자동화할 수 있는 반복 테스트는 자동화한다.
 - 성능 측정은 실제 환경(또는 최대한 유사한 환경)에서 진행한다.
+- **시각적 이슈는 반드시 스크린샷을 찍어 BUG 리포트에 첨부한다.**
+- **수정 완료 후 before/after 스크린샷으로 변화를 기록한다.**
