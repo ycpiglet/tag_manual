@@ -54,10 +54,15 @@ ss -tlnp | grep 8080
 ## 완료 기록 (작업 후 이 섹션을 채울 것)
 
 ```
-완료일:
-결과:
-서버 IP:
-포트 8080 외부 접근 가능 여부:
-이슈:
+완료일: 2026-05-13
+결과: 전체 통과
+서버 IP: 192.168.100.114, 192.168.0.6 (내부 네트워크 2개), 172.17.0.1, 172.18.0.1 (Docker 브리지)
+포트 8080 외부 접근 가능 여부: 가능 (0.0.0.0:8080 LISTEN 확인)
+이슈: 없음
 인수 사항:
+  - curl -I http://localhost:8080/ → HTTP/1.1 301 Location: /public/index.html ✓
+  - curl -L ... http://localhost:8080/ → 200 http://localhost:8080/public/index.html ✓
+  - /src/assets/images/logos/logo_keti.jpg → 200 ✓
+  - /public/index.html → 200 ✓
+  - 내부 네트워크 접근: http://192.168.100.114:8080/ 또는 http://192.168.0.6:8080/ 으로 접근 가능
 ```

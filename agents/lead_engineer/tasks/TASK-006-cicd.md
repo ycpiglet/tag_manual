@@ -1,6 +1,6 @@
 # TASK-006 | CI/CD Engineer
 
-상태: 대기
+상태: 완료
 담당: CI/CD Engineer
 생성일: 2026-05-13
 참조: CYCLE-002
@@ -55,4 +55,22 @@ git push origin main
 변경 파일:
 이슈:
 인수 사항:
+```
+
+## 완료 기록
+
+```
+완료일: 2026-05-13
+결과: 3개 커밋 + main 머지 완료
+커밋 이력:
+  79a23e1  docs: add cycle-001 review, beta test cases, and cycle-002 plan
+  2b8962f  feat: update prototype to latest version
+  71ec268  ci: fix redirect to use relative path (preserve port)
+  622d23a  ci: add root redirect to /public/index.html in nginx
+  38c1938  merge: feature/deploy → main
+이슈: 없음
+인수 사항:
+  - main 브랜치에 모든 변경 반영 완료
+  - feature/deploy 브랜치는 이제 삭제 가능
+  - TASK-008(QA)이 nginx 리다이렉트 검증 담당
 ```

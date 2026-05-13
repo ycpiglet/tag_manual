@@ -1,6 +1,6 @@
 # TASK-007 | Backend Engineer
 
-상태: 대기
+상태: 완료
 담당: Backend Engineer
 생성일: 2026-05-13
 참조: CYCLE-002
@@ -44,4 +44,22 @@ location = / {
 변경 파일:
 이슈:
 인수 사항:
+```
+
+## 완료 기록
+
+```
+완료일: 2026-05-13
+결과: nginx.conf에 absolute_redirect off + location = / 리다이렉트 추가
+변경 파일: nginx.conf
+검증:
+  curl -sI http://localhost:8080/  → 301 Location: /public/index.html (상대경로)
+  curl -sL http://localhost:8080/  → 200 http://localhost:8080/public/index.html
+  기존 경로 (/public/index.html, /src/assets/, /docs/) 영향 없음 확인
+이슈:
+  최초 return 301 /public/index.html 적용 후 Location이 포트를 빠뜨린
+  절대 URL(http://localhost/public/index.html)로 응답되는 문제 발생.
+  absolute_redirect off 추가로 해결.
+인수 사항:
+  - nginx.conf 변경 시 반드시 docker compose up -d --build 필요 (재시작만으로는 미적용)
 ```
