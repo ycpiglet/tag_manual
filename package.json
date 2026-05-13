@@ -1,0 +1,20 @@
+{
+  "name": "star-team-manual",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "migrate": "node scripts/migrate.mjs",
+    "migrate:users": "node scripts/migrate.mjs users",
+    "migrate:data": "node scripts/migrate.mjs contacts companies partners qa faq glossary changelog vendor_docs",
+    "migrate:files": "node scripts/migrate.mjs manuals vendor_files images",
+    "test": "node scripts/test_browser.mjs",
+    "test:login": "node scripts/test_browser.mjs --login admin admin"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.0",
+    "pg": "^8.20.0"
+  },
+  "devDependencies": {
+    "playwright": "^1.60.0"
+  }
+}
