@@ -23,4 +23,11 @@
 
 ## 기록
 
-(최초 생성 - 아직 기록 없음)
+### COMPOUND-001
+
+날짜: 2026-05-13
+발견한 패턴: 로컬 커밋을 원격에 push하지 않은 상태에서 PR을 만들고 squash merge하면 local/remote main 히스토리가 분기됨.
+근본 원인: HTTPS push 실패로 로컬 커밋들이 원격에 없었고, feature 브랜치만 push됨. PR squash가 그 상태의 remote main 위에 얹혀 분기 발생.
+개선 조치: feature 브랜치 생성 전 반드시 `git push origin main`으로 로컬 main을 원격과 동기화. HTTPS push 실패 시 SSH URL로 즉시 전환 (`git remote set-url origin git@github.com:ycpiglet/tag_manual.git`).
+적용 대상: CI/CD Engineer
+상태: 적용 완료

@@ -3,7 +3,7 @@
 작성일: 2026-05-13
 작성자: Lead Engineer
 참조: agents/ceo/PLAN-003.md
-상태: 진행 중
+상태: 완료
 
 ---
 
@@ -63,8 +63,38 @@ TASK-010 (CI/CD) + TASK-011 (QA) ←── 병렬 시작 가능
 
 ## REVIEW (사이클 완료 후 작성)
 
-_미완료_
+### 완료 현황
+
+| ID | 담당 | 결과 |
+|----|------|------|
+| TASK-009 | Backend | 완료. `.vercelignore` 생성. `vercel.json` 검토 후 수정 불필요 판정. |
+| TASK-010 | CI/CD | 완료. PR #2 squash merge → main (df445f4). |
+| TASK-011 | QA | 완료. 전체 통과. |
+
+### 주요 발견 사항
+
+1. **SSH 전환 필요**: `gh auth status`는 정상이지만 HTTPS git push 실패. git remote를 SSH URL로 변경해 해결. 이후 모든 push는 SSH 사용.
+
+2. **squash merge + 로컬 미push = 히스토리 분기**: 로컬 8개 커밋이 원격에 없는 상태에서 PR squash merge하면 local/remote main이 분기됨. squash commit이 feature 브랜치 전체를 포함하므로 `git reset --hard origin/main`으로 해결. 향후 커밋은 push를 먼저 하거나, PR 전 로컬 main을 remote와 동기화해야 함.
+
+3. **vercel.json rewrite**: nginx의 301 redirect와 달리 URL이 `/`로 유지됨. 사용자 입장에서 더 자연스러운 UX.
+
+4. **BTC-004 자동 해결 예상**: Vercel 배포 시 HTTPS 기본 제공으로 GPS 기능 활성화 예정.
+
+### 미처리/다음 사이클 고려사항
+
+- Vercel 실제 배포 실행 (vercel CLI 또는 GitHub 연동)
+- 배포 후 BTC-004(GPS) 동작 확인
+- BTC-001, 002, 003 수정 여부 판단
+- TASK-010 완료기록 커밋 (현재 uncommitted)
 
 ## COMPOUND
 
-_없음_
+### COMPOUND-001
+
+날짜: 2026-05-13
+발견한 패턴: 로컬 커밋을 원격에 push하지 않은 상태에서 PR을 만들고 merge하면 local/remote main 히스토리가 분기됨.
+근본 원인: HTTPS push 실패로 인해 로컬 커밋들이 원격에 없었고, feature 브랜치만 push됨.
+개선 조치: feature 브랜치 생성 전 항상 `git push origin main`으로 로컬 main을 원격과 동기화. HTTPS 안 되면 SSH로 즉시 전환.
+적용 대상: CI/CD Engineer
+상태: 적용 완료

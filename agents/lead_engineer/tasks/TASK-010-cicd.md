@@ -57,10 +57,17 @@ feat: add Vercel deployment config and .vercelignore
 ## 완료 기록 (작업 후 이 섹션을 채울 것)
 
 ```
-완료일:
-결과:
-커밋 해시:
-PR 번호:
+완료일: 2026-05-13
+결과: PR #2 squash merge 완료. vercel.json + .vercelignore main에 존재 확인.
+커밋 해시: df445f4
+PR 번호: ycpiglet/tag_manual#2
 이슈:
+  - HTTPS push 불가. git remote를 SSH(git@github.com)로 변경하여 해결.
+  - PR merge 후 git pull 시 rebase 충돌 발생.
+    원인: 로컬 main 8개 커밋이 remote에 미push 상태에서 PR squash merge됨.
+    해결: squash commit이 feature 브랜치 전체(로컬 8개 커밋 포함)를 담고 있으므로
+         git reset --hard origin/main으로 로컬 동기화.
 인수 사항:
+  - git remote는 SSH URL(git@github.com:ycpiglet/tag_manual.git)로 고정됨
+  - main 브랜치: local = remote = df445f4
 ```
