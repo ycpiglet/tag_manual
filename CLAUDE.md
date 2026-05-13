@@ -110,6 +110,48 @@ CI/CD: 수정 후 해당 케이스 회귀 테스트에 포함
 
 ---
 
+## Python 툴체인
+
+이 프로젝트의 스크립트와 테스트는 Python 우선으로 운영합니다.
+
+### 설치
+
+```bash
+pip install -r requirements.txt
+python -m playwright install chromium
+cp .env.example .env   # 실제 값 채우기
+```
+
+### 핵심 툴
+
+| 도구 | Python 패키지 | 용도 |
+|------|--------------|------|
+| Supabase | `supabase` | DB 조회/마이그레이션 |
+| Playwright | `playwright` + `pytest-playwright` | E2E 브라우저 테스트 |
+| Sentry | `sentry-sdk` | 스크립트 에러 모니터링 |
+| Vercel | `requests` (REST API) | 배포 상태 확인 |
+
+### 주요 스크립트
+
+| 파일 | 실행 | 용도 |
+|------|------|------|
+| `scripts/test_e2e.py` | `pytest scripts/test_e2e.py -v` | E2E 테스트 |
+| `scripts/migrate.py` | `python scripts/migrate.py` | Supabase 마이그레이션 |
+| `scripts/test_connect.py` | `python scripts/test_connect.py` | DB 연결 테스트 |
+| `scripts/check_deployment.py` | `python scripts/check_deployment.py` | Vercel 배포 상태 |
+
+### 환경변수 (.env)
+
+```
+SUPABASE_URL, SUPABASE_KEY          # 공개 (anon)
+SUPABASE_SERVICE_ROLE_KEY           # 비공개 — 절대 커밋 금지
+SENTRY_DSN                          # 공개 가능
+VERCEL_TOKEN, VERCEL_PROJECT_ID     # 비공개
+BASE_URL                            # 테스트 대상 URL
+```
+
+---
+
 ## Git 워크플로 (모든 에이전트 필수 준수)
 
 **절대 규칙: `main` 브랜치에 직접 commit하거나 local merge하지 않는다.**

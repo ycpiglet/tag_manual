@@ -123,6 +123,41 @@ EOF
 )"
 ```
 
+## Python 배포 검증 툴
+
+### Vercel 배포 상태 확인
+
+```bash
+# 최신 배포 상태 조회
+python scripts/check_deployment.py
+
+# 배포 완료까지 대기 (CI 파이프라인에서 사용)
+python scripts/check_deployment.py --wait
+```
+
+필요 환경변수: `VERCEL_TOKEN`, `VERCEL_PROJECT_ID`
+
+### E2E 테스트 (배포 후 smoke test)
+
+```bash
+# Vercel 배포 후 자동 검증
+pytest scripts/test_e2e.py -v --base-url https://tag-manual.vercel.app
+```
+
+### 배포 파이프라인 (권장 순서)
+
+```
+1. git push origin main
+     ↓
+2. Vercel 자동 배포 트리거 (GitHub 연동)
+     ↓
+3. python scripts/check_deployment.py --wait
+     ↓
+4. pytest scripts/test_e2e.py -v --base-url {vercel_url}
+     ↓
+5. 통과 → 완료 기록 / 실패 → Lead Engineer에게 에스컬레이션
+```
+
 ## 배포 체크리스트
 
 스테이징 배포 전:

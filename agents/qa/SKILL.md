@@ -78,6 +78,51 @@ Critical: N개 / High: N개 / Medium: N개 / Low: N개
 [수정 필요 항목] 버그 ID 목록
 ```
 
+## Python E2E 테스트 (pytest-playwright)
+
+이 프로젝트의 E2E 테스트는 Python Playwright + pytest 기반입니다.
+`scripts/test_browser.mjs`(Node.js)보다 pytest 기반 Python 구현을 우선 사용합니다.
+
+### 실행
+
+```bash
+# 전체 테스트 (로컬 Docker)
+pytest scripts/test_e2e.py -v
+
+# Vercel 배포 테스트
+pytest scripts/test_e2e.py -v --base-url https://tag-manual.vercel.app
+
+# 특정 테스트만
+pytest scripts/test_e2e.py -v -k "login or image"
+
+# 로그인 후 테스트 (logged_in_page fixture 사용)
+pytest scripts/test_e2e.py -v -k "robot or dark_mode"
+```
+
+### 주요 픽스처 (conftest.py)
+
+| 픽스처 | 설명 |
+|--------|------|
+| `page` | pytest-playwright 기본 페이지 (각 테스트마다 새 컨텍스트) |
+| `logged_in_page` | admin 로그인 완료된 페이지 |
+| `base_url` | 테스트 대상 URL (--base-url 또는 .env BASE_URL) |
+| `supabase_client` | Supabase anon 클라이언트 (DB 상태 검증용) |
+
+### 새 테스트 추가
+
+```python
+# scripts/test_e2e.py 에 추가
+def test_my_feature(logged_in_page: Page):
+    page = logged_in_page
+    page.click(".some-button")
+    expect(page.locator(".result")).to_have_text("기대값")
+```
+
+### Sentry 연동
+
+`conftest.py`에서 `SENTRY_DSN`이 있으면 테스트 중 발생하는 예외가 Sentry로 전송됩니다.
+Sentry Dashboard에서 테스트 실패 패턴 추적 가능.
+
 ## 스크린샷 촬영 (증거 수집 및 자기 검증)
 
 버그 리포트 증거 수집, 수정 전후 비교, 회귀 테스트 시 헤드리스 Chrome으로 스크린샷을 찍습니다.
