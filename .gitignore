@@ -1,0 +1,27 @@
+# 환경 변수 및 시크릿
+.env
+.env.*
+!.env.example
+
+# 로그
+*.log
+logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 에디터
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node (향후 빌드 도구 추가 시)
+node_modules/
+.vercel

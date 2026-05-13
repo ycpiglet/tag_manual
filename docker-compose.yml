@@ -1,0 +1,9 @@
+services:
+  web:
+    build: .
+    ports:
+      - "8080:80"
+    # 로컬 개발: 파일 변경 시 재빌드 없이 즉시 반영
+    volumes:
+      - .:/usr/share/nginx/html:ro
+    restart: unless-stopped
