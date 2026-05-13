@@ -110,6 +110,52 @@ CI/CD: 수정 후 해당 케이스 회귀 테스트에 포함
 
 ---
 
+## Git 워크플로 (모든 에이전트 필수 준수)
+
+**절대 규칙: `main` 브랜치에 직접 commit하거나 local merge하지 않는다.**
+
+모든 코드 변경은 아래 흐름을 반드시 따릅니다:
+
+```
+1. 브랜치 생성 (main 기반)
+   git checkout main && git pull origin main
+   git checkout -b feature/TASK-{번호}-{설명}
+
+2. 작업 + commit (브랜치 위에서)
+   git add <파일>
+   git commit -m "feat(scope): 설명"
+
+3. 원격에 push
+   git push -u origin feature/TASK-{번호}-{설명}
+
+4. PR 생성 (gh CLI 사용)
+   gh pr create --base main --title "..." --body "..."
+
+5. PR merge (gh CLI 사용, CI/CD Engineer 담당)
+   gh pr merge <PR번호> --squash --delete-branch
+```
+
+### 브랜치 명명 규칙
+
+| 상황 | 브랜치명 |
+|------|----------|
+| 기능 개발 | `feature/TASK-{번호}-{짧은설명}` |
+| 버그 수정 | `fix/BUG-{번호}-{짧은설명}` |
+| 긴급 수정 | `hotfix/{짧은설명}` |
+
+### 역할 분담
+
+- **코드 작성 에이전트** (UI/UX, Backend): 브랜치 생성 → commit → push → PR 생성까지 담당
+- **CI/CD Engineer**: PR 리뷰 확인 → `gh pr merge` 실행 → 배포 이력 기록
+
+### 금지 사항
+
+- `git push origin main` 직접 push 금지
+- `git merge` local merge 후 push 금지
+- PR 없이 main에 반영 금지
+
+---
+
 ## 코드 작성 원칙
 
 ### 기존 코드 우선

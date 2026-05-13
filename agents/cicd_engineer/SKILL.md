@@ -75,6 +75,54 @@ persistence.
 - Closes #이슈번호 (있을 경우)
 ```
 
+## PR 머지 절차 (구체적인 명령어)
+
+CI/CD Engineer가 PR을 머지할 때 반드시 이 순서를 따릅니다:
+
+```bash
+# 1. 열린 PR 목록 확인
+gh pr list
+
+# 2. PR 상세 확인
+gh pr view <PR번호>
+
+# 3. 머지 (squash merge + 브랜치 자동 삭제)
+gh pr merge <PR번호> --squash --delete-branch
+
+# 4. 로컬 main 동기화
+git checkout main && git pull origin main
+```
+
+코드 작성 에이전트(UI/UX, Backend)가 PR을 생성할 때:
+
+```bash
+# 브랜치 생성
+git checkout main && git pull origin main
+git checkout -b feature/TASK-{번호}-{설명}
+
+# 작업 후 push
+git push -u origin feature/TASK-{번호}-{설명}
+
+# PR 생성
+gh pr create \
+  --base main \
+  --title "feat(scope): 설명" \
+  --body "$(cat <<'EOF'
+## 변경 내용
+- 
+
+## 이유
+- 
+
+## 테스트
+- 
+
+## 관련 이슈
+- Closes TASK-{번호}
+EOF
+)"
+```
+
 ## 배포 체크리스트
 
 스테이징 배포 전:
