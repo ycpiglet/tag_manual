@@ -853,7 +853,7 @@ details.md-toggle .toggle-body{padding:12px 16px;font-size:13px;line-height:1.75
     <div class="login-title"><span class="i18n-ko">TOM AND GERRI 원격 관제 시스템</span><span class="i18n-en">TOM AND GERRI Remote Control System</span></div>
     <div class="login-sub"><span class="i18n-ko">KETI AX운영본부 지능로보틱스연구센터 STAR TEAM</span><span class="i18n-en">KETI AX Operations Division · Intelligent Robotics Research Center · STAR TEAM</span></div>
     <hr class="ld">
-    <div class="lf"><label data-i18n="login.id">아이디</label><input type="text" id="lid" placeholder="예: itp_user" data-i18n-ph="ph.id" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="lf"><label data-i18n="login.id">아이디</label><input type="text" id="lid" onkeydown="if(event.key==='Enter')doLogin()"></div>
     <div class="lf"><label data-i18n="ph.password">비밀번호</label><div class="pw-wrap"><input type="password" id="lpw" placeholder="비밀번호" data-i18n-ph="ph.password" onkeydown="if(event.key==='Enter')doLogin()"><button type="button" class="pw-eye" onclick="togglePwVisible()" tabindex="-1" title="비밀번호 표시/숨기기"><svg id="pw-eye-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
     <div class="login-err" id="lerr" data-i18n="login.err">아이디 또는 비밀번호가 올바르지 않습니다.</div>
     <button class="login-btn" onclick="doLogin()" data-i18n="btn.login">로그인</button>
@@ -4278,7 +4278,6 @@ const T={
   'ph.qa.body':['문의 내용을 상세히 작성해주세요.\n\n예: 발생 일시, 로봇 ID, 증상 설명 등','Describe the issue in detail.\n\ne.g., timestamp, robot ID, symptoms'],
   'ph.qa.answer':['답변 내용을 입력하세요','Enter answer'],
   'ph.ai.input':['질문 입력…','Enter question…'],
-  'ph.id':['예: itp_user','e.g., itp_user'],
   'ph.password':['비밀번호','Password'],
   'ph.author':['이름 입력','Enter name'],
   'ph.idAlnum':['영문/숫자','Alphanumeric'],
