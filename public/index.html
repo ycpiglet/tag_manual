@@ -1832,14 +1832,7 @@ async function loadSupabaseData(){
 /* ═══════════════════════════════════
    AUTH
 ═══════════════════════════════════ */
-let USERS_DB = [
-  {id:'admin',   name:'관리자',      pw:'admin',    email:'admin@keti.re.kr',    role:'admin',  sites:['incheon','suwon','yeongwol'], status:'active',  lastLogin:'2025-05-04 09:12'},
-  {id:'itp_user',name:'ITP 사용자',  pw:'1234',     email:'itp@itp.or.kr',       role:'user',   sites:['incheon'],                   status:'active',  lastLogin:'2025-05-03 14:30'},
-  {id:'star_sw', name:'STAR팀 SW',   pw:'star1234', email:'star@keti.re.kr',     role:'staff',  sites:['incheon','suwon','yeongwol'], status:'active',  lastLogin:'2025-05-04 10:45'},
-  {id:'viewer',  name:'뷰어 계정',    pw:'view',     email:'viewer@keti.re.kr',   role:'user',   sites:['incheon'],                   status:'active',  lastLogin:'2025-04-30 16:20'},
-  {id:'gangnam', name:'강남 계정',    pw:'1234',     email:'gangnam@keti.re.kr',  role:'user',   sites:['suwon'],                     status:'active',  lastLogin:'—'},
-  {id:'yeongwol',name:'영월 계정',    pw:'1234',     email:'yeongwol@keti.re.kr', role:'user',   sites:['yeongwol'],                  status:'active',  lastLogin:'—'},
-];
+let USERS_DB = []; // populated from Supabase user_profiles after login
 const ACCESS_LOGS = [
   {time:'2025-05-04 10:45',user:'star_sw',  name:'STAR팀 SW', action:'로그인',   ip:'192.168.1.10'},
   {time:'2025-05-04 09:12',user:'admin',    name:'관리자',     action:'로그인',   ip:'192.168.1.1'},
@@ -1848,7 +1841,6 @@ const ACCESS_LOGS = [
   {time:'2025-05-02 11:00',user:'star_sw',  name:'STAR팀 SW', action:'로그인',   ip:'192.168.1.10'},
 ];
 let me = null;
-const AUTH_KEY='star_team_auth_user_id';
 const GPS_KEY='star_team_cached_location';
 
 /* USERS_DB의 name 필드는 KR을 source-of-truth로 두되 표시는 i18n 변환.
@@ -1910,7 +1902,6 @@ async function doLogout(){
     ACCESS_LOGS.unshift({time:new Date().toLocaleString('ko-KR').replace(',',''),user:me.id,name:me.name,action:'로그아웃',ip:'—'});
   }
   await sb.auth.signOut();
-  localStorage.removeItem(AUTH_KEY);
   me=null;
   document.getElementById('login-overlay').style.display='flex';
   document.getElementById('topbar').style.display='none';
@@ -6074,12 +6065,7 @@ async function restoreSession(){
     me={id:profile.username,name:profile.full_name,email:profile.email,
         role:profile.role,sites:profile.sites||[],status:'active',lastLogin:'—',_uid:session.user.id};
   } else {
-    // 2) localStorage fallback (이전 세션 호환)
-    const uid=localStorage.getItem(AUTH_KEY);
-    if(!uid) return;
-    const u=USERS_DB.find(x=>x.id===uid&&x.status==='active');
-    if(!u){localStorage.removeItem(AUTH_KEY);return;}
-    me=u;
+    return; // no valid Supabase session — show login
   }
   // 3) Supabase에서 전체 데이터 로드
   await loadSupabaseData();
