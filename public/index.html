@@ -96,6 +96,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--s
 .login-hint code{background:var(--surface2);padding:2px 6px;border-radius:var(--r-xs);font-family:var(--mono);font-size:10.5px;border:1px solid var(--border);color:var(--text-dim)}
 .login-err{color:var(--red);font-size:12px;text-align:center;margin-top:7px;display:none;font-weight:600}
 .ld{border:none;border-top:1px solid var(--border);margin:16px 0}
+.pw-wrap{position:relative;display:flex;align-items:center}
+.pw-wrap input{width:100%;padding-right:38px}
+.pw-eye{position:absolute;right:10px;background:none;border:none;cursor:pointer;color:var(--text-muted);padding:3px;line-height:0;transition:color .12s}
+.pw-eye:hover{color:var(--accent)}
 
 /* ─── TOPBAR ─── */
 #topbar{height:var(--topbar-h);background:rgba(255,255,255,.82);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:0.5px solid rgba(0,0,0,.12);display:none;align-items:center;justify-content:space-between;padding:0 20px;flex-shrink:0;z-index:100}
@@ -850,7 +854,7 @@ details.md-toggle .toggle-body{padding:12px 16px;font-size:13px;line-height:1.75
     <div class="login-sub"><span class="i18n-ko">KETI AX운영본부 지능로보틱스연구센터 STAR TEAM</span><span class="i18n-en">KETI AX Operations Division · Intelligent Robotics Research Center · STAR TEAM</span></div>
     <hr class="ld">
     <div class="lf"><label data-i18n="login.id">아이디</label><input type="text" id="lid" placeholder="예: itp_user" data-i18n-ph="ph.id" onkeydown="if(event.key==='Enter')doLogin()"></div>
-    <div class="lf"><label data-i18n="ph.password">비밀번호</label><input type="password" id="lpw" placeholder="비밀번호" data-i18n-ph="ph.password" onkeydown="if(event.key==='Enter')doLogin()"></div>
+    <div class="lf"><label data-i18n="ph.password">비밀번호</label><div class="pw-wrap"><input type="password" id="lpw" placeholder="비밀번호" data-i18n-ph="ph.password" onkeydown="if(event.key==='Enter')doLogin()"><button type="button" class="pw-eye" onclick="togglePwVisible()" tabindex="-1" title="비밀번호 표시/숨기기"><svg id="pw-eye-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button></div></div>
     <div class="login-err" id="lerr" data-i18n="login.err">아이디 또는 비밀번호가 올바르지 않습니다.</div>
     <button class="login-btn" onclick="doLogin()" data-i18n="btn.login">로그인</button>
     <div class="login-hint">
@@ -1854,6 +1858,14 @@ const GPS_KEY='star_team_cached_location';
    사전에 매핑이 없는 사용자(직원 실명 등)는 원문 그대로 표시. */
 /* userDisplayName / SYS_NAME_MAP은 i18n 헬퍼와 함께 line ~3686에서 정의됨. */
 
+function togglePwVisible(){
+  const inp=document.getElementById('lpw');
+  if(!inp) return;
+  const show=inp.type==='password';
+  inp.type=show?'text':'password';
+  const icon=document.getElementById('pw-eye-icon');
+  if(icon) icon.style.opacity=show?'1':'.4';
+}
 async function doLogin(){
   const username=document.getElementById('lid').value.trim();
   const pw=document.getElementById('lpw').value;
