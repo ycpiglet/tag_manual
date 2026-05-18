@@ -98,16 +98,15 @@ def test_robot_images_load(logged_in_page: Page):
 def test_dark_mode_toggle(logged_in_page: Page):
     """다크 모드 토글이 동작하는지 확인."""
     page = logged_in_page
-    # 토글 버튼 찾기
-    toggle = page.locator("[id*='dark'], [class*='dark-toggle'], [aria-label*='dark'], [title*='dark']").first
+    toggle = page.locator(".theme-toggle").first
     if not toggle.is_visible():
-        pytest.skip("다크 모드 토글 버튼을 찾을 수 없음")
+        pytest.skip("다크 모드 토글 버튼(.theme-toggle)을 찾을 수 없음")
 
-    body_before = page.evaluate("document.body.className")
+    theme_before = page.evaluate("document.documentElement.getAttribute('data-theme')")
     toggle.click()
     page.wait_for_timeout(300)
-    body_after = page.evaluate("document.body.className")
-    assert body_before != body_after, "토글 후 body 클래스 변화 없음"
+    theme_after = page.evaluate("document.documentElement.getAttribute('data-theme')")
+    assert theme_before != theme_after, f"토글 후 data-theme 변화 없음: '{theme_before}' → '{theme_after}'"
 
 
 def test_logout(logged_in_page: Page):
