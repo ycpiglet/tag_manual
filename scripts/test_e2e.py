@@ -48,14 +48,14 @@ def test_no_js_errors_on_load(page: Page, base_url: str):
 # ────────────────────────────────────────────────────────────────
 
 @pytest.mark.parametrize("user,pw,expect_success", [
-    ("admin",    "admin", True),
-    ("itp_user", "1234",  True),
-    ("viewer",   "view",  True),
+    ("admin",    "admin", True),   # Supabase Auth 계정 필요
+    ("itp_user", "1234",  True),   # Supabase Auth 계정 필요
+    ("viewer",   "view",  True),   # Supabase Auth 계정 필요
     ("wrong",    "wrong", False),
     ("",         "",      False),
 ])
 def test_login(page: Page, base_url: str, user: str, pw: str, expect_success: bool):
-    """다양한 자격증명으로 로그인 시도."""
+    """Supabase Auth 기반 로그인 테스트 — USERS_DB fallback 없음."""
     page.goto(base_url)
     page.fill("#lid", user)
     page.fill("#lpw", pw)
