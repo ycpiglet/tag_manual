@@ -502,7 +502,27 @@ body{min-width:1040px}
 .addr-line{display:flex;align-items:center;gap:6px;justify-content:space-between}
 .addr-copy{border:none;background:transparent;color:var(--text-muted);cursor:pointer;padding:2px;border-radius:var(--r-xs)}
 .addr-copy:hover{background:var(--surface3);color:var(--accent)}
-@media(max-width:1100px){body{min-width:1040px}.tb-brand-sub{display:none}#topbar{padding:0 12px}}
+@media(max-width:1100px){.tb-brand-sub{display:none}#topbar{padding:0 12px}}
+/* ─── MOBILE RESPONSIVE ─── */
+.hamburger-btn{display:none;align-items:center;justify-content:center;width:34px;height:34px;background:none;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;flex-shrink:0;color:var(--text-muted)}
+.hamburger-btn:hover{background:var(--surface2)}
+.sidebar-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.35);z-index:190;backdrop-filter:blur(2px)}
+.sidebar-overlay.active{display:block}
+@media(max-width:768px){
+  html,body{overflow:auto}
+  #layout{height:auto;min-height:calc(100vh - var(--topbar-h));overflow:visible}
+  #sidebar{position:fixed;top:var(--topbar-h);left:0;height:calc(100vh - var(--topbar-h));z-index:200;transform:translateX(-100%);transition:transform .22s cubic-bezier(.4,0,.2,1);width:240px}
+  #sidebar.mobile-open{transform:translateX(0)}
+  #main{padding:16px 14px;overflow-y:visible}
+  .hamburger-btn{display:flex}
+  .tb-logo,.tb-sep,.tb-brand-name,.site-lbl,.status-chip,.tb-time{display:none}
+  .site-sel{min-width:0;max-width:140px;font-size:11px}
+  .user-chip>div:last-child{display:none}
+  .lang-toggle span.lang-seg,span.lang-div{display:none}
+  .theme-toggle span{display:none!important}
+  .logout-btn span{display:none}
+  .login-box{width:92vw;padding:32px 24px}
+}
 .mnav-item[id^="mnv-manual_"]{opacity:.9}
 @media print{
   #login-overlay,#topbar,#sidebar,#ai-fab,#ai-panel,.manual-toolbar,.mnav,.nav-item,.sb-bottom{display:none!important}
@@ -839,9 +859,15 @@ details.md-toggle .toggle-body{padding:12px 16px;font-size:13px;line-height:1.75
   </div>
 </div>
 
+<!-- SIDEBAR OVERLAY (mobile) -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="toggleMobileSidebar()"></div>
+
 <!-- TOPBAR -->
 <div id="topbar">
   <div class="tb-left">
+    <button class="hamburger-btn" onclick="toggleMobileSidebar()" title="메뉴">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
     <div class="tb-logo"><img src="../src/assets/images/logos/logo_keti.jpg" alt="KETI" style="height:28px" onerror="this.outerHTML='<span style=\'font-size:16px;font-weight:800;color:#1a5fac\'>KETI</span>'"></div>
     <div class="tb-sep"></div>
     <div><div class="tb-brand-name">STAR TEAM</div><div class="tb-brand-sub">Robot Operations Manual</div></div>
@@ -3942,6 +3968,9 @@ function sw(name,el){
   if(name==='faq' && typeof renderFaq==='function') renderFaq();
   if(name==='changelog' && typeof renderChangelog==='function') renderChangelog();
   if(name==='partners' && typeof buildPartners==='function') buildPartners();
+  // close mobile sidebar after navigation
+  const sb=document.getElementById('sidebar');
+  if(sb && sb.classList.contains('mobile-open')) toggleMobileSidebar();
 }
 function updateClock(){document.getElementById('clock').textContent=new Date().toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});}
 
@@ -5084,6 +5113,14 @@ function showVendorPdfFallback(path){
   </div>`;
 }
 
+function toggleMobileSidebar(){
+  const sb=document.getElementById('sidebar');
+  const ov=document.getElementById('sidebar-overlay');
+  if(!sb||!ov) return;
+  const open=sb.classList.toggle('mobile-open');
+  ov.classList.toggle('active',open);
+  document.body.style.overflow=open?'hidden':'';
+}
 function toggleTheme(){
   const dark=document.documentElement.getAttribute('data-theme')==='dark';
   const next=dark?'light':'dark';
