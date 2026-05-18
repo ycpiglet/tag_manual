@@ -1400,7 +1400,9 @@ details.md-toggle .toggle-body{padding:12px 16px;font-size:13px;line-height:1.75
           <div class="admin-tab" onclick="swAdminTab('create',this)" data-i18n="admin.tab.create">계정 생성</div>
           <div class="admin-tab" onclick="swAdminTab('sites',this)" data-i18n="admin.tab.sites">사이트 권한</div>
           <div class="admin-tab" onclick="swAdminTab('contacts',this)">담당자 관리</div>
-          <div class="admin-tab" onclick="swAdminTab('partners',this)">협력업체 관리</div>
+          <div class="admin-tab" onclick="swAdminTab('partners',this)">협력업체 담당자</div>
+          <div class="admin-tab" onclick="swAdminTab('robots',this)">로봇 관리</div>
+          <div class="admin-tab" onclick="swAdminTab('companies',this)">업체 관리</div>
           <div class="admin-tab" onclick="swAdminTab('logs',this)" data-i18n="admin.tab.logs">접속 로그</div>
         </div>
         <!-- ACCOUNTS -->
@@ -1533,6 +1535,92 @@ details.md-toggle .toggle-body{padding:12px 16px;font-size:13px;line-height:1.75
           </div>
           <div id="partner-contact-admin-list"></div>
         </div>
+        <!-- ROBOTS CRUD -->
+        <div class="admin-section" id="adm-robots">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:13px;font-weight:600">로봇 목록</div>
+            <button class="btn-primary" onclick="showRobotForm(null)" style="font-size:12px;padding:6px 14px">+ 로봇 추가</button>
+          </div>
+          <div id="robot-form-wrap" style="display:none;background:var(--bg);border:1.5px solid var(--accent);border-radius:12px;padding:20px;margin-bottom:20px">
+            <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)" id="robot-form-title">로봇 추가</div>
+            <div class="form-row">
+              <div class="form-field"><label>이름 *</label><input type="text" id="rf-name" placeholder="GoCart180 LT #1"></div>
+              <div class="form-field"><label>카테고리 *</label>
+                <select id="rf-cat">
+                  <option value="amr">AMR</option>
+                  <option value="quadruped">4족 보행</option>
+                  <option value="manipulator">매니퓰레이터</option>
+                  <option value="arm">암</option>
+                  <option value="m2m">MtoM IoT</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label>사이트 *</label>
+                <select id="rf-site">
+                  <option value="incheon">인천 청라 로봇랜드</option>
+                  <option value="suwon">서울 강남 로봇플러스</option>
+                  <option value="yeongwol">강원 영월 빛드림본부</option>
+                </select>
+              </div>
+              <div class="form-field"><label>건물</label>
+                <select id="rf-bld">
+                  <option value="">—</option>
+                  <option value="robotower">로보타워</option>
+                  <option value="rnd">R&D센터</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label>층</label><input type="text" id="rf-floor" placeholder="1F"></div>
+              <div class="form-field"><label>아이콘 (이모지)</label><input type="text" id="rf-icon" placeholder="🤖"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label>로봇 타입</label><input type="text" id="rf-type" placeholder="AMR"></div>
+              <div class="form-field"><label>IP 주소</label><input type="text" id="rf-ip" placeholder="192.168.1.31"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label>매뉴얼 파일 키</label><input type="text" id="rf-mdfile" placeholder="robots/gocart.md"></div>
+              <div class="form-field"><label>벤더 그룹</label><input type="text" id="rf-vendor" placeholder="gocart180"></div>
+            </div>
+            <div class="form-field"><label>시동 절차 (| 구분)</label><input type="text" id="rf-startup" placeholder="배터리 확인|TOM ON|전원 ON"></div>
+            <div class="form-field"><label>점검 항목 (| 구분)</label><input type="text" id="rf-checklist" placeholder="배터리|TOM|Rubberneck"></div>
+            <div class="form-field"><label>제어 방법 (| 구분)</label><input type="text" id="rf-ctrl" placeholder="Rubberneck|WASD|Space 정지"></div>
+            <div class="form-actions" style="margin-top:16px">
+              <button class="btn-ghost" onclick="cancelRobotForm()">취소</button>
+              <button class="btn-primary" onclick="submitRobot()" id="rf-btn">등록</button>
+            </div>
+          </div>
+          <div id="robot-admin-list"></div>
+        </div>
+        <!-- COMPANIES CRUD -->
+        <div class="admin-section" id="adm-companies">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:13px;font-weight:600">협력업체 목록</div>
+            <button class="btn-primary" onclick="showCompanyForm(null)" style="font-size:12px;padding:6px 14px">+ 업체 추가</button>
+          </div>
+          <div id="company-form-wrap" style="display:none;background:var(--bg);border:1.5px solid var(--accent);border-radius:12px;padding:20px;margin-bottom:20px">
+            <div style="font-size:14px;font-weight:700;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)" id="company-form-title">업체 추가</div>
+            <div class="form-row">
+              <div class="form-field"><label>업체 키 *</label><input type="text" id="cpf-key" placeholder="yujin"></div>
+              <div class="form-field"><label>업체명(한글) *</label><input type="text" id="cpf-label-ko" placeholder="유진로봇"></div>
+            </div>
+            <div class="form-row">
+              <div class="form-field"><label>업체명(영문)</label><input type="text" id="cpf-label-en" placeholder="Yujin Robot"></div>
+              <div class="form-field"><label>웹사이트 URL</label><input type="text" id="cpf-url" placeholder="https://www.yujinrobot.com"></div>
+            </div>
+            <div class="form-field"><label>주소</label><input type="text" id="cpf-address" placeholder="인천광역시 연수구 ..."></div>
+            <div class="form-row">
+              <div class="form-field"><label>색상 코드</label><input type="color" id="cpf-color" value="#8e8e93" style="height:38px;padding:4px"></div>
+              <div class="form-field"><label>설명</label><input type="text" id="cpf-desc" placeholder="유진로봇 GoCart180 제조사"></div>
+            </div>
+            <div class="form-actions" style="margin-top:16px">
+              <button class="btn-ghost" onclick="cancelCompanyForm()">취소</button>
+              <button class="btn-primary" onclick="submitCompany()" id="cpf-btn">등록</button>
+            </div>
+          </div>
+          <div id="company-admin-list"></div>
+        </div>
         <!-- LOGS -->
         <div class="admin-section" id="adm-logs">
           <div style="font-size:13px;font-weight:600;margin-bottom:12px" data-i18n="admin.logs.title">최근 접속 로그</div>
@@ -1639,14 +1727,16 @@ async function loadSupabaseData(){
       {data:contacts},
       {data:companies},
       {data:pContacts},
-      {data:logs}
+      {data:logs},
+      {data:robotRows}
     ]=await Promise.all([
       sb.from('user_profiles').select('*'),
       sb.from('qa_posts').select('*').order('id'),
       sb.from('contacts').select('*').order('sort_order'),
       sb.from('partner_companies').select('*'),
       sb.from('partner_contacts').select('*').order('sort_order'),
-      sb.from('access_logs').select('*').order('ts',{ascending:false}).limit(50)
+      sb.from('access_logs').select('*').order('ts',{ascending:false}).limit(50),
+      sb.from('robots').select('*').order('site_key')
     ]);
     if(users?.length) USERS_DB=users.map(u=>({
       id:u.username,name:u.full_name,email:u.email,
@@ -1689,6 +1779,24 @@ async function loadSupabaseData(){
         user:l.user_username||'',name:l.user_name||'',action:l.action,ip:l.ip||'—'
       }))
     );
+    if(robotRows?.length){
+      const siteMap={incheon:[],suwon:[],yeongwol:[]};
+      robotRows.forEach(r=>{
+        const site=r.site_key||'incheon';
+        if(!siteMap[site]) siteMap[site]=[];
+        siteMap[site].push({
+          _sbId:r.id,id:r.id,bld:r.building||'',name:r.name,
+          cat:r.category||'amr',icon:r.icon||'🤖',type:r.robot_type||'',
+          floor:r.floor||'',power:'online',mp:'online',rn:'online',solar:'online',upd:'즉시',
+          specs:r.specs||{},
+          startup:(r.startup||'').split('|').filter(Boolean),
+          checklist:(r.checklist||'').split('|').filter(Boolean),
+          ctrl:(r.ctrl||'').split('|').filter(Boolean),
+          mdFile:r.manual_file||'',vendorGroup:r.vendor_group||'',vendorPdf:r.vendor_pdf||''
+        });
+      });
+      Object.keys(siteMap).forEach(k=>{if(siteMap[k].length) ALL_ROBOTS[k]=siteMap[k];});
+    }
   }catch(e){
     console.warn('[Supabase] loadSupabaseData 실패, 하드코딩 fallback 사용:', e.message);
   }
@@ -3181,6 +3289,193 @@ function renderContactsAdmin(){
 }
 
 /* ═══════════════════════════════════
+   ROBOTS ADMIN CRUD
+═══════════════════════════════════ */
+let editingRobotId=null;
+function showRobotForm(id){
+  editingRobotId=id||null;
+  const wrap=document.getElementById('robot-form-wrap');
+  wrap.style.display='block';
+  wrap.scrollIntoView({behavior:'smooth',block:'start'});
+  if(id){
+    const r=Object.values(ALL_ROBOTS).flat().find(x=>x._sbId===id||x.id===id);
+    if(r){
+      document.getElementById('rf-name').value=r.name||'';
+      document.getElementById('rf-cat').value=r.cat||'amr';
+      document.getElementById('rf-site').value=r._sbSite||Object.keys(ALL_ROBOTS).find(k=>ALL_ROBOTS[k].some(x=>(x._sbId||x.id)===id))||'incheon';
+      document.getElementById('rf-bld').value=r.bld||'';
+      document.getElementById('rf-floor').value=r.floor||'';
+      document.getElementById('rf-icon').value=r.icon||'';
+      document.getElementById('rf-type').value=r.type||'';
+      document.getElementById('rf-ip').value=r.specs?.IP||r.specs?.ip||'';
+      document.getElementById('rf-mdfile').value=r.mdFile||'';
+      document.getElementById('rf-vendor').value=r.vendorGroup||'';
+      document.getElementById('rf-startup').value=(r.startup||[]).join('|');
+      document.getElementById('rf-checklist').value=(r.checklist||[]).join('|');
+      document.getElementById('rf-ctrl').value=(r.ctrl||[]).join('|');
+    }
+    document.getElementById('robot-form-title').textContent='로봇 수정';
+    document.getElementById('rf-btn').textContent='저장';
+  } else {
+    ['rf-name','rf-floor','rf-icon','rf-type','rf-ip','rf-mdfile','rf-vendor','rf-startup','rf-checklist','rf-ctrl'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('rf-cat').value='amr';
+    document.getElementById('rf-site').value='incheon';
+    document.getElementById('rf-bld').value='';
+    document.getElementById('robot-form-title').textContent='로봇 추가';
+    document.getElementById('rf-btn').textContent='등록';
+  }
+}
+function cancelRobotForm(){
+  document.getElementById('robot-form-wrap').style.display='none';
+  editingRobotId=null;
+}
+async function submitRobot(){
+  if(me?.role!=='admin'){alert('관리자만 가능합니다.');return;}
+  const name=document.getElementById('rf-name').value.trim();
+  if(!name){alert('이름은 필수입니다.');return;}
+  const ip=document.getElementById('rf-ip').value.trim();
+  const specs=ip?{'IP':ip}:{};
+  const payload={
+    name,
+    category:document.getElementById('rf-cat').value,
+    site_key:document.getElementById('rf-site').value,
+    building:document.getElementById('rf-bld').value||null,
+    floor:document.getElementById('rf-floor').value.trim()||null,
+    icon:document.getElementById('rf-icon').value.trim()||null,
+    robot_type:document.getElementById('rf-type').value.trim()||null,
+    specs:Object.keys(specs).length?specs:null,
+    manual_file:document.getElementById('rf-mdfile').value.trim()||null,
+    vendor_group:document.getElementById('rf-vendor').value.trim()||null,
+    startup:document.getElementById('rf-startup').value.trim()||null,
+    checklist:document.getElementById('rf-checklist').value.trim()||null,
+    ctrl:document.getElementById('rf-ctrl').value.trim()||null
+  };
+  if(editingRobotId){
+    const {error}=await sb.from('robots').update(payload).eq('id',editingRobotId);
+    if(error){alert('수정 실패: '+error.message);return;}
+    showToast('로봇 정보가 수정되었습니다.');
+  } else {
+    payload.id=crypto.randomUUID();
+    const {error}=await sb.from('robots').insert(payload);
+    if(error){alert('추가 실패: '+error.message);return;}
+    showToast('로봇이 추가되었습니다.');
+  }
+  cancelRobotForm();
+  await loadSupabaseData();
+  buildStatus(); buildManualNav(); buildCtrl();
+  renderRobotsAdmin();
+}
+async function deleteRobot(id){
+  if(me?.role!=='admin'){alert('관리자만 가능합니다.');return;}
+  if(!confirm('이 로봇을 삭제하시겠습니까?'))return;
+  const {error}=await sb.from('robots').delete().eq('id',id);
+  if(error){alert('삭제 실패: '+error.message);return;}
+  showToast('삭제되었습니다.');
+  await loadSupabaseData();
+  buildStatus(); buildManualNav(); buildCtrl();
+  renderRobotsAdmin();
+}
+function renderRobotsAdmin(){
+  const box=document.getElementById('robot-admin-list');
+  if(!box) return;
+  const all=Object.entries(ALL_ROBOTS).flatMap(([site,arr])=>arr.map(r=>({...r,_site:site})));
+  if(!all.length){box.innerHTML='<div class="qa-empty">데이터 없음 (Supabase에서 로드 필요)</div>';return;}
+  box.innerHTML=`<div class="user-table"><div class="user-thead" style="grid-template-columns:1fr 1fr 80px 80px 80px"><span>이름</span><span>사이트/층</span><span>카테고리</span><span>IP</span><span>액션</span></div>`+
+    all.map(r=>{
+      const rid=r._sbId||r.id;
+      const editBtn=rid?`<button class="btn-ghost" style="font-size:11px;padding:3px 8px" onclick="showRobotForm('${rid}')">수정</button>`:'';
+      const delBtn=rid?`<button class="btn-danger" style="font-size:11px;padding:3px 8px;margin-left:4px" onclick="deleteRobot('${rid}')">삭제</button>`:'';
+      return `<div class="user-row" style="grid-template-columns:1fr 1fr 80px 80px 80px"><span>${r.icon||''}${r.name}</span><span style="font-size:11px">${r._site}/${r.floor||'—'}</span><span style="font-size:11px">${r.cat}</span><span style="font-family:var(--mono);font-size:10px">${r.specs?.IP||'—'}</span><span>${editBtn}${delBtn}</span></div>`;
+    }).join('')+'</div>';
+}
+
+/* ═══════════════════════════════════
+   COMPANIES ADMIN CRUD
+═══════════════════════════════════ */
+let editingCompanyKey=null;
+function showCompanyForm(key){
+  editingCompanyKey=key||null;
+  const wrap=document.getElementById('company-form-wrap');
+  wrap.style.display='block';
+  wrap.scrollIntoView({behavior:'smooth',block:'start'});
+  const keyField=document.getElementById('cpf-key');
+  if(key){
+    const c=PARTNER_COMPANIES.find(x=>x.key===key);
+    if(c){
+      keyField.value=c.key||'';
+      document.getElementById('cpf-label-ko').value=c.label||'';
+      document.getElementById('cpf-label-en').value=c.labelEn||'';
+      document.getElementById('cpf-url').value=c.url||'';
+      document.getElementById('cpf-address').value=c.address||'';
+      document.getElementById('cpf-color').value=c.color||'#8e8e93';
+      document.getElementById('cpf-desc').value=c.description||'';
+    }
+    keyField.readOnly=true;
+    document.getElementById('company-form-title').textContent='업체 수정';
+    document.getElementById('cpf-btn').textContent='저장';
+  } else {
+    ['cpf-key','cpf-label-ko','cpf-label-en','cpf-url','cpf-address','cpf-desc'].forEach(i=>document.getElementById(i).value='');
+    document.getElementById('cpf-color').value='#8e8e93';
+    keyField.readOnly=false;
+    document.getElementById('company-form-title').textContent='업체 추가';
+    document.getElementById('cpf-btn').textContent='등록';
+  }
+}
+function cancelCompanyForm(){
+  document.getElementById('company-form-wrap').style.display='none';
+  editingCompanyKey=null;
+}
+async function submitCompany(){
+  if(me?.role!=='admin'){alert('관리자만 가능합니다.');return;}
+  const key=document.getElementById('cpf-key').value.trim();
+  const labelKo=document.getElementById('cpf-label-ko').value.trim();
+  if(!key||!labelKo){alert('업체 키와 업체명(한글)은 필수입니다.');return;}
+  const payload={
+    company_key:key,
+    label_ko:labelKo,
+    label_en:document.getElementById('cpf-label-en').value.trim()||null,
+    website:document.getElementById('cpf-url').value.trim()||null,
+    address:document.getElementById('cpf-address').value.trim()||null,
+    color_code:document.getElementById('cpf-color').value||'#8e8e93',
+    description:document.getElementById('cpf-desc').value.trim()||null
+  };
+  if(editingCompanyKey){
+    const {error}=await sb.from('partner_companies').update(payload).eq('company_key',editingCompanyKey);
+    if(error){alert('수정 실패: '+error.message);return;}
+    showToast('업체 정보가 수정되었습니다.');
+  } else {
+    const {error}=await sb.from('partner_companies').insert(payload);
+    if(error){alert('추가 실패: '+error.message);return;}
+    showToast('업체가 추가되었습니다.');
+  }
+  cancelCompanyForm();
+  await loadSupabaseData();
+  if(typeof buildPartners==='function') buildPartners();
+  renderCompaniesAdmin();
+}
+async function deleteCompany(key){
+  if(me?.role!=='admin'){alert('관리자만 가능합니다.');return;}
+  if(!confirm('이 업체를 삭제하시겠습니까? 연결된 담당자도 함께 삭제됩니다.'))return;
+  const {error}=await sb.from('partner_companies').delete().eq('company_key',key);
+  if(error){alert('삭제 실패: '+error.message);return;}
+  showToast('삭제되었습니다.');
+  await loadSupabaseData();
+  if(typeof buildPartners==='function') buildPartners();
+  renderCompaniesAdmin();
+}
+function renderCompaniesAdmin(){
+  const box=document.getElementById('company-admin-list');
+  if(!box) return;
+  if(!PARTNER_COMPANIES.length){box.innerHTML='<div class="qa-empty">데이터 없음 (Supabase에서 로드 필요)</div>';return;}
+  box.innerHTML=`<div class="user-table"><div class="user-thead" style="grid-template-columns:100px 1fr 1fr 60px 80px"><span>키</span><span>업체명</span><span>주소</span><span>색상</span><span>액션</span></div>`+
+    PARTNER_COMPANIES.map(c=>{
+      const editBtn=`<button class="btn-ghost" style="font-size:11px;padding:3px 8px" onclick="showCompanyForm('${c.key}')">수정</button>`;
+      const delBtn=`<button class="btn-danger" style="font-size:11px;padding:3px 8px;margin-left:4px" onclick="deleteCompany('${c.key}')">삭제</button>`;
+      return `<div class="user-row" style="grid-template-columns:100px 1fr 1fr 60px 80px"><span style="font-family:var(--mono);font-size:11px">${c.key}</span><span>${c.label} <span style="font-size:10px;color:var(--text-muted)">${c.labelEn||''}</span></span><span style="font-size:11px;color:var(--text-muted)">${c.address||'—'}</span><span><span style="display:inline-block;width:16px;height:16px;border-radius:4px;background:${c.color||'#8e8e93'};border:1px solid var(--border)"></span></span><span>${editBtn}${delBtn}</span></div>`;
+    }).join('')+'</div>';
+}
+
+/* ═══════════════════════════════════
    PARTNER CONTACT ADMIN CRUD
 ═══════════════════════════════════ */
 let editingPartnerContactId=null;
@@ -3539,6 +3834,8 @@ function swAdminTab(tab,el){
   document.getElementById('adm-'+tab).classList.add('active');
   if(tab==='contacts') renderContactsAdmin();
   if(tab==='partners') renderPartnerContactsAdmin();
+  if(tab==='robots') renderRobotsAdmin();
+  if(tab==='companies') renderCompaniesAdmin();
 }
 
 function renderUserTable(){
